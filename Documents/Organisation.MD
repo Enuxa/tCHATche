@@ -1,5 +1,9 @@
 # Base
 - Démarrage / fin propre du serveur
+    - Lance l'exécutable
+    - Affiche les informations relatives au serveur
+    - On peut taper les commandes :
+        - stop : arrête le serveur
 - Affichage sous forme de tableau des messages entrant/sortant
 - Connexion au serveur / déconnexion propre du serveur
 - Demande de connexion / déconnexion depuis le client

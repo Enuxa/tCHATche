@@ -1,3 +1,9 @@
+#ifndef COMMON_H
+#define  COMMON_H
+
 #define ROOT_PATH "/tmp/tCHATche"
-#define SERVER_TUBE_PATH "/tmp/tCHATche/server"
-#define CLIENTS_TUBE_DIRECTORY_PATH "/tmp/tCHATche/clients"
+#define SERVER_PIPE_PATH "/tmp/tCHATche/server"
+#define CLIENTS_PIPE_DIRECTORY_PATH "/tmp/tCHATche/clients"
+#define PATH_LENGTH 1024
+#define BUFFER_LENGTH 256
+#endif

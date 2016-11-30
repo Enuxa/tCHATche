@@ -1,6 +1,7 @@
 COMPILER	=	gcc
 INCLUDE_DIR	=	h
-OPTIONS		=	-Wall -I${INCLUDE_DIR}
+OPTIONS		=	 -I${INCLUDE_DIR}
+SERVER_EXEC =	tchatche_server
 
 clean:
 	rm -Rf *.o
@@ -8,10 +9,10 @@ clean:
 all: tchatche_server
 
 tchatche_server: server.o
-	${COMPILER} ${OPTIONS} $@$*.c -o $* $^
+	${COMPILER} ${OPTIONS} ${SERVER_EXEC}.c -o ${SERVER_EXEC} server.o
 
-server.o: common.o
-	${COMPILER} ${OPTIONS} $@$*.c -c $^
+server.o: server.c common.o
+	${COMPILER} ${OPTIONS} server.c -c common.o
 
 common.o:
-	${COMPILER} ${OPTIONS} $@$*.c -c $^
+	${COMPILER} ${OPTIONS} common.c -c

@@ -1,18 +1,21 @@
-COMPILER	=	gcc
+CC = gcc
 INCLUDE_DIR	=	h
-OPTIONS		=	 -I${INCLUDE_DIR}
+CFLAGS =	-Wall -I$(INCLUDE_DIR)
+LDFLAGS =
 SERVER_EXEC =	tchatche_server
 
+all: $(SERVER_EXEC)
+
+tchatche_server: server.o common.o tchatche_server.o
+	$(CC) $(LDFLAGS) $^ -o $@
+
+tchatche_server.o: h/server.h h/common.h
+common.o: h/common.h
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
 clean:
-	rm -Rf *.o
+	rm -rf *.o *.gch $(SERVER_EXEC)
 
-all: tchatche_server
-
-tchatche_server: server.o
-	${COMPILER} ${OPTIONS} ${SERVER_EXEC}.c -o ${SERVER_EXEC} server.o
-
-server.o: server.c common.o
-	${COMPILER} ${OPTIONS} server.c -c common.o
-
-common.o:
-	${COMPILER} ${OPTIONS} common.c -c
+.PHONY: clean

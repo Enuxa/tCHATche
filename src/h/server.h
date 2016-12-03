@@ -10,7 +10,7 @@ typedef struct _client {
     int id;             //  L'identifiant du client
     char *name;         //  Le nom du client
     char *pipe_path;    //  Le chemin du tube du client
-    FILE *pipe;         //  Le tube du client
+    int pipe;           //  Le descripteur du tube client
 } client;
 
 //  Liste de clients
@@ -22,7 +22,7 @@ typedef struct _client_list {
 //  La représentation côté serveur d'un serveur
 typedef struct _server {
     char *pipe_path;    //  Le chemin vers le tube du serveur
-    FILE *pipe;//  Le tube du serveur
+    int pipe;           //  Le descripteur du tube serveur
     client_list *clients;// La liste des clients
 } server;
 

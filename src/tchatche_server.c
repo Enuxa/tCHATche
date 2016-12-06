@@ -1,4 +1,4 @@
-#include "server.h"
+#include "h/server.h"
 
 int main(int argc, char const *argv[]) {
     server srvr;

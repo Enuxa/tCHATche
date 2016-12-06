@@ -3,14 +3,20 @@ INCLUDE_DIR	=	h
 CFLAGS =	-Wall -I$(INCLUDE_DIR)
 LDFLAGS =
 SERVER_EXEC =	tchatche_server
+CLIENT_EXEC =	tchatche_client
 
 all: $(SERVER_EXEC)
+	${CLIENT_EXEC}
 
-tchatche_server: server.o common.o tchatche_server.o
+tchatche_server: server.o protocol.o common.o tchatche_server.o
+	$(CC) $(LDFLAGS) $^ -o $@
+
+tchatche_client: client.o protocol.o common.o tchatche_client.o
 	$(CC) $(LDFLAGS) $^ -o $@
 
 tchatche_server.o: h/server.h h/common.h
-common.o: h/common.h
+
+common.o: protocol.o
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@

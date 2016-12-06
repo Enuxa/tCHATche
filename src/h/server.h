@@ -1,8 +1,6 @@
 #ifndef SERVER_H
 #define SERVER_H
 
-#include <stdio.h>
-
 #define STOP_SERVER 1
 
 //  La représentation côté serveur d'un client

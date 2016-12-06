@@ -6,4 +6,8 @@
 #define CLIENTS_PIPE_DIRECTORY_PATH "/tmp/tCHATche/clients"
 #define PATH_LENGTH 1024
 #define BUFFER_LENGTH 256
+#define USERNAME_LENGTH 50
+
+#include "protocol.h"
+
 #endif

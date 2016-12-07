@@ -1,5 +1,5 @@
-#include "h/client.h"
-#include "h/common.h"
+#include "client.h"
+#include "common.h"
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -9,6 +9,16 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <stdio.h>
+
+#define QUIT_COMMAND 1
+#define QUIT_SEQUENCE "/quit"
+
+int process_command(char *buff) {
+    if (!strcmp(buff, QUIT_SEQUENCE))
+        return QUIT_COMMAND;
+
+    return 0;
+}
 
 int connect(server *srvr, char *path) {
     //  Si le serveur n'existe pas
@@ -32,15 +42,8 @@ int connect(server *srvr, char *path) {
 }
 
 int join(client *clnt, char *username, server *srvr) {
-    char *buff = malloc(BUFFER_LENGTH);
-
-    //  Construction du message
-    make_header(buff, 0, CODE_JOIN);
-
-    strcpy(buff + REQUEST_CONTENT_OFFSET, username);
-
+    //  Ouverture du tube
     clnt->pipepath = malloc(BUFFER_LENGTH);
-
     int i = 1;
     do {
         sprintf(clnt->pipepath, "%s/pipe%d", ROOT_PATH, i);
@@ -53,7 +56,12 @@ int join(client *clnt, char *username, server *srvr) {
     //  Création du tube client
     mkfifo(clnt->pipepath, S_IRWXU | S_IWGRP);
     clnt->pipe = open(clnt->pipepath, O_RDONLY | O_NONBLOCK);
-    strcpy(buff + strlen(username) + REQUEST_CONTENT_OFFSET + 1, clnt->pipepath);
+
+    //  Construction du message
+    char *buff = malloc(BUFFER_LENGTH);
+    char *ptr = make_header(buff, 4 + 4 + 4 + strlen(username) + 4 + strlen(clnt->pipepath), CODE_JOIN);
+    ptr = add_string(ptr, username);
+    ptr = add_string(ptr, clnt->pipepath);
 
     //  Envoie le message
     if (write(srvr->pipe, buff, BUFFER_LENGTH) < 0) {
@@ -66,6 +74,8 @@ int join(client *clnt, char *username, server *srvr) {
 
         return 1;
     };
+
+    printf("MSG: %s\n", buff);
 
     printf("Demande de connexion envoyée au serveur en tant que %s.\nVeuillez patienter ", username);
 
@@ -81,7 +91,9 @@ int join(client *clnt, char *username, server *srvr) {
     printf("\n");
     //  Traite la réponse du serveur
     int ret_val;
-    if (check_type(buff, CODE_SUCCESS)) {
+    request *req = read_request(buff);
+    if (!strcmp(req->type, CODE_SUCCESS)) {
+        clnt->id = read_number(req->content);
         printf("Connexion réussie !\n");
         ret_val = 0;
     } else {
@@ -97,33 +109,74 @@ int join(client *clnt, char *username, server *srvr) {
     return ret_val;
 }
 
-int run_client(client *clnt) {
+int client_loop(client *clnt, server *srvr) {
+    //  Rendre la lecture sur stdin non bloquante
+    fcntl(0, F_SETFL, O_NONBLOCK | fcntl(0, F_GETFL, 0));
+
+    char *buff_stdin = malloc(BUFFER_LENGTH);
+    char *buff_pipe = malloc(BUFFER_LENGTH);
+    char *buff_request = malloc(BUFFER_LENGTH);
+
+    int alive = 1;
+    while (alive) {
+        int read_ret = read(0, buff_stdin, BUFFER_LENGTH);
+
+        buff_stdin[read_ret - 1] = '\0';
+        int cmd = process_command(buff_stdin);
+
+        if (cmd == QUIT_COMMAND) {
+            alive = 0;
+            char *ptr = make_header(buff_request, 4 + 4 + 4, CODE_DISCONNECT);
+            add_number(ptr, clnt->id);
+            write(srvr->pipe, buff_request, BUFFER_LENGTH);
+        }
+    }
+
+    free(buff_request);
+    free(buff_pipe);
+    free(buff_stdin);
+
+    return 0;
+}
+
+int run_client(client *clnt, const char *sp, const char *un) {
     server srvr;
 
-    //  Lecture de l'adresse du serveur
     char server_path[BUFFER_LENGTH];
-    printf("Chemin du serveur : ");
-    if (!fgets(server_path, BUFFER_LENGTH, stdin) || !strcmp(server_path, "\n")) {
-        printf("Chemin invalide : %s\n", server_path);
-        return 1;
-    };
-
-    server_path[strlen(server_path) - 1] = '\0';
+    //  Lecture de l'adresse du serveur
+    if(!sp) {
+        printf("Chemin du serveur : ");
+        if (!fgets(server_path, BUFFER_LENGTH, stdin) || !strcmp(server_path, "\n")) {
+            printf("Chemin invalide : %s\n", server_path);
+            return 1;
+        }
+        server_path[strlen(server_path) - 1] = '\0';
+    } else {
+        strcpy(server_path, sp);
+    }
     printf("%s\n", server_path);
 
     if (connect(&srvr, server_path))
         return 1;
 
     char username[USERNAME_LENGTH];
-    printf("Votre nom d'utilisateur : ");
-    if (!fgets(username, USERNAME_LENGTH, stdin) || !strcmp(server_path, "\n")) {
-        printf("Nom d'utilisateur invalide : %s\n", server_path);
-        return 1;
+    if(!un) {
+        printf("Votre nom d'utilisateur : ");
+        if (!fgets(username, USERNAME_LENGTH, stdin) || !strcmp(server_path, "\n")) {
+            printf("Nom d'utilisateur invalide : %s\n", server_path);
+            return 1;
+        }
+        username[strlen(username) - 1] = '\0';
+    } else {
+        strcpy(username, un);
     }
-
-    username[strlen(username) - 1] = '\0';
     if (join(clnt, username, &srvr))
         return 1;
+
+    client_loop(clnt, &srvr);
+
+    close(clnt->pipe);
+    remove(clnt->pipepath);
 
     return 0;
 }

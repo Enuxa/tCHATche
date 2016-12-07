@@ -13,7 +13,7 @@ typedef struct _client {
 //  La représentation côté client d'un serveur
 typedef struct _server {
     char *pipepath; //  Le chemin du tube serveur
-    int pipe;       //  Le tbe serveur
+    int pipe;       //  Le tube serveur
 } server;
 
 /*  Envoie un message msg via un serveur srvr.
@@ -32,6 +32,6 @@ int join(client *clnt, char *username, server *srvr);
 int connect(server *srvr, char *path);
 
 //  Fais vivre le client
-int run_client(client *clnt);
+int run_client(client *clnt, const char *sp, const char *un);
 
 #endif

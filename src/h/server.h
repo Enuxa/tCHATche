@@ -22,6 +22,7 @@ typedef struct _server {
     char *pipe_path;    //  Le chemin vers le tube du serveur
     int pipe;           //  Le descripteur du tube serveur
     client_list *clients;// La liste des clients
+    int id_counter;     //  Le compteur des identifiants
 } server;
 
 //  Fait vivre le serveur

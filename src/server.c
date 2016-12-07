@@ -1,5 +1,5 @@
-#include "h/server.h"
-#include "h/common.h"
+#include "server.h"
+#include "common.h"
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -16,8 +16,7 @@
 //  Affiche l'invite de commande
 #define PROMPT() printf("> "); fflush(stdout);
 
-int process_request(server *srvr, char *buff, int length);
-void monitor_request(char *buff, int length);
+int process_request(server *srvr, request *req);
 
 int start_server(server *srvr) {
     printf("Démarrage du serveur\n");
@@ -109,10 +108,9 @@ int run_server(server *srvr) {
         //  Lecture d'un message surle tube
         read_ret = read(srvr->pipe, buff_pipe, BUFFER_LENGTH);
         if (read_ret > 0) {//   Si on a lu quelque chose
-            buff_pipe[read_ret] = '\0';
-            printf("\n");
-            monitor_request(buff_pipe, read_ret);
-            process_request(srvr, buff_pipe, read_ret);
+            request *req = read_request(buff_pipe);
+            monitor_request(req);
+            process_request(srvr, req);
         } else if (read_ret < 0 && errno != EAGAIN) {// Si on a rencontré un errer différente de l'absence de données sur le tube
             perror("Erreur de lecture depuis le tube");
         }
@@ -175,7 +173,7 @@ int process_join(server *srvr, char *username, char *pipepath) {
         while (list) {
             //  Si le nom d'utilisateur n'est pas disponible
             if (!strcmp(list->clnt.name, username)) {
-                make_header(buff, 0, CODE_FAIL);
+                make_header(buff, 8, CODE_FAIL);
                 write(link->clnt.pipe, buff, BUFFER_LENGTH);
                 free(link->clnt.name);
                 free(link->clnt.pipe_path);
@@ -192,10 +190,11 @@ int process_join(server *srvr, char *username, char *pipepath) {
         }
         id = prev->clnt.id + 1;
         prev->next = link;
+        link->clnt.id = id;
     }
 
-    make_header(buff, 0, CODE_SUCCESS);
-    sprintf(buff + REQUEST_CONTENT_OFFSET, "%d", id);
+    char *ptr = make_header(buff, 0, CODE_SUCCESS);
+    add_number(ptr, id);
     write(link->clnt.pipe, buff, BUFFER_LENGTH);
 
     printf("\033[1m%s[id=%d]\033[0m : connnecté sur %s\n", username, id, pipepath);
@@ -203,21 +202,13 @@ int process_join(server *srvr, char *username, char *pipepath) {
     return 0;
 }
 
-int process_request(server *srvr, char *buff, int length) {
-    if (check_type(buff, CODE_JOIN)) {
-        char *username = buff + REQUEST_CONTENT_OFFSET;
-        char *pipepath = buff + 1 + REQUEST_CONTENT_OFFSET + strlen(buff + REQUEST_CONTENT_OFFSET);
-
-        if (REQUEST_CONTENT_OFFSET >= length || 1 + REQUEST_CONTENT_OFFSET + strlen(buff + REQUEST_CONTENT_OFFSET) >= length)
-            return 1;
+int process_request(server *srvr, request *req) {
+    if (!strcmp(req->type, CODE_JOIN)) {
+        char *username = read_string(req->content);
+        char *pipepath = read_string(req->content + 4 + strlen(username));
 
         return process_join(srvr, username, pipepath);
     }
 
     return 1;
-}
-
-void monitor_request(char *buff, int length) {
-    printf("\033[1mNombre\033[0m\t%s\n", buff);
-    printf("\033[1mType\033[0m\t%s\n", buff + TYPE_OFFSET);
 }

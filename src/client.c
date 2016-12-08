@@ -54,8 +54,23 @@ int join(client *clnt, char *username, server *srvr) {
     fflush(stdout);
 
     //  Création du tube client
-    mkfifo(clnt->pipepath, S_IRWXU | S_IWGRP);
+    int rv;
+    if ((rv = mkfifo(clnt->pipepath, S_IRWXU | S_IWGRP))) {
+        printf("Impossible d'ouvrir le tube à l'adresse %s", clnt->pipepath);
+        fflush(stdout);
+        perror("");
+        free(clnt->pipepath);
+        return 1;
+    }
     clnt->pipe = open(clnt->pipepath, O_RDONLY | O_NONBLOCK);
+
+    if (clnt->pipe < 0) {
+        printf("Erreur lors de l'ouverture du tube à l'adresse %s", clnt->pipepath);
+        fflush(stdout);
+        perror("");
+        free(clnt->pipepath);
+        return 1;
+    }
 
     //  Construction du message
     char *buff = malloc(BUFFER_LENGTH);
@@ -75,8 +90,6 @@ int join(client *clnt, char *username, server *srvr) {
         return 1;
     };
 
-    printf("MSG: %s\n", buff);
-
     printf("Demande de connexion envoyée au serveur en tant que %s.\nVeuillez patienter ", username);
 
     //  Attend la réponse du serveur
@@ -86,6 +99,9 @@ int join(client *clnt, char *username, server *srvr) {
         putchar('.');
         fflush(stdout);
     } while ((read_ret = read(clnt->pipe, buff, BUFFER_LENGTH)) <= 0);
+    if (read_ret < MIN_REQUEST_LENGTH + 4) {
+        printf("Réponse invalide du serveur\n");
+    }
     buff[read_ret - 1] = '\0';
 
     printf("\n");
@@ -93,7 +109,10 @@ int join(client *clnt, char *username, server *srvr) {
     int ret_val;
     request *req = read_request(buff);
     if (!strcmp(req->type, CODE_SUCCESS)) {
-        clnt->id = read_number(req->content);
+        if (read_number(req->content, req->length, &clnt->id)) {
+            printf("Requête invalide\n");
+            ret_val = 1;
+        }
         printf("Connexion réussie !\n");
         ret_val = 0;
     } else {
@@ -101,10 +120,10 @@ int join(client *clnt, char *username, server *srvr) {
         ret_val = 1;
     }
 
+    free_request(req);
+
     free(buff);
-    close(clnt->pipe);
-    remove(clnt->pipepath);
-    free(clnt->pipepath);
+    free(clnt>-pipepath);
 
     return ret_val;
 }
@@ -124,11 +143,15 @@ int client_loop(client *clnt, server *srvr) {
         buff_stdin[read_ret - 1] = '\0';
         int cmd = process_command(buff_stdin);
 
-        if (cmd == QUIT_COMMAND) {
+        //  Si un message a été saisi
+        if (buff_stdin[0] != '/') {
+
+        } else if (cmd == QUIT_COMMAND) {//    Si une commande a été saisie
             alive = 0;
             char *ptr = make_header(buff_request, 4 + 4 + 4, CODE_DISCONNECT);
             add_number(ptr, clnt->id);
-            write(srvr->pipe, buff_request, BUFFER_LENGTH);
+            if (write(srvr->pipe, buff_request, BUFFER_LENGTH) < BUFFER_LENGTH)
+                perror("Erreur lors de la demande de deconnexion");
         }
     }
 

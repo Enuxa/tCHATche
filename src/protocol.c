@@ -32,6 +32,7 @@ request *read_request(char *buff) {
     sscanf(buff, "%d", &(req->length));
     for (int i = 0; i < 4; i++)
         req->type[i] = buff[4 + i];
+    req->type[4] = '\0';
 
     req->content = buff + 8;
 
@@ -43,23 +44,31 @@ void free_request(request *req) {
     free(req);
 }
 
-int read_number(char *buff) {
+int read_number(char *buff, int remaining, int *n) {
+    if (remaining < 4)
+        return 1;
+
     char nb[4];
     for (int i = 0;i < 4; i++)
         nb[i] = buff[i];
 
-    int n;
-    sscanf(nb, "%d", &n);
+    sscanf(nb, "%d", n);
 
-    return n;
+    return 0;
 }
 
-char *read_string(char *buff) {
+char *read_string(char *buff, int remaining) {
+    if (remaining < 4)
+        return NULL;
+
     int l;
     char nb[4];
     for (int i = 0; i < 4; i++)
         nb[i] = buff[i];
     sscanf(nb, "%d", &l);
+
+    if (remaining - 4 < l)
+        return NULL;
 
     char *str = malloc(l + 1);
     for (int i = 0; i < l; i++)

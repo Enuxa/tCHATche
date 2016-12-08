@@ -1,10 +1,10 @@
 # A finir
-- Tenir à jour le compteur d'identifiants
-- Supprimer un client qui s'est déconnecté
-- Corriger le bug ds clients connectés sur un même tube
-- Gérer les erreurs
-- Sécuriser les fonctions gérant les requêtes
-- Rajouter les `free_request` oubliés
+- [x] Tenir à jour le compteur d'identifiants
+- [x] Supprimer un client qui s'est déconnecté
+- [x] Corriger le bug des clients connectés sur un même tube
+- [x] Gérer les erreurs
+- [x] Sécuriser les fonctions gérant les requêtes
+- [x] Rajouter les `free_request` oubliés
 
 # Base
 - [x] Démarrage / fin propre du serveur
@@ -13,7 +13,7 @@
     - On peut taper les commandes :
         - [x] stop : arrête le serveur
 - [x] Connexion au serveur / déconnexion propre du serveur
-- [ ] Demande de connexion / déconnexion depuis le client
+- [x] Demande de connexion / déconnexion depuis le client
 - [ ] Réception et redistribution des messages depuis le serveur
 - [ ] Reception de messages de la part de clients
 - [ ] Envoi de messages de la part de clients

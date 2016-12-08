@@ -23,6 +23,8 @@
  *  [8-*]  :   Corps de message
 */
 
+#define MIN_REQUEST_LENGTH 8
+
 typedef struct _request {
     int length;
     char *type;
@@ -49,10 +51,10 @@ char* add_string(char *buff, char *str);
 request* read_request(char *buff);
 
 //  Lit une chaîne depuis une requête
-char *read_string(char *buff);
+char *read_string(char *buff, int remaining);
 
 //  Lit un nombre depuis une requête
-int read_number(char *buff);
+int read_number(char *buff, int remaining, int *n);
 
 //  Libère les ressources utilisées par une requête
 void free_request(request *req);

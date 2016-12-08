@@ -13,6 +13,8 @@
 
 #define HOME_MESSAGE "\nListe de commandes :\n- stop\tarrête le serveur\n"
 
+struct timespec sleep_time = {0, 1000000000L / 12};
+
 //  Affiche l'invite de commande
 #define PROMPT() printf("> "); fflush(stdout);
 
@@ -24,19 +26,20 @@ int start_server(server *srvr) {
     //  Initialiser la variable srvr
     srvr->clients = NULL;
     srvr->pipe = -1;
+    srvr->id_counter = 0;
     srvr->pipe_path = (char*) malloc(PATH_LENGTH);
     strcpy(srvr->pipe_path, SERVER_PIPE_PATH);
 
     //  Ouvrir le répertoire racine
     if (access(ROOT_PATH, F_OK) && mkdir(ROOT_PATH, S_IRWXU | S_IRWXG)) {
-        perror("Erreur lors de l'ouverture du dossier racine");
+        perror("\033[31mErreur lors de l'ouverture du dossier racine\033[0m");
 
         return 1;
     }
 
     //  Eventuelle suppression du tube serveur déjà existant
     if (!access(SERVER_PIPE_PATH, F_OK) && remove(SERVER_PIPE_PATH)) {
-        printf("Le tube serveur existe mais ne peut pas être supprimé\n");
+        printf("\033[0mLe tube serveur existe mais ne peut pas être supprimé\033[0m\n");
 
         free(srvr->pipe_path);
 
@@ -45,7 +48,7 @@ int start_server(server *srvr) {
 
     //  Création du tube serveur
     if (mkfifo(SERVER_PIPE_PATH, S_IRWXU | S_IWGRP | S_IWOTH)) {
-        perror("Erreur lors de l'ouverture du tube serveur");
+        perror("\033[31mErreur lors de l'ouverture du tube serveur\033[0m");
 
         free(srvr->pipe_path);
 
@@ -57,7 +60,7 @@ int start_server(server *srvr) {
     //  Ouverture du tube serveur
     srvr->pipe = open(SERVER_PIPE_PATH, O_RDONLY | O_NONBLOCK);
     if (srvr->pipe < 0) {
-        perror("Echec d'ouverture du tube serveur");
+        perror("\033[31mEchec d'ouverture du tube serveur\033[0m");
         return 1;
     }
 
@@ -79,7 +82,7 @@ int close_server(server *srvr) {
     //  Fermer et supprimer le tube
     if (srvr->pipe >= 0) {
         if (close(srvr->pipe) || remove(srvr->pipe_path)) {
-            perror("Erreur lors de la fermeture/suppression du tube serveur");
+            perror("\033[31mErreur lors de la fermeture/suppression du tube serveur\033[0m");
             return 1;
         } else printf("Tube serveur fermé et supprimé avec succès !\n");
     }
@@ -107,12 +110,15 @@ int run_server(server *srvr) {
     while (alive) {
         //  Lecture d'un message surle tube
         read_ret = read(srvr->pipe, buff_pipe, BUFFER_LENGTH);
-        if (read_ret > 0) {//   Si on a lu quelque chose
+        if (read_ret >= MIN_REQUEST_LENGTH) {//   Si on a lu quelque chose
             request *req = read_request(buff_pipe);
             monitor_request(req);
             process_request(srvr, req);
-        } else if (read_ret < 0 && errno != EAGAIN) {// Si on a rencontré un errer différente de l'absence de données sur le tube
-            perror("Erreur de lecture depuis le tube");
+            free_request(req);
+        } else if (read_ret < 0 && errno != EAGAIN) {// Si on a rencontré un erreur différente de l'absence de données sur le tube
+            printf("%d\n", read_ret);
+            fflush(stdout);
+            perror("\033[31mErreur de lecture depuis le tube\033[0m");
         }
 
         //  Traitement des commandes
@@ -124,7 +130,7 @@ int run_server(server *srvr) {
             }
         }
 
-        sleep(1);
+        nanosleep(&sleep_time, NULL);
     }
 
     close_server(srvr);
@@ -153,7 +159,7 @@ int process_join(server *srvr, char *username, char *pipepath) {
     link->clnt.pipe = open(pipepath, O_WRONLY | O_NONBLOCK);
 
     if (link->clnt.pipe < 0) {
-        printf("Impossible d'ouvrir le tube à l'adresse %s", pipepath);
+        printf("\033[31mImpossible d'ouvrir le tube à l'adresse %s\033[0m", pipepath);
         fflush(stdout);
         perror("");
         free(link->clnt.name);
@@ -161,8 +167,6 @@ int process_join(server *srvr, char *username, char *pipepath) {
         free(link);
         return 1;
     }
-
-    int id = 0;
 
     //  S'il n'y a pas encore de clients connectés
     if (!srvr->clients)
@@ -174,13 +178,16 @@ int process_join(server *srvr, char *username, char *pipepath) {
             //  Si le nom d'utilisateur n'est pas disponible
             if (!strcmp(list->clnt.name, username)) {
                 make_header(buff, 8, CODE_FAIL);
-                write(link->clnt.pipe, buff, BUFFER_LENGTH);
+                if (write(link->clnt.pipe, buff, BUFFER_LENGTH) < BUFFER_LENGTH) {
+                    perror("\033[31mErreur lors de l'envoi d'echec de connexion\033[0m");
+                    return 1;
+                }
                 free(link->clnt.name);
                 free(link->clnt.pipe_path);
                 free(link);
                 close(link->clnt.pipe);
 
-                printf("Tentative de connexion avec le nom %s refusée\n", username);
+                printf("\033[31mTentative de connexion avec le nom %s refusée\033[0m\n", username);
 
                 return 1;
             }
@@ -188,26 +195,70 @@ int process_join(server *srvr, char *username, char *pipepath) {
             prev = list;
             list = list->next;
         }
-        id = prev->clnt.id + 1;
         prev->next = link;
-        link->clnt.id = id;
     }
 
-    char *ptr = make_header(buff, 0, CODE_SUCCESS);
-    add_number(ptr, id);
-    write(link->clnt.pipe, buff, BUFFER_LENGTH);
+    link->clnt.id = srvr->id_counter;
+    srvr->id_counter++;
 
-    printf("\033[1m%s[id=%d]\033[0m : connnecté sur %s\n", username, id, pipepath);
+    char *ptr = make_header(buff, 12, CODE_SUCCESS);
+    add_number(ptr, link->clnt.id);
+    if (write(link->clnt.pipe, buff, BUFFER_LENGTH) < BUFFER_LENGTH) {
+        perror("\033[31mErreur lors de l'envoi de la confirmation de connexion\033[0m");
+        return 1;
+    }
+
+    printf("\033[1m%s[id=%d]\033[0m : connnecté sur %s\n", username, link->clnt.id, pipepath);
 
     return 0;
 }
 
+int process_disconnect(server *srvr, int id) {
+    client_list *list = srvr->clients;
+    client_list *prev = NULL;
+    while (list) {
+        if (list->clnt.id == id) {
+            if (!prev)
+                srvr->clients = list->next;
+            else
+                prev->next = list->next;
+
+            printf("%s déconnecté avec succès\n", list->clnt.name);
+
+            free(list->clnt.name);
+            free(list->clnt.pipe_path);
+            free(list);
+
+            return 0;
+        }
+
+        prev = list;
+        list = list->next;
+    }
+
+    printf("\033[31mImpossible de déconnecter le client d'identifiant %d\033[0m\n", id);
+    return 1;
+}
+
 int process_request(server *srvr, request *req) {
     if (!strcmp(req->type, CODE_JOIN)) {
-        char *username = read_string(req->content);
-        char *pipepath = read_string(req->content + 4 + strlen(username));
+        char *username, *pipepath;
+        if (!(username = read_string(req->content, req->length)) ||
+            !(pipepath = read_string(req->content + strlen(username) + 4, req->length - strlen(username) - 4))) {
+            printf("Requête invalide\n");
+            free_request(req);
+            return 1;
+        }
 
         return process_join(srvr, username, pipepath);
+    } else if (!strcmp(req->type, CODE_DISCONNECT)) {
+        int id;
+        if (read_number(req->content, req->length, &id)) {
+            printf("Requête invalide\n");
+            return 1;
+        }
+
+        return process_disconnect(srvr, id);
     }
 
     return 1;

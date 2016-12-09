@@ -1,5 +1,5 @@
-#include "client.h"
-#include "common.h"
+#include "h/client.h"
+#include "h/common.h"
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -123,7 +123,7 @@ int join(client *clnt, char *username, server *srvr) {
     free_request(req);
 
     free(buff);
-    free(clnt>-pipepath);
+    free(clnt->pipepath);
 
     return ret_val;
 }
@@ -140,21 +140,35 @@ int client_loop(client *clnt, server *srvr) {
     while (alive) {
         int read_ret = read(0, buff_stdin, BUFFER_LENGTH);
 
+        //  "Troncature" du message
         buff_stdin[read_ret - 1] = '\0';
         int cmd = process_command(buff_stdin);
 
         //  Si un message a été saisi
         if (buff_stdin[0] != '/') {
-
-        } else if (cmd == QUIT_COMMAND) {//    Si une commande a été saisie
+            //TODO:
+        //  Si une commande a été saisie
+        } else if (cmd == QUIT_COMMAND) {
             alive = 0;
             char *ptr = make_header(buff_request, 4 + 4 + 4, CODE_DISCONNECT);
             add_number(ptr, clnt->id);
+            fflush(stdout);
             if (write(srvr->pipe, buff_request, BUFFER_LENGTH) < BUFFER_LENGTH)
                 perror("Erreur lors de la demande de deconnexion");
         }
+
+        //  Lecture depuis le tube client
+        read_ret = read(clnt->pipe, buff_pipe, BUFFER_LENGTH);
+        if (read_ret < MIN_REQUEST_LENGTH && errno != EAGAIN) {
+            perror("Erreur de lecture depuis le tube");
+            printf("%d\n", srvr->pipe);
+            fflush(stdout);
+        } else {
+
+        }
     }
 
+    //  Nettoyage
     free(buff_request);
     free(buff_pipe);
     free(buff_stdin);
@@ -179,9 +193,11 @@ int run_client(client *clnt, const char *sp, const char *un) {
     }
     printf("%s\n", server_path);
 
+    //  Tentative de connexion
     if (connect(&srvr, server_path))
         return 1;
 
+    //  Lecture d'un nom d'utilisateur si aucun n'a été passé en argument
     char username[USERNAME_LENGTH];
     if(!un) {
         printf("Votre nom d'utilisateur : ");
@@ -193,11 +209,16 @@ int run_client(client *clnt, const char *sp, const char *un) {
     } else {
         strcpy(username, un);
     }
+
+    //  Tentative de connexion
     if (join(clnt, username, &srvr))
         return 1;
 
-    client_loop(clnt, &srvr);
+    //  On fait vivre le serveur
+    if (client_loop(clnt, &srvr))
+        return 1;
 
+    //  Nettoyage
     close(clnt->pipe);
     remove(clnt->pipepath);
 

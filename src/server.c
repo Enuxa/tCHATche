@@ -1,5 +1,5 @@
-#include "server.h"
-#include "common.h"
+#include "h/server.h"
+#include "h/common.h"
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -11,9 +11,9 @@
 #include <stdio.h>
 #include <time.h>
 
-#define HOME_MESSAGE "\nListe de commandes :\n- stop\tarrête le serveur\n"
+extern const struct timespec sleep_time;
 
-struct timespec sleep_time = {0, 1000000000L / 12};
+#define HOME_MESSAGE "\nListe de commandes :\n- stop\tarrête le serveur\n"
 
 //  Affiche l'invite de commande
 #define PROMPT() printf("> "); fflush(stdout);
@@ -30,7 +30,7 @@ int start_server(server *srvr) {
     srvr->pipe_path = (char*) malloc(PATH_LENGTH);
     strcpy(srvr->pipe_path, SERVER_PIPE_PATH);
 
-    //  Ouvrir le répertoire racine
+    //  Créer (si nécessaire) le répertoire racine
     if (access(ROOT_PATH, F_OK) && mkdir(ROOT_PATH, S_IRWXU | S_IRWXG)) {
         perror("\033[31mErreur lors de l'ouverture du dossier racine\033[0m");
 
@@ -72,11 +72,22 @@ int start_server(server *srvr) {
 int close_server(server *srvr) {
     //  Déconnecter les clients
     client_list *list = srvr->clients, *link;
+    char *buff = malloc(BUFFER_LENGTH);
+    make_header(buff, MIN_REQUEST_LENGTH + 4, CODE_SHUTDOWN);
+    add_number(buff + MIN_REQUEST_LENGTH, 0);
     while (list) {
         link = list;
         list = list->next;
 
-        //TODO : déconnecter le client link->clnt
+        if (write(link->clnt.pipe, buff, BUFFER_LENGTH) < BUFFER_LENGTH) {
+            printf("\033[31mImpossible d'informer %s que le serveur ferme\033[0m\n", link->clnt.name);
+            perror("");
+        }
+
+        close(link->clnt.pipe);
+        free(link->clnt.pipe_path);
+        free(link->clnt.name);
+
         free(link);
     }
     //  Fermer et supprimer le tube
@@ -88,6 +99,7 @@ int close_server(server *srvr) {
     }
     //  Libérer la mémoire restante
     free(srvr->pipe_path);
+    free(buff);
 
     return 0;
 }

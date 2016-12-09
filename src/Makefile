@@ -1,6 +1,6 @@
 CC = gcc
 INCLUDE_DIR	=	h
-CFLAGS =	-Wall -I$(INCLUDE_DIR)
+CFLAGS =	-std=c11 -Wall -I$(INCLUDE_DIR)
 LDFLAGS =
 SERVER_EXEC =	tchatche_server
 CLIENT_EXEC =	tchatche_client
@@ -9,10 +9,10 @@ all: $(SERVER_EXEC)
 	${CLIENT_EXEC}
 
 tchatche_server: server.o protocol.o common.o tchatche_server.o
-	$(CC) $(LDFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -o $@
 
 tchatche_client: client.o protocol.o common.o tchatche_client.o
-	$(CC) $(LDFLAGS) $^ -o $@
+	$(CC) $(CFLAGS)  $(LDFLAGS) $^ -o $@
 
 tchatche_server.o: h/server.h h/common.h
 

@@ -20,7 +20,7 @@
 /*  Structure d'un message :
  *  [0-3]   :   Nombre
  *  [4-7]   :   Type
- *  [8-*]  :   Corps de message
+ *  [8-*]   :  Corps de message
 */
 
 #define MIN_REQUEST_LENGTH 8

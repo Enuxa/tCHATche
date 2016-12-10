@@ -1,5 +1,6 @@
 #include "h/client.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #define EXEC_NAME "tchatche_client"

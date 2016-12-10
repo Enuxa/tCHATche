@@ -20,9 +20,9 @@ char *add_string(char *buff, char *str) {
 }
 
 void monitor_request(request *req) {
-    printf("\033[1mNombre\033[0m\t%d\n", req->length);
-    printf("\033[1mType\033[0m\t%s\n", req->type);
-    printf("\033[1mContenu\033[0m\t\033[33m%s\033[0m\n", req->content);
+    printf("\n\033[1mNombre\033[0m\t\t%d\n", req->length);
+    printf("\033[1mType\033[0m\t\t%s\n", req->type);
+    printf("\033[1mContenu\033[0m\t\t\033[33m%s\033[0m\n\n", req->content);
 }
 
 request *read_request(char *buff) {

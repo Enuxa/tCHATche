@@ -17,10 +17,10 @@ typedef struct _server {
 } server;
 
 /*  Envoie un message msg via un serveur srvr.
- *  Si dstId = 0, le message est public, si dstId vaut
+ *  Si dstId = -1, le message est public, si dstId vaut
  * l'identifiant d'un client, ce dernier est le destinataire
 */
-int send_message(client *clnt, server *srvr, char *msg, int dstId);
+int send_message(client *clnt, server *srvr, char *msg, char *dst);
 
 //  Déconnecte du serveur
 int disconnect(client *clnt, server *srvr);

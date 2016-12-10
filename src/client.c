@@ -9,9 +9,12 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <stdio.h>
+#include <time.h>
 
 #define QUIT_COMMAND 1
 #define QUIT_SEQUENCE "/quit"
+
+extern struct timespec sleep_time;
 
 int process_command(char *buff) {
     if (!strcmp(buff, QUIT_SEQUENCE))
@@ -95,7 +98,7 @@ int join(client *clnt, char *username, server *srvr) {
     //  Attend la réponse du serveur
     int read_ret;
     do {
-        sleep(1);
+        nanosleep(&sleep_time, NULL);
         putchar('.');
         fflush(stdout);
     } while ((read_ret = read(clnt->pipe, buff, BUFFER_LENGTH)) <= 0);
@@ -123,9 +126,36 @@ int join(client *clnt, char *username, server *srvr) {
     free_request(req);
 
     free(buff);
-    free(clnt->pipepath);
 
     return ret_val;
+}
+
+int color_code(char *username) {
+    int n = 0;
+    int i = 0;
+    while (username[i] != '\0') {
+        n += username[i];
+        i++;
+    }
+
+    return 30 + n % 8;
+}
+
+int process_message(request *req) {
+    char *username = read_string(req->content, req->length);
+    if (!username) {
+        printf("Message invalide\n");
+        return 1;
+    }
+    char *msg = read_string(req->content + 4 + strlen(username), req->length - 4 - strlen(username));
+    if (!msg) {
+        printf("Message invalide\n");
+        return 1;
+    }
+
+    printf("\033[%d;1m%s\033[0m: %s\n", color_code(username), username, msg);
+
+    return 0;
 }
 
 int client_loop(client *clnt, server *srvr) {
@@ -144,9 +174,11 @@ int client_loop(client *clnt, server *srvr) {
         buff_stdin[read_ret - 1] = '\0';
         int cmd = process_command(buff_stdin);
 
+        //  Si aucun message n'a été lu
+        if (read_ret < 0){}
         //  Si un message a été saisi
-        if (buff_stdin[0] != '/') {
-            //TODO:
+        else if (buff_stdin[0] != '/') {
+            send_message(clnt, srvr, buff_stdin, NULL);
         //  Si une commande a été saisie
         } else if (cmd == QUIT_COMMAND) {
             alive = 0;
@@ -163,8 +195,15 @@ int client_loop(client *clnt, server *srvr) {
             perror("Erreur de lecture depuis le tube");
             printf("%d\n", srvr->pipe);
             fflush(stdout);
-        } else {
-
+        } else if (read_ret >= MIN_REQUEST_LENGTH) {
+            request *req = read_request(buff_pipe);
+            if (!strcmp(req->type, CODE_SHUTDOWN)) {
+                printf("Le serveur a été fermé\n");
+                alive = 0;
+            } else if (!strcmp(req->type, CODE_MESSAGE) || !strcmp(req->type, CODE_PRIVATE)) {
+                process_message(req);
+            }
+            free_request(req);
         }
     }
 
@@ -223,4 +262,15 @@ int run_client(client *clnt, const char *sp, const char *un) {
     remove(clnt->pipepath);
 
     return 0;
+}
+
+int send_message(client *clnt, server *srvr, char *msg, char *dst) {
+    char *buff = malloc(BUFFER_LENGTH);
+    char *ptr = make_header(buff, MIN_REQUEST_LENGTH + 4 + (dst ? strlen(dst) : 0) + strlen(msg), dst ? CODE_PRIVATE : CODE_MESSAGE);
+    ptr = add_number(ptr, clnt->id);
+    if (dst)
+        ptr = add_string(ptr, dst);
+    add_string(ptr, msg);
+
+    return write(srvr->pipe, buff, BUFFER_LENGTH) != BUFFER_LENGTH;
 }

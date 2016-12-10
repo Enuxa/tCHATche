@@ -16,7 +16,7 @@ extern const struct timespec sleep_time;
 #define HOME_MESSAGE "\nListe de commandes :\n- stop\tarrête le serveur\n"
 
 //  Affiche l'invite de commande
-#define PROMPT() printf("> "); fflush(stdout);
+#define PROMPT() printf("\n> "); fflush(stdout);
 
 int process_request(server *srvr, request *req);
 
@@ -118,15 +118,18 @@ int run_server(server *srvr) {
     char *buff_pipe = malloc(BUFFER_LENGTH);
     char *buff_stdin = malloc(BUFFER_LENGTH);
 
+    PROMPT();
+
     int alive = 1, read_ret;
     while (alive) {
-        //  Lecture d'un message surle tube
+        //  Lecture d'un message sur le tube
         read_ret = read(srvr->pipe, buff_pipe, BUFFER_LENGTH);
         if (read_ret >= MIN_REQUEST_LENGTH) {//   Si on a lu quelque chose
             request *req = read_request(buff_pipe);
             monitor_request(req);
             process_request(srvr, req);
             free_request(req);
+            PROMPT();
         } else if (read_ret < 0 && errno != EAGAIN) {// Si on a rencontré un erreur différente de l'absence de données sur le tube
             printf("%d\n", read_ret);
             fflush(stdout);
@@ -139,7 +142,10 @@ int run_server(server *srvr) {
             int cmd = process_command(srvr, buff_stdin);
             if (cmd == STOP_SERVER) {
                 alive = 0;
+            } else {
+                printf("\033[31mCommande inconnue\033[0m\n");
             }
+            PROMPT();
         }
 
         nanosleep(&sleep_time, NULL);
@@ -252,7 +258,53 @@ int process_disconnect(server *srvr, int id) {
     return 1;
 }
 
+int broadcast_message(server *srvr, request *req) {
+    int id;
+    if (read_number(req->content, req->length, &id))
+        return 1;
+
+    char *msg = read_string(req->content + 4, req->length - 4);
+    if (!msg)
+        return 1;
+
+    client_list *list = srvr->clients;
+    char *buff = NULL;
+    while (list) {
+        //  Si ce client est l'emetteur du message
+        if (list->clnt.id == id) {
+            buff = malloc(BUFFER_LENGTH);
+            char *ptr = make_header(buff, MIN_REQUEST_LENGTH + 4 + 4 + strlen(msg), CODE_MESSAGE);
+            ptr = add_string(ptr, list->clnt.name);
+            add_string(ptr, msg);
+            break;
+        }
+        list = list->next;
+    }
+
+    if (!buff) {
+        printf("\033[31mLe message reçu ne provient pas d'un utilisateur connecté\033[0m\n");
+        return 1;
+    }
+
+    int ret_val = 0;
+    list = srvr->clients;
+    while (list) {
+        //  On s'assure de ne pas retransmettre le mesage à l'émetteur
+        if (list->clnt.id != id) {
+            if (write(list->clnt.pipe, buff, BUFFER_LENGTH) < BUFFER_LENGTH) {
+                printf("\033[31mErreur lors de la transmission du message à %s\033[0m", list->clnt.name);
+                perror("");
+                ret_val = 1;
+            }
+        }
+        list = list->next;
+    }
+
+    return ret_val;
+}
+
 int process_request(server *srvr, request *req) {
+    //  Connexion d'un utilisateur
     if (!strcmp(req->type, CODE_JOIN)) {
         char *username, *pipepath;
         if (!(username = read_string(req->content, req->length)) ||
@@ -263,6 +315,7 @@ int process_request(server *srvr, request *req) {
         }
 
         return process_join(srvr, username, pipepath);
+    //  Deconnexion d'un utilisateur
     } else if (!strcmp(req->type, CODE_DISCONNECT)) {
         int id;
         if (read_number(req->content, req->length, &id)) {
@@ -271,6 +324,10 @@ int process_request(server *srvr, request *req) {
         }
 
         return process_disconnect(srvr, id);
+    }
+    //  Reception d'un message
+    else if (!strcmp(req->type,CODE_MESSAGE) || !strcmp(req->type, CODE_PRIVATE)) {
+        return broadcast_message(srvr, req);
     }
 
     return 1;

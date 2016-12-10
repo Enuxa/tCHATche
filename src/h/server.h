@@ -1,6 +1,8 @@
 #ifndef SERVER_H
 #define SERVER_H
 
+#include "protocol.h"
+
 #define STOP_SERVER 1
 
 //  La représentation côté serveur d'un client
@@ -35,5 +37,8 @@ int close_server(server *srvr);
 *   STOP_SERVER :   Demande de fermeture du serveur
 */
 int process_command(server *srvr, char *line);
+
+//  Redistribue un message
+int broadcast_message(server *srvr, request *req);
 
 #endif

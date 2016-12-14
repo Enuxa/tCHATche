@@ -1,3 +1,5 @@
+#define  _POSIX_C_SOURCE 199309L
+
 #include "h/client.h"
 #include "h/common.h"
 #include <string.h>
@@ -12,13 +14,24 @@
 #include <time.h>
 
 #define QUIT_COMMAND 1
+#define PM_COMMAND 2
 #define QUIT_SEQUENCE "/quit"
+#define PM_SEQUENCE "/pm"
 
 extern struct timespec sleep_time;
 
 int process_command(char *buff) {
     if (!strcmp(buff, QUIT_SEQUENCE))
         return QUIT_COMMAND;
+    else if (strstr(buff, PM_SEQUENCE) == buff) {   //  Si la chaîne commence par la séquence de message privé
+        if (strlen(buff) < strlen(PM_SEQUENCE) + 2) {   //  Il faut que la sequence soit suivie d'un espace et du nom du destinataire (au moins deux caractères au total)
+            printf("Commande incomplète\n");
+            return -1;
+        }
+        if (buff[strlen(PM_SEQUENCE)] != ' ')
+            return 0;
+        return PM_COMMAND;
+    }
 
     return 0;
 }
@@ -47,6 +60,8 @@ int connect(server *srvr, char *path) {
 int join(client *clnt, char *username, server *srvr) {
     //  Ouverture du tube
     clnt->pipepath = malloc(BUFFER_LENGTH);
+    printf("%s\n", username);
+    fflush(stdout);
     int i = 1;
     do {
         sprintf(clnt->pipepath, "%s/pipe%d", ROOT_PATH, i);
@@ -76,6 +91,16 @@ int join(client *clnt, char *username, server *srvr) {
     }
 
     //  Construction du message
+    int length = 4 + 4 + 4 + strlen(username) + 4 + strlen(clnt->pipepath);
+
+    if (strlen(username) > USERNAME_LENGTH || length > BUFFER_LENGTH) {
+        printf("Erreur : l'adresse du serveur ou votre nom d'utilisateur est trop long %s\n", clnt->pipepath);
+        fflush(stdout);
+        close(clnt->pipe);
+        free(clnt->pipepath);
+        return 1;
+    }
+
     char *buff = malloc(BUFFER_LENGTH);
     char *ptr = make_header(buff, 4 + 4 + 4 + strlen(username) + 4 + strlen(clnt->pipepath), CODE_JOIN);
     ptr = add_string(ptr, username);
@@ -104,6 +129,13 @@ int join(client *clnt, char *username, server *srvr) {
     } while ((read_ret = read(clnt->pipe, buff, BUFFER_LENGTH)) <= 0);
     if (read_ret < MIN_REQUEST_LENGTH + 4) {
         printf("Réponse invalide du serveur\n");
+
+        free(buff);
+        close(clnt->pipe);
+        remove(clnt->pipepath);
+        free(clnt->pipepath);
+
+        return 1;
     }
     buff[read_ret - 1] = '\0';
 
@@ -112,7 +144,7 @@ int join(client *clnt, char *username, server *srvr) {
     int ret_val;
     request *req = read_request(buff);
     if (!strcmp(req->type, CODE_SUCCESS)) {
-        if (read_number(req->content, req->length, &clnt->id)) {
+        if (!read_number(req->content, req->length, &clnt->id)) {
             printf("Requête invalide\n");
             ret_val = 1;
         }
@@ -142,18 +174,20 @@ int color_code(char *username) {
 }
 
 int process_message(request *req) {
-    char *username = read_string(req->content, req->length);
-    if (!username) {
+    char *username, *msg;
+    char *ptr = read_string(req->content, &username, req->length);
+    if (!ptr) {
         printf("Message invalide\n");
         return 1;
     }
-    char *msg = read_string(req->content + 4 + strlen(username), req->length - 4 - strlen(username));
+    read_string(ptr, &msg, req->length - (ptr - req->content));
     if (!msg) {
+        free(username);
         printf("Message invalide\n");
         return 1;
     }
 
-    printf("\033[%d;1m%s\033[0m: %s\n", color_code(username), username, msg);
+    printf("\033[%d;1m%s%s\033[0m: %s\n", color_code(username), username, strcmp(req->type, CODE_PRIVATE) ? "" : "[mp]", msg);
 
     return 0;
 }
@@ -169,24 +203,25 @@ int client_loop(client *clnt, server *srvr) {
     int alive = 1;
     while (alive) {
         int read_ret = read(0, buff_stdin, BUFFER_LENGTH);
-
-        //  "Troncature" du message
-        buff_stdin[read_ret - 1] = '\0';
-        int cmd = process_command(buff_stdin);
-
-        //  Si aucun message n'a été lu
-        if (read_ret < 0){}
         //  Si un message a été saisi
-        else if (buff_stdin[0] != '/') {
-            send_message(clnt, srvr, buff_stdin, NULL);
-        //  Si une commande a été saisie
-        } else if (cmd == QUIT_COMMAND) {
-            alive = 0;
-            char *ptr = make_header(buff_request, 4 + 4 + 4, CODE_DISCONNECT);
-            add_number(ptr, clnt->id);
-            fflush(stdout);
-            if (write(srvr->pipe, buff_request, BUFFER_LENGTH) < BUFFER_LENGTH)
-                perror("Erreur lors de la demande de deconnexion");
+
+        if (read_ret > 0){
+            buff_stdin[read_ret - 1] = '\0';
+            int cmd = process_command(buff_stdin);
+            if (buff_stdin[0] != '/') {
+                send_message(clnt, srvr, buff_stdin, NULL);
+            //  Si une commande a été saisie
+            } else if (cmd == QUIT_COMMAND) {
+                alive = 0;
+                char *ptr = make_header(buff_request, 4 + 4 + 4, CODE_DISCONNECT);
+                add_number(ptr, clnt->id);
+                fflush(stdout);
+                if (write(srvr->pipe, buff_request, BUFFER_LENGTH) < BUFFER_LENGTH)
+                    perror("Erreur lors de la demande de deconnexion");
+            } else if (cmd == PM_COMMAND) {
+                send_private_message(clnt, srvr, buff_stdin + strlen(PM_SEQUENCE));
+            } else if (!cmd)
+                printf("Erreur : commande inconnue \"%s\"\n", buff_stdin);
         }
 
         //  Lecture depuis le tube client
@@ -218,7 +253,7 @@ int client_loop(client *clnt, server *srvr) {
 int run_client(client *clnt, const char *sp, const char *un) {
     server srvr;
 
-    char server_path[BUFFER_LENGTH];
+    char *server_path = malloc(BUFFER_LENGTH);
     //  Lecture de l'adresse du serveur
     if(!sp) {
         printf("Chemin du serveur : ");
@@ -233,35 +268,48 @@ int run_client(client *clnt, const char *sp, const char *un) {
     printf("%s\n", server_path);
 
     //  Tentative de connexion
-    if (connect(&srvr, server_path))
+    if (connect(&srvr, server_path)) {
+        free(server_path);
         return 1;
+    }
 
+    char *username = malloc(USERNAME_LENGTH + 2);   //  On alloue plus de mémoire que nécessaire pour pouvoir détecter un pseudo trop long
     //  Lecture d'un nom d'utilisateur si aucun n'a été passé en argument
-    char username[USERNAME_LENGTH];
     if(!un) {
         printf("Votre nom d'utilisateur : ");
-        if (!fgets(username, USERNAME_LENGTH, stdin) || !strcmp(server_path, "\n")) {
+        if (!fgets(username, USERNAME_LENGTH + 2, stdin) || !strcmp(server_path, "\n")) {
             printf("Nom d'utilisateur invalide : %s\n", server_path);
             return 1;
         }
-        username[strlen(username) - 1] = '\0';
+        username[strlen(username)] = '\0';
     } else {
-        strcpy(username, un);
+        strncpy(username, un, USERNAME_LENGTH + 2);
+        username[USERNAME_LENGTH + 1] = '\0';
     }
 
     //  Tentative de connexion
-    if (join(clnt, username, &srvr))
+    if (join(clnt, username, &srvr)) {
+        free(server_path);
+        free(username);
+        free(srvr.pipepath);
         return 1;
+    }
+
+    int ret = 0;
 
     //  On fait vivre le serveur
-    if (client_loop(clnt, &srvr))
-        return 1;
+    ret = client_loop(clnt, &srvr);
 
     //  Nettoyage
     close(clnt->pipe);
     remove(clnt->pipepath);
+    free(clnt->pipepath);
+    free(username);
+    free(clnt->username);
+    free(server_path);
+    free(srvr.pipepath);
 
-    return 0;
+    return ret;
 }
 
 int send_message(client *clnt, server *srvr, char *msg, char *dst) {
@@ -272,5 +320,23 @@ int send_message(client *clnt, server *srvr, char *msg, char *dst) {
         ptr = add_string(ptr, dst);
     add_string(ptr, msg);
 
-    return write(srvr->pipe, buff, BUFFER_LENGTH) != BUFFER_LENGTH;
+    int ret = write(srvr->pipe, buff, BUFFER_LENGTH) != BUFFER_LENGTH;
+
+    free(buff);
+
+    return ret;
+}
+
+int send_private_message(client *clnt, server *srvr, char *buff) {
+    char username[USERNAME_LENGTH];
+    if (sscanf(buff, "%s", username) != 1) {
+        printf("Erreur : impossible de lire le nom d'utilisateur\n");
+        return 1;
+    }
+    if (strlen(PM_SEQUENCE) + 1 + strlen(username) + 2 > BUFFER_LENGTH) {
+        printf("Erreur : le nom d'utilisateur est trop long\n");
+        return 1;
+    }
+
+    return send_message(clnt, srvr, buff + strlen(username) + 1, username);
 }

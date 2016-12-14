@@ -5,12 +5,12 @@
 #include "h/protocol.h"
 
 char* make_header(char *buff, int length, char *type) {
-    sprintf(buff, "%4d%s", length, type);
+    sprintf(buff, "%04d%s", length, type);
     return buff + 8;
 }
 
 char* add_number(char *buff, int n) {
-    sprintf(buff, "%4d", n);
+    sprintf(buff, "%04d", n);
     return buff + 4;
 }
 
@@ -34,19 +34,22 @@ request *read_request(char *buff) {
         req->type[i] = buff[4 + i];
     req->type[4] = '\0';
 
-    req->content = buff + 8;
+    req->content = malloc(req->length);
+    for (int i = 0; i < req->length; i++)
+        req->content[i] = buff[MIN_REQUEST_LENGTH + i];
 
     return req;
 }
 
 void free_request(request *req) {
     free(req->type);
+    free(req->content);
     free(req);
 }
 
-int read_number(char *buff, int remaining, int *n) {
+char *read_number(char *buff, int remaining, int *n) {
     if (remaining < 4)
-        return 1;
+        return NULL;
 
     char nb[4];
     for (int i = 0;i < 4; i++)
@@ -54,10 +57,10 @@ int read_number(char *buff, int remaining, int *n) {
 
     sscanf(nb, "%d", n);
 
-    return 0;
+    return buff + 4;
 }
 
-char *read_string(char *buff, int remaining) {
+char *read_string(char *buff, char **str, int remaining) {
     if (remaining < 4)
         return NULL;
 
@@ -70,11 +73,11 @@ char *read_string(char *buff, int remaining) {
     if (remaining - 4 < l)
         return NULL;
 
-    char *str = malloc(l + 1);
+    *str = malloc(l + 1);
     for (int i = 0; i < l; i++)
-        str[i] = buff[4 + i];
+        (*str)[i] = buff[4 + i];
 
-    str[l] = '\0';
+    (*str)[l] = '\0';
 
-    return str;
+    return buff + 4 + l;
 }

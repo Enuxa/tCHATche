@@ -1,3 +1,5 @@
+#define  _POSIX_C_SOURCE 199309L
+
 #include "h/server.h"
 #include "h/common.h"
 #include <string.h>
@@ -27,7 +29,7 @@ int start_server(server *srvr) {
     srvr->clients = NULL;
     srvr->pipe = -1;
     srvr->id_counter = 0;
-    srvr->pipe_path = (char*) malloc(PATH_LENGTH);
+    srvr->pipe_path = malloc(PATH_LENGTH);
     strcpy(srvr->pipe_path, SERVER_PIPE_PATH);
 
     //  Créer (si nécessaire) le répertoire racine
@@ -91,12 +93,10 @@ int close_server(server *srvr) {
         free(link);
     }
     //  Fermer et supprimer le tube
-    if (srvr->pipe >= 0) {
-        if (close(srvr->pipe) || remove(srvr->pipe_path)) {
-            perror("\033[31mErreur lors de la fermeture/suppression du tube serveur\033[0m");
-            return 1;
-        } else printf("Tube serveur fermé et supprimé avec succès !\n");
-    }
+    if (close(srvr->pipe) || remove(srvr->pipe_path)) {
+        perror("\033[31mErreur lors de la fermeture/suppression du tube serveur\033[0m");
+        return 1;
+    } else printf("Tube serveur fermé et supprimé avec succès !\n");
     //  Libérer la mémoire restante
     free(srvr->pipe_path);
     free(buff);
@@ -126,6 +126,7 @@ int run_server(server *srvr) {
         read_ret = read(srvr->pipe, buff_pipe, BUFFER_LENGTH);
         if (read_ret >= MIN_REQUEST_LENGTH) {//   Si on a lu quelque chose
             request *req = read_request(buff_pipe);
+            printf("Requête : %s\n", buff_pipe);
             monitor_request(req);
             process_request(srvr, req);
             free_request(req);
@@ -153,6 +154,9 @@ int run_server(server *srvr) {
 
     close_server(srvr);
 
+    free(buff_pipe);
+    free(buff_stdin);
+
     return 0;
 }
 
@@ -176,10 +180,13 @@ int process_join(server *srvr, char *username, char *pipepath) {
     strcpy(link->clnt.pipe_path, pipepath);
     link->clnt.pipe = open(pipepath, O_WRONLY | O_NONBLOCK);
 
-    if (link->clnt.pipe < 0) {
-        printf("\033[31mImpossible d'ouvrir le tube à l'adresse %s\033[0m", pipepath);
-        fflush(stdout);
-        perror("");
+    if (link->clnt.pipe < 0 || strlen(link->clnt.name) > USERNAME_LENGTH) {
+        if (link->clnt.pipe < 0) {
+            printf("\033[31mImpossible d'ouvrir le tube à l'adresse %s\033[0m", pipepath);
+            fflush(stdout);
+            perror("");
+        } else
+            printf("\033[31mUn client a tenté de se connecter avec un pseudonyme de %d caractères (%d de trop)\033[0m", (int) strlen(username), USERNAME_LENGTH - (int) strlen(username));
         free(link->clnt.name);
         free(link->clnt.pipe_path);
         free(link);
@@ -226,7 +233,9 @@ int process_join(server *srvr, char *username, char *pipepath) {
         return 1;
     }
 
-    printf("\033[1m%s[id=%d]\033[0m : connnecté sur %s\n", username, link->clnt.id, pipepath);
+    printf("\033[1m%s[id=%d]\033[0m : connecté sur %s\n", username, link->clnt.id, pipepath);
+
+    free(buff);
 
     return 0;
 }
@@ -260,10 +269,16 @@ int process_disconnect(server *srvr, int id) {
 
 int broadcast_message(server *srvr, request *req) {
     int id;
-    if (read_number(req->content, req->length, &id))
+    char *msg;
+    char *ptr = read_number(req->content, req->length, &id);
+    if (!ptr)
         return 1;
 
-    char *msg = read_string(req->content + 4, req->length - 4);
+    char *username;
+    if (!strcmp(CODE_PRIVATE, req->type))
+        ptr = read_string(ptr, &username, req->length - (ptr - req->content));
+
+    read_string(ptr, &msg, req->length - (ptr - req->content));
     if (!msg)
         return 1;
 
@@ -273,7 +288,7 @@ int broadcast_message(server *srvr, request *req) {
         //  Si ce client est l'emetteur du message
         if (list->clnt.id == id) {
             buff = malloc(BUFFER_LENGTH);
-            char *ptr = make_header(buff, MIN_REQUEST_LENGTH + 4 + 4 + strlen(msg), CODE_MESSAGE);
+            char *ptr = make_header(buff, MIN_REQUEST_LENGTH + 4 + strlen(list->clnt.name) + 4 + strlen(msg), req->type);
             ptr = add_string(ptr, list->clnt.name);
             add_string(ptr, msg);
             break;
@@ -286,11 +301,15 @@ int broadcast_message(server *srvr, request *req) {
         return 1;
     }
 
+    request *br = read_request(buff);
+    printf("Diffusion du message suivant :\n");
+    monitor_request(br);
+
     int ret_val = 0;
     list = srvr->clients;
     while (list) {
         //  On s'assure de ne pas retransmettre le mesage à l'émetteur
-        if (list->clnt.id != id) {
+        if (list->clnt.id != id && (strcmp(req->type, CODE_PRIVATE) || !strcmp(username, list->clnt.name))) {
             if (write(list->clnt.pipe, buff, BUFFER_LENGTH) < BUFFER_LENGTH) {
                 printf("\033[31mErreur lors de la transmission du message à %s\033[0m", list->clnt.name);
                 perror("");
@@ -300,25 +319,39 @@ int broadcast_message(server *srvr, request *req) {
         list = list->next;
     }
 
+    free(buff);
+    free_request(br);
+    free(msg);
+
     return ret_val;
 }
 
 int process_request(server *srvr, request *req) {
     //  Connexion d'un utilisateur
     if (!strcmp(req->type, CODE_JOIN)) {
-        char *username, *pipepath;
-        if (!(username = read_string(req->content, req->length)) ||
-            !(pipepath = read_string(req->content + strlen(username) + 4, req->length - strlen(username) - 4))) {
+        char *username = NULL, *pipepath = NULL, *ptr;
+        if (!(ptr = read_string(req->content, &username, req->length)) ||
+            !(read_string(ptr, &pipepath, req->length - (req->content - ptr)))) {
+
             printf("Requête invalide\n");
-            free_request(req);
+
+            if (username)
+                free(username);
+
             return 1;
         }
 
-        return process_join(srvr, username, pipepath);
+        if (process_join(srvr, username, pipepath)) {
+            free(username);
+            free(pipepath);
+
+            return 1;
+        }
+        return 0;
     //  Deconnexion d'un utilisateur
     } else if (!strcmp(req->type, CODE_DISCONNECT)) {
         int id;
-        if (read_number(req->content, req->length, &id)) {
+        if (!read_number(req->content, req->length, &id)) {
             printf("Requête invalide\n");
             return 1;
         }

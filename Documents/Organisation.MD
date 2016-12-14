@@ -1,10 +1,5 @@
 # A finir
-- [x] Tenir à jour le compteur d'identifiants
-- [x] Supprimer un client qui s'est déconnecté
-- [x] Corriger le bug des clients connectés sur un même tube
-- [x] Gérer les erreurs
-- [x] Sécuriser les fonctions gérant les requêtes
-- [x] Rajouter les `free_request` oubliés
+- Nom d'utilisateur déjà utilisé -> fuite mémoire
 
 # Base
 - [x] Démarrage / fin propre du serveur
@@ -14,15 +9,16 @@
         - [x] stop : arrête le serveur
 - [x] Connexion au serveur / déconnexion propre du serveur
 - [x] Demande de connexion / déconnexion depuis le client
-- [ ] Réception et redistribution des messages depuis le serveur
-- [ ] Reception de messages de la part de clients
-- [ ] Envoi de messages de la part de clients
-- [ ] Affichage sous forme de tableau des messages entrant/sortant
+- [x] Réception et redistribution des messages depuis le serveur
+- [x] Reception de messages de la part de clients
+- [x] Envoi de messages de la part de clients
+- [x] Affichage sous forme de tableau des messages entrant/sortant
 
 # Fonctionnalités demandées
-- [ ] Messages privés
+- [x] Messages privés
 - [ ] Liste d'utilisateurs
 - [ ] Envoi de fichiers
+- [ ] Commande `shut` de la part d'un utilisateur
 
 # Fonctionnalités supplémentaires
 - [ ] Filtrage d'injures

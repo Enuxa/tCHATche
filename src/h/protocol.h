@@ -50,11 +50,15 @@ char* add_string(char *buff, char *str);
 //  Décompose l'en-tête d'une requête
 request* read_request(char *buff);
 
-//  Lit une chaîne depuis une requête
-char *read_string(char *buff, int remaining);
+/*  Lit une chaîne depuis une requête
+ *  Renvoie un pointeur vers la suite de la requête
+*/
+char *read_string(char *buff, char **str, int remaining);
 
-//  Lit un nombre depuis une requête
-int read_number(char *buff, int remaining, int *n);
+/*  Lit un nombre depuis une requête
+ *  Renvoie un pointeur vers la suite de la requête
+*/
+char *read_number(char *buff, int remaining, int *n);
 
 //  Libère les ressources utilisées par une requête
 void free_request(request *req);

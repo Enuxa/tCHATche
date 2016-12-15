@@ -48,9 +48,10 @@ int connect(server *srvr, char *path);
 */
 int run_client(client *clnt, const char *sp, const char *un);
 
-/*  Traite une commande serveur
+/*  Traite une commande client
  *  Renvoie 0 si la commande n'a pas été reconnue
  *  Renvoie -1 si la commande a été reconnue mais est incorrecte
+ *  Renvoie l'identifiant de la commande si elle a été reconnue et est correcte
 */
 int process_command(char *buff);
 

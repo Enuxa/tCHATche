@@ -15,14 +15,18 @@
 
 #define QUIT_COMMAND 1
 #define PM_COMMAND 2
+#define LIST_COMMAND 3
 #define QUIT_SEQUENCE "/quit"
 #define PM_SEQUENCE "/pm"
+#define LIST_SEQUENCE "/list"
 
 extern struct timespec sleep_time;
 
 int process_command(char *buff) {
     if (!strcmp(buff, QUIT_SEQUENCE))
         return QUIT_COMMAND;
+    else if(!strcmp(buff, LIST_SEQUENCE))
+        return LIST_COMMAND;
     else if (strstr(buff, PM_SEQUENCE) == buff) {   //  Si la chaîne commence par la séquence de message privé
         if (strlen(buff) < strlen(PM_SEQUENCE) + 2) {   //  Il faut que la sequence soit suivie d'un espace et du nom du destinataire (au moins deux caractères au total)
             printf("Commande incomplète\n");
@@ -90,7 +94,7 @@ int join(client *clnt, char *username, server *srvr) {
     }
 
     //  Construction du message
-    int length = 4 + 4 + 4 + strlen(username) + 4 + strlen(clnt->pipepath);
+    int length = MIN_REQUEST_LENGTH + 4 + strlen(username) + 4 + strlen(clnt->pipepath);
 
     if (strlen(username) > USERNAME_LENGTH || length > BUFFER_LENGTH) {
         printf("Erreur : l'adresse du serveur ou votre nom d'utilisateur est trop long %s\n", clnt->pipepath);
@@ -102,7 +106,7 @@ int join(client *clnt, char *username, server *srvr) {
 
     //  Construction du message de demande de connexion
     char *buff = calloc(BUFFER_LENGTH, 1);
-    char *ptr = make_header(buff, 4 + 4 + 4 + strlen(username) + 4 + strlen(clnt->pipepath), CODE_JOIN);
+    char *ptr = make_header(buff, MIN_REQUEST_LENGTH + 4 + strlen(username) + 4 + strlen(clnt->pipepath), CODE_JOIN);
     ptr = add_string(ptr, username);
     ptr = add_string(ptr, clnt->pipepath);
 
@@ -221,13 +225,17 @@ int client_loop(client *clnt, server *srvr) {
             //  Si une commande a été saisie
             } else if (cmd == QUIT_COMMAND) {
                 alive = 0;
-                char *ptr = make_header(buff_request, 4 + 4 + 4, CODE_DISCONNECT);
+                char *ptr = make_header(buff_request, MIN_REQUEST_LENGTH + 4, CODE_DISCONNECT);
                 add_number(ptr, clnt->id);
-                fflush(stdout);
                 if (write(srvr->pipe, buff_request, BUFFER_LENGTH) < BUFFER_LENGTH)
                     perror("Erreur lors de la demande de deconnexion");
             } else if (cmd == PM_COMMAND) {
                 send_private_message(clnt, srvr, buff_stdin + strlen(PM_SEQUENCE));
+            } else if(cmd == LIST_COMMAND) {
+                char *ptr = make_header(buff_request, MIN_REQUEST_LENGTH + 4, CODE_LIST);
+                add_number(ptr, clnt->id);
+                if (write(srvr->pipe, buff_request, BUFFER_LENGTH) < BUFFER_LENGTH)
+                    perror("Erreur lors de la demande de liste");
             } else if (!cmd)
                 printf("Erreur : commande inconnue \"%s\"\n", buff_stdin);
         }
@@ -245,6 +253,13 @@ int client_loop(client *clnt, server *srvr) {
                 alive = 0;
             } else if (!strcmp(req->type, CODE_MESSAGE) || !strcmp(req->type, CODE_PRIVATE)) {
                 process_message(req);
+            } else if(!strcmp(req->type, CODE_LIST)) {
+                int n;
+                char *ptr, *username;
+                if((ptr = read_number(req->content, req->length, &n)) && read_string(ptr, &username, req->length)) {
+                    printf("Utilisateur : %s\n", username);
+                    free(username);
+                } else printf("Erreur de réception de la liste\n");
             }
             free_request(req);
         }

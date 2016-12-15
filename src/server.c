@@ -242,26 +242,21 @@ int process_join(server *srvr, char *username, char *pipepath) {
 }
 
 int process_disconnect(server *srvr, int id) {
-    client_list *list = srvr->clients;
     client_list *prev = NULL;
-    while (list) {
-        if (list->clnt.id == id) {
-            if (!prev)
-                srvr->clients = list->next;
-            else
-                prev->next = list->next;
+    client_list *clnt = find_client_by_id(id, srvr->clients, &prev);
+    if(clnt) {
+        if (!prev)
+            srvr->clients = clnt->next;
+        else
+            prev->next = clnt->next;
 
-            printf("%s déconnecté avec succès\n", list->clnt.name);
+        printf("%s déconnecté avec succès\n", clnt->clnt.name);
 
-            free(list->clnt.name);
-            free(list->clnt.pipe_path);
-            free(list);
+        free(clnt->clnt.name);
+        free(clnt->clnt.pipe_path);
+        free(clnt);
 
-            return 0;
-        }
-
-        prev = list;
-        list = list->next;
+        return 0;
     }
 
     printf("\033[31mImpossible de déconnecter le client d'identifiant %d\033[0m\n", id);
@@ -280,24 +275,21 @@ int broadcast_message(server *srvr, request *req) {
         ptr = read_string(ptr, &username, req->length - (ptr - req->content));
 
     read_string(ptr, &msg, req->length - (ptr - req->content));
-    if (!msg)
+    if (!msg) {
+        free(username);
         return 1;
+    }
 
     client_list *list = srvr->clients;
     char *buff = NULL;
-    while (list) {
-        //  Si ce client est l'emetteur du message
-        if (list->clnt.id == id) {
-            buff = calloc(BUFFER_LENGTH, 1);
-            char *ptr = make_header(buff, MIN_REQUEST_LENGTH + 4 + strlen(list->clnt.name) + 4 + strlen(msg), req->type);
-            ptr = add_string(ptr, list->clnt.name);
-            add_string(ptr, msg);
-            break;
-        }
-        list = list->next;
-    }
-
-    if (!buff) {
+    client_list *clnt;
+    clnt = find_client_by_id(id, list, &clnt);
+    if(clnt) {
+        buff = calloc(BUFFER_LENGTH, 1);
+        ptr = make_header(buff, MIN_REQUEST_LENGTH + 4 + strlen(clnt->clnt.name) + 4 + strlen(msg), req->type);
+        ptr = add_string(ptr, clnt->clnt.name);
+        add_string(ptr, msg);
+    } else {
         printf("\033[31mLe message reçu ne provient pas d'un utilisateur connecté\033[0m\n");
         return 1;
     }
@@ -330,6 +322,36 @@ int broadcast_message(server *srvr, request *req) {
     return ret_val;
 }
 
+int process_list(server *srvr, request *req) {
+    int id;
+    if (!read_number(req->content, req->length, &id)) {
+        printf("Requête invalide\n");
+        return 1;
+    }
+    client_list *clnt;
+    clnt = find_client_by_id(id, srvr->clients, &clnt);
+    if(!clnt) {
+        printf("Client inconnu\n");
+        return 1;
+    }
+    client_list *link = srvr->clients;
+    char *buff = calloc(BUFFER_LENGTH, 1);
+    while (link) {
+        char *ptr = make_header(buff, MIN_REQUEST_LENGTH + 4 + strlen(link->clnt.name), CODE_LIST);
+        ptr = add_number(ptr, srvr->client_count);
+        add_string(ptr, link->clnt.name);
+
+        if(write(clnt->clnt.pipe, buff, BUFFER_LENGTH) < BUFFER_LENGTH)
+            printf("Erreur d'envoi de l'utilisateur %s à %s\n", link->clnt.name, clnt->clnt.name);
+
+        link = link->next;
+    }
+
+    free(buff);
+
+    return 0;
+}
+
 int process_request(server *srvr, request *req) {
     //  Connexion d'un utilisateur
     if (!strcmp(req->type, CODE_JOIN)) {
@@ -351,7 +373,7 @@ int process_request(server *srvr, request *req) {
         free(pipepath);
 
         return ret;
-    //  Deconnexion d'un utilisateur
+    //  Déconnexion d'un utilisateur
     } else if (!strcmp(req->type, CODE_DISCONNECT)) {
         int id;
         if (!read_number(req->content, req->length, &id)) {
@@ -361,10 +383,28 @@ int process_request(server *srvr, request *req) {
 
         return process_disconnect(srvr, id);
     }
-    //  Reception d'un message
-    else if (!strcmp(req->type,CODE_MESSAGE) || !strcmp(req->type, CODE_PRIVATE)) {
+    //  Réception d'un message
+    else if (!strcmp(req->type, CODE_MESSAGE) || !strcmp(req->type, CODE_PRIVATE)) {
         return broadcast_message(srvr, req);
+    //  Demande de liste
+    } else if(!strcmp(req->type, CODE_LIST)) {
+        return process_list(srvr, req);
     }
 
     return 1;
+}
+
+client_list *find_client_by_id(int id, client_list *list, client_list **previous) {
+    client_list *link = list;
+    *previous = NULL;
+    while (link) {
+        if (link->clnt.id == id) {
+            return link;
+        }
+
+        *previous = link;
+        link = link->next;
+    }
+
+    return NULL;
 }

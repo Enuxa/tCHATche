@@ -16,8 +16,8 @@
 # Fonctionnalités demandées
 - [x] Messages privés
 - [ ] Liste d'utilisateurs
-- [ ] Envoi de fichiers
 - [ ] Commande `shut` de la part d'un utilisateur
+- [ ] Envoi de fichiers
 
 # Fonctionnalités supplémentaires
 - [ ] Filtrage d'injures

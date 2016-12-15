@@ -5,8 +5,7 @@ LDFLAGS =
 SERVER_EXEC =	tchatche_server
 CLIENT_EXEC =	tchatche_client
 
-all: $(SERVER_EXEC)
-	${CLIENT_EXEC}
+all: tchatche_server tchatche_client
 
 tchatche_server: server.o protocol.o common.o tchatche_server.o
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ -o $@

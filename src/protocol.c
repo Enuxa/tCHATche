@@ -26,15 +26,23 @@ void monitor_request(request *req) {
 }
 
 request *read_request(char *buff) {
-    request *req = malloc(sizeof(request));
-    req->type = malloc(5);
+    request *req = calloc(1, sizeof(request));
+    req->type = calloc(5, 1);
 
-    sscanf(buff, "%d", &(req->length));
+    //  Lecture de la longueur de la requête
+    if (sscanf(buff, "%d", &(req->length)) != 1) {
+        free(req->type);
+        free(req);
+        return NULL;
+    }
+
+    //  Lecture du tye de la requête
     for (int i = 0; i < 4; i++)
         req->type[i] = buff[4 + i];
     req->type[4] = '\0';
 
-    req->content = malloc(req->length);
+    //  Lecture du contenu de la requête
+    req->content = calloc(req->length, 1);
     for (int i = 0; i < req->length; i++)
         req->content[i] = buff[MIN_REQUEST_LENGTH + i];
 
@@ -48,36 +56,40 @@ void free_request(request *req) {
 }
 
 char *read_number(char *buff, int remaining, int *n) {
+    //  S'il ne reste pas assez de caractères à lire dans le buffer
     if (remaining < 4)
         return NULL;
 
     char nb[4];
-    for (int i = 0;i < 4; i++)
+    for (int i = 0; i < 4; i++) //  Lecture du nombre
         nb[i] = buff[i];
 
-    sscanf(nb, "%d", n);
+    if (sscanf(nb, "%d", n) != 1)
+        return NULL;
 
     return buff + 4;
 }
 
 char *read_string(char *buff, char **str, int remaining) {
+    //  S'il ne reste pas assez de caractères à lire dans le buffer
     if (remaining < 4)
         return NULL;
 
     int l;
     char nb[4];
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 4; i++)//   Lecture de la longueur de la chaîne
         nb[i] = buff[i];
-    sscanf(nb, "%d", &l);
-
-    if (remaining - 4 < l)
+    if (sscanf(nb, "%d", &l) != 1)
         return NULL;
 
-    *str = malloc(l + 1);
-    for (int i = 0; i < l; i++)
+    if (remaining - 4 < l) //   S'il ne reste pas assez de caractères dans le buffer
+        return NULL;
+
+    *str = calloc(l + 1, 1);
+    for (int i = 0; i < l; i++) //  Lecture de la chaîne
         (*str)[i] = buff[4 + i];
 
-    (*str)[l] = '\0';
+    (*str)[l] = '\0'; //    On ajoute le caractère de fi de chaîne
 
     return buff + 4 + l;
 }

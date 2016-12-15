@@ -43,7 +43,7 @@ int connect(server *srvr, char *path) {
         return 1;
     }
 
-    srvr->pipepath = malloc(PATH_LENGTH);
+    srvr->pipepath = calloc(PATH_LENGTH, 1);
     strcpy(srvr->pipepath, path);
 
     //  Se connecte au serveur
@@ -59,7 +59,7 @@ int connect(server *srvr, char *path) {
 
 int join(client *clnt, char *username, server *srvr) {
     //  Ouverture du tube
-    clnt->pipepath = malloc(BUFFER_LENGTH);
+    clnt->pipepath = calloc(BUFFER_LENGTH, 1);
     printf("%s\n", username);
     fflush(stdout);
     int i = 1;
@@ -72,8 +72,7 @@ int join(client *clnt, char *username, server *srvr) {
     fflush(stdout);
 
     //  Création du tube client
-    int rv;
-    if ((rv = mkfifo(clnt->pipepath, S_IRWXU | S_IWGRP))) {
+    if (mkfifo(clnt->pipepath, S_IRWXU | S_IWGRP)) {
         printf("Impossible d'ouvrir le tube à l'adresse %s", clnt->pipepath);
         fflush(stdout);
         perror("");
@@ -101,7 +100,8 @@ int join(client *clnt, char *username, server *srvr) {
         return 1;
     }
 
-    char *buff = malloc(BUFFER_LENGTH);
+    //  Construction du message de demande de connexion
+    char *buff = calloc(BUFFER_LENGTH, 1);
     char *ptr = make_header(buff, 4 + 4 + 4 + strlen(username) + 4 + strlen(clnt->pipepath), CODE_JOIN);
     ptr = add_string(ptr, username);
     ptr = add_string(ptr, clnt->pipepath);
@@ -116,7 +116,7 @@ int join(client *clnt, char *username, server *srvr) {
         free(clnt->pipepath);
 
         return 1;
-    };
+    }
 
     printf("Demande de connexion envoyée au serveur en tant que %s.\nVeuillez patienter ", username);
 
@@ -152,6 +152,11 @@ int join(client *clnt, char *username, server *srvr) {
         ret_val = 0;
     } else {
         printf("Echec de connexion !\n");
+
+        close(clnt->pipe);
+        remove(clnt->pipepath);
+        free(clnt->pipepath);
+
         ret_val = 1;
     }
 
@@ -189,6 +194,9 @@ int process_message(request *req) {
 
     printf("\033[%d;1m%s%s\033[0m: %s\n", color_code(username), username, strcmp(req->type, CODE_PRIVATE) ? "" : "[mp]", msg);
 
+    free(msg);
+    free(username);
+
     return 0;
 }
 
@@ -196,9 +204,9 @@ int client_loop(client *clnt, server *srvr) {
     //  Rendre la lecture sur stdin non bloquante
     fcntl(0, F_SETFL, O_NONBLOCK | fcntl(0, F_GETFL, 0));
 
-    char *buff_stdin = malloc(BUFFER_LENGTH);
-    char *buff_pipe = malloc(BUFFER_LENGTH);
-    char *buff_request = malloc(BUFFER_LENGTH);
+    char *buff_stdin = calloc(BUFFER_LENGTH, 1);
+    char *buff_pipe = calloc(BUFFER_LENGTH, 1);
+    char *buff_request = calloc(BUFFER_LENGTH, 1);
 
     int alive = 1;
     while (alive) {
@@ -253,7 +261,7 @@ int client_loop(client *clnt, server *srvr) {
 int run_client(client *clnt, const char *sp, const char *un) {
     server srvr;
 
-    char *server_path = malloc(BUFFER_LENGTH);
+    char *server_path = calloc(BUFFER_LENGTH, 1);
     //  Lecture de l'adresse du serveur
     if(!sp) {
         printf("Chemin du serveur : ");
@@ -273,7 +281,7 @@ int run_client(client *clnt, const char *sp, const char *un) {
         return 1;
     }
 
-    char *username = malloc(USERNAME_LENGTH + 2);   //  On alloue plus de mémoire que nécessaire pour pouvoir détecter un pseudo trop long
+    char *username = calloc(USERNAME_LENGTH + 2, 1);   //  On alloue plus de mémoire que nécessaire pour pouvoir détecter un pseudo trop long
     //  Lecture d'un nom d'utilisateur si aucun n'a été passé en argument
     if(!un) {
         printf("Votre nom d'utilisateur : ");
@@ -313,7 +321,7 @@ int run_client(client *clnt, const char *sp, const char *un) {
 }
 
 int send_message(client *clnt, server *srvr, char *msg, char *dst) {
-    char *buff = malloc(BUFFER_LENGTH);
+    char *buff = calloc(BUFFER_LENGTH, 1);
     char *ptr = make_header(buff, MIN_REQUEST_LENGTH + 4 + (dst ? strlen(dst) : 0) + strlen(msg), dst ? CODE_PRIVATE : CODE_MESSAGE);
     ptr = add_number(ptr, clnt->id);
     if (dst)

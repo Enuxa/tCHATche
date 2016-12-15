@@ -1,6 +1,6 @@
 CC = gcc
 INCLUDE_DIR	=	h
-CFLAGS =	-std=c11 -Wall -I$(INCLUDE_DIR)
+CFLAGS =	-std=c11 -Wall -I$(INCLUDE_DIR) -g
 LDFLAGS =
 SERVER_EXEC =	tchatche_server
 CLIENT_EXEC =	tchatche_client

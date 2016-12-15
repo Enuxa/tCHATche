@@ -1,5 +1,4 @@
 # A finir
-- Nom d'utilisateur déjà utilisé -> fuite mémoire
 
 # Base
 - [x] Démarrage / fin propre du serveur

@@ -29,7 +29,7 @@ int start_server(server *srvr) {
     srvr->clients = NULL;
     srvr->pipe = -1;
     srvr->id_counter = 0;
-    srvr->pipe_path = malloc(PATH_LENGTH);
+    srvr->pipe_path = calloc(PATH_LENGTH, 1);
     strcpy(srvr->pipe_path, SERVER_PIPE_PATH);
 
     //  Créer (si nécessaire) le répertoire racine
@@ -74,7 +74,7 @@ int start_server(server *srvr) {
 int close_server(server *srvr) {
     //  Déconnecter les clients
     client_list *list = srvr->clients, *link;
-    char *buff = malloc(BUFFER_LENGTH);
+    char *buff = calloc(BUFFER_LENGTH, 1);
     make_header(buff, MIN_REQUEST_LENGTH + 4, CODE_SHUTDOWN);
     add_number(buff + MIN_REQUEST_LENGTH, 0);
     while (list) {
@@ -115,8 +115,8 @@ int run_server(server *srvr) {
     //  Rendre la lecture sur stdin non bloquante
     fcntl(0, F_SETFL, O_NONBLOCK | fcntl(0, F_GETFL, 0));
 
-    char *buff_pipe = malloc(BUFFER_LENGTH);
-    char *buff_stdin = malloc(BUFFER_LENGTH);
+    char *buff_pipe = calloc(BUFFER_LENGTH, 1);
+    char *buff_stdin = calloc(BUFFER_LENGTH, 1);
 
     PROMPT();
 
@@ -169,17 +169,18 @@ int process_command(server *srvr, char *line) {
 }
 
 int process_join(server *srvr, char *username, char *pipepath) {
-    client_list *link = malloc(sizeof(client_list));
-    char *buff = malloc(BUFFER_LENGTH);
+    client_list *link = calloc(1, sizeof(client_list));
+    char *buff = calloc(BUFFER_LENGTH, 1);
 
-    link->clnt.name = malloc(BUFFER_LENGTH);
-    link->clnt.pipe_path = malloc(BUFFER_LENGTH);
+    link->clnt.name = calloc(BUFFER_LENGTH, 1);
+    link->clnt.pipe_path = calloc(BUFFER_LENGTH, 1);
     link->next = NULL;
     link->clnt.id = 0;
     strcpy(link->clnt.name, username);
     strcpy(link->clnt.pipe_path, pipepath);
     link->clnt.pipe = open(pipepath, O_WRONLY | O_NONBLOCK);
 
+    //  Si on a échoué à ouvrir le tube client ou que le nom d'utilisateur est trop long
     if (link->clnt.pipe < 0 || strlen(link->clnt.name) > USERNAME_LENGTH) {
         if (link->clnt.pipe < 0) {
             printf("\033[31mImpossible d'ouvrir le tube à l'adresse %s\033[0m", pipepath);
@@ -274,7 +275,7 @@ int broadcast_message(server *srvr, request *req) {
     if (!ptr)
         return 1;
 
-    char *username;
+    char *username = NULL;
     if (!strcmp(CODE_PRIVATE, req->type))
         ptr = read_string(ptr, &username, req->length - (ptr - req->content));
 
@@ -287,7 +288,7 @@ int broadcast_message(server *srvr, request *req) {
     while (list) {
         //  Si ce client est l'emetteur du message
         if (list->clnt.id == id) {
-            buff = malloc(BUFFER_LENGTH);
+            buff = calloc(BUFFER_LENGTH, 1);
             char *ptr = make_header(buff, MIN_REQUEST_LENGTH + 4 + strlen(list->clnt.name) + 4 + strlen(msg), req->type);
             ptr = add_string(ptr, list->clnt.name);
             add_string(ptr, msg);
@@ -323,6 +324,9 @@ int broadcast_message(server *srvr, request *req) {
     free_request(br);
     free(msg);
 
+    if (username)
+        free(username);
+
     return ret_val;
 }
 
@@ -341,13 +345,12 @@ int process_request(server *srvr, request *req) {
             return 1;
         }
 
-        if (process_join(srvr, username, pipepath)) {
-            free(username);
-            free(pipepath);
+        int ret = process_join(srvr, username, pipepath);
 
-            return 1;
-        }
-        return 0;
+        free(username);
+        free(pipepath);
+
+        return ret;
     //  Deconnexion d'un utilisateur
     } else if (!strcmp(req->type, CODE_DISCONNECT)) {
         int id;

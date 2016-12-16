@@ -64,8 +64,8 @@ int connect(server *srvr, char *path) {
 int join(client *clnt, char *username, server *srvr) {
     //  Ouverture du tube
     clnt->pipepath = calloc(BUFFER_LENGTH, 1);
-    printf("%s\n", username);
-    fflush(stdout);
+    clnt->username = calloc(USERNAME_LENGTH, 1);
+    strcpy(clnt->username, username);
     int i = 1;
     do {
         sprintf(clnt->pipepath, "%s/pipe%d", ROOT_PATH, i);
@@ -81,6 +81,7 @@ int join(client *clnt, char *username, server *srvr) {
         fflush(stdout);
         perror("");
         free(clnt->pipepath);
+        free(clnt->username);
         return 1;
     }
     clnt->pipe = open(clnt->pipepath, O_RDONLY | O_NONBLOCK);
@@ -90,6 +91,7 @@ int join(client *clnt, char *username, server *srvr) {
         fflush(stdout);
         perror("");
         free(clnt->pipepath);
+        free(clnt->username);
         return 1;
     }
 
@@ -101,6 +103,7 @@ int join(client *clnt, char *username, server *srvr) {
         fflush(stdout);
         close(clnt->pipe);
         free(clnt->pipepath);
+        free(clnt->username);
         return 1;
     }
 
@@ -118,6 +121,7 @@ int join(client *clnt, char *username, server *srvr) {
         close(clnt->pipe);
         remove(clnt->pipepath);
         free(clnt->pipepath);
+        free(clnt->username);
 
         return 1;
     }
@@ -138,6 +142,7 @@ int join(client *clnt, char *username, server *srvr) {
         close(clnt->pipe);
         remove(clnt->pipepath);
         free(clnt->pipepath);
+        free(clnt->username);
 
         return 1;
     }
@@ -160,6 +165,7 @@ int join(client *clnt, char *username, server *srvr) {
         close(clnt->pipe);
         remove(clnt->pipepath);
         free(clnt->pipepath);
+        free(clnt->username);
 
         ret_val = 1;
     }

@@ -15,8 +15,10 @@
 
 # Fonctionnalités demandées
 - [x] Messages privés
-- [ ] Liste d'utilisateurs
+- [x] Liste d'utilisateurs
 - [ ] Commande `shut` de la part d'un utilisateur
+- [ ] Commande `kick` de la part du serveur
+- [ ] Commande `help` du serveur et client
 - [ ] Envoi de fichiers
 
 # Fonctionnalités supplémentaires

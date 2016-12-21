@@ -42,6 +42,11 @@ char* make_header(char *buff, int length, char *type);
 */
 char* add_number(char *buff, int n);
 
+/*  Ajoute un nombre long à une requête
+ * Renvoie un pointeur vers la suite de la requête
+*/
+char* add_lnumber(char *buff, long n);
+
 /*  Ajoute une chaîne à une requête
  * Renvoie un pointeur vers la suite de la requête
 */
@@ -59,6 +64,11 @@ char *read_string(char *buff, char **str, int remaining);
  *  Renvoie un pointeur vers la suite de la requête
 */
 char *read_number(char *buff, int remaining, int *n);
+
+/*  Lit un nombre depuis une requête
+ *  Renvoie un pointeur vers la suite de la requête
+*/
+char *read_lnumber(char *buff, int remaining, long *n);
 
 //  Libère les ressources utilisées par une requête
 void free_request(request *req);

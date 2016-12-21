@@ -15,12 +15,10 @@
 
 extern const struct timespec sleep_time;
 
-#define HOME_MESSAGE "\nListe de commandes :\n- stop\tarrête le serveur\n"
-
 //  Affiche l'invite de commande
 #define PROMPT() printf("\n> "); fflush(stdout);
 
-int process_request(server *srvr, request *req);
+int process_request(server *srvr, request *req, int *alive);
 
 int start_server(server *srvr) {
     printf("Démarrage du serveur\n");
@@ -75,8 +73,8 @@ int close_server(server *srvr) {
     //  Déconnecter les clients
     client_list *list = srvr->clients, *link;
     char *buff = calloc(BUFFER_LENGTH, 1);
-    make_header(buff, MIN_REQUEST_LENGTH + 4, CODE_SHUTDOWN);
-    add_number(buff + MIN_REQUEST_LENGTH, 0);
+    char *ptr = make_header(buff, MIN_REQUEST_LENGTH + 4, CODE_SHUTDOWN);
+    add_number(ptr, 0);
     while (list) {
         link = list;
         list = list->next;
@@ -101,16 +99,19 @@ int close_server(server *srvr) {
     free(srvr->pipe_path);
     free(buff);
 
+    terminate_file_transferts(srvr);
+
     return 0;
 }
 
 int run_server(server *srvr) {
+    srvr->ft_list = NULL;
+    srvr->transfert_id_count = 0;
+
     if (start_server(srvr)) {
         close_server(srvr);
         return 1;
     }
-
-    printf(HOME_MESSAGE);
 
     //  Rendre la lecture sur stdin non bloquante
     fcntl(0, F_SETFL, O_NONBLOCK | fcntl(0, F_GETFL, 0));
@@ -126,9 +127,8 @@ int run_server(server *srvr) {
         read_ret = read(srvr->pipe, buff_pipe, BUFFER_LENGTH);
         if (read_ret >= MIN_REQUEST_LENGTH) {//   Si on a lu quelque chose
             request *req = read_request(buff_pipe);
-            printf("Requête : %s\n", buff_pipe);
             monitor_request(req);
-            process_request(srvr, req);
+            process_request(srvr, req, &alive);
             free_request(req);
             PROMPT();
         } else if (read_ret < 0 && errno != EAGAIN) {// Si on a rencontré un erreur différente de l'absence de données sur le tube
@@ -148,6 +148,8 @@ int run_server(server *srvr) {
             }
             PROMPT();
         }
+
+        memset(buff_pipe, 0, BUFFER_LENGTH);
 
         nanosleep(&sleep_time, NULL);
     }
@@ -274,7 +276,14 @@ int broadcast_message(server *srvr, request *req) {
     if (!strcmp(CODE_PRIVATE, req->type))
         ptr = read_string(ptr, &username, req->length - (ptr - req->content));
 
-    read_string(ptr, &msg, req->length - (ptr - req->content));
+    if (!ptr) {
+          printf("Requête invalide\n");
+          return 1;
+    }
+    if (!read_string(ptr, &msg, req->length - (ptr - req->content))) {
+        printf("Requête invalide\n");
+        return 1;
+    }
     if (!msg) {
         free(username);
         return 1;
@@ -352,14 +361,14 @@ int process_list(server *srvr, request *req) {
     return 0;
 }
 
-int process_request(server *srvr, request *req) {
+int process_request(server *srvr, request *req, int *alive) {
     //  Connexion d'un utilisateur
     if (!strcmp(req->type, CODE_JOIN)) {
         char *username = NULL, *pipepath = NULL, *ptr;
         if (!(ptr = read_string(req->content, &username, req->length)) ||
             !(read_string(ptr, &pipepath, req->length - (req->content - ptr)))) {
 
-            printf("Requête invalide\n");
+            printf("Requête invalide %s\n", username);
 
             if (username)
                 free(username);
@@ -389,6 +398,11 @@ int process_request(server *srvr, request *req) {
     //  Demande de liste
     } else if(!strcmp(req->type, CODE_LIST)) {
         return process_list(srvr, req);
+    //  Demande de fermeture du serveur
+    } else if (!strcmp(req->type, CODE_SHUTDOWN)) {
+        *alive = 0;
+    } else if (!strcmp(req->type, CODE_FILE)) {
+        process_file_transfert(req, srvr);
     }
 
     return 1;
@@ -407,4 +421,191 @@ client_list *find_client_by_id(int id, client_list *list, client_list **previous
     }
 
     return NULL;
+}
+
+client_list *find_client_by_username(char *username, client_list *list, client_list **previous) {
+    client_list *link = list;
+    *previous = NULL;
+    while (link) {
+        if (!strcmp(username, link->clnt.name)) {
+            return link;
+        }
+
+        *previous = link;
+        link = link->next;
+    }
+
+    return NULL;
+}
+
+void free_file_transfert(file_transfert *ft) {
+    free(ft->filename);
+    free(ft);
+}
+
+void terminate_file_transferts(server *srvr) {
+    while (srvr->ft_list) {
+        file_transfert *ft = srvr->ft_list->next;
+        free_file_transfert(srvr->ft_list);
+        srvr->ft_list = ft;
+    }
+}
+
+int process_new_file_transfert(request *req, server *srvr, int *sndr_pipe, int *transId) {
+    char *username, *filename;
+    long length;
+    int id;
+    char *ptr = read_number(req->content + 4, req->length - 4, &id);
+    if (!ptr) {
+        printf("Requête invalide\n");
+        return -1;
+    }
+    ptr = read_string(ptr, &username, req->length - (ptr - req->content));
+    if (!ptr) {
+        printf("Requête invalide\n");
+        return -1;
+    }
+    ptr = read_lnumber(ptr, req->length - (ptr - req->content), &length);
+    if (!ptr) {
+        free(username);
+        printf("Requête invalide\n");
+        return -1;
+    }
+    ptr = read_string(ptr, &filename, req->length - (ptr - req->content));
+    if (!ptr) {
+        free(username);
+        printf("Requête invalide\n");
+        return -1;
+    }
+    char *buff = calloc(BUFFER_LENGTH, 1);
+    ptr = make_header(buff, MIN_REQUEST_LENGTH + (4) + (4) + (8 + length) + (4 + strlen(filename)), CODE_FILE);
+    ptr = add_number(ptr, 0);
+    ptr = add_number(ptr, srvr->transfert_id_count);
+    ptr = add_lnumber(ptr, length);
+    ptr = add_string(ptr, filename);
+
+    client_list *dst, *sndr;
+    dst = find_client_by_username(username, srvr->clients, &dst);
+    sndr = find_client_by_id(id, srvr->clients, &sndr);
+
+    if (!sndr) {
+        printf("Erreur : l'envoyeur n'est pas un utilisateur du serveur\n");
+        free(username);
+        free(filename);
+        free(buff);
+
+        return -1;
+    }
+
+    *sndr_pipe = sndr->clnt.pipe;
+
+    if (!dst) {
+        printf("Erreur : client inconnu\n");
+        free(username);
+        free(filename);
+        free(buff);
+
+        return 1;
+    }
+
+    printf("Transfert[transid=%d] -- Demande d'envoi de %s[id=%d] vers %s[id=%d] du fichier '%s' (%ld octets)\n",
+            srvr->transfert_id_count,
+            sndr->clnt.name, sndr->clnt.id, dst->clnt.name, dst->clnt.id,
+            filename, length
+    );
+
+    if (write(dst->clnt.pipe, buff, BUFFER_LENGTH) < BUFFER_LENGTH) {
+        printf("Erreur lors de la transmission au récepteur de la notification de transfert\n");
+
+        free(buff);
+        free(username);
+        free(filename);
+        return 1;
+    }
+
+    file_transfert *ft = calloc(1, sizeof(file_transfert));
+    ft->next = srvr->ft_list;
+    ft->id = srvr->transfert_id_count;
+    ft->sndr = &sndr->clnt;
+    ft->dst = &dst->clnt;
+    ft->filename = filename;
+    ft->length = length;
+    ft->remaining_length = length;
+    srvr->ft_list = ft;
+
+    srvr->transfert_id_count++;
+
+    free(buff);
+    free(username);
+
+    return 0;
+}
+
+int process_existing_file_transfert(char *dat, int serie, int remaining, server *srvr, int transId) {
+    file_transfert *ft = srvr->ft_list;
+    while (ft && ft->id != transId) {
+        ft = ft->next;
+    }
+    //  Si on n'a pas trouvé le transfert correspondant
+    if (!ft)
+      return 1;
+
+    char *buff = calloc(BUFFER_LENGTH, 1);
+    char *ptr = make_header(buff, MIN_REQUEST_LENGTH + (4) + (4) + remaining, CODE_FILE);
+    ptr = add_number(buff, serie);
+    ptr = add_number(buff, transId);
+    memcpy(ptr, dat, remaining);
+
+    if (write(ft->dst->pipe, buff, BUFFER_LENGTH) < BUFFER_LENGTH) {
+        printf("Erreur durant le transfert du reste du fichier à %s\n", ft->dst->name);
+        free(buff);
+        return 1;
+    }
+    
+    free(buff);
+
+    return 0;
+}
+
+int process_file_transfert(request *req, server *srvr) {
+    int serie;
+    char *ptr = read_number(req->content, req->length, &serie);
+    if (!ptr) {
+        printf("Requête invalide\n");
+        return 1;
+    }
+    //  Si on continue un transfert
+    if (serie) {
+        int transId;
+        if (!(ptr = read_number(ptr, req->length - (req->content - ptr), &transId))) {
+            printf("Requête invalide\n");
+            return 1;
+        }
+
+        return process_existing_file_transfert(ptr, serie, req->length - (req->content - ptr), srvr, transId);
+    } else {//  Si on commence un nouveau transfert
+        int sndr_pipe, transId;
+        char *buff = calloc(BUFFER_LENGTH, 1);
+        int ret;
+        if ((ret = process_new_file_transfert(req, srvr, &sndr_pipe, &transId)) == 1) {
+            make_header(buff, MIN_REQUEST_LENGTH, CODE_FAIL);
+            write(sndr_pipe, buff, BUFFER_LENGTH);
+
+            free(buff);
+
+            return 1;
+        } else if (ret == 0) {
+            char *ptr = make_header(buff, MIN_REQUEST_LENGTH + 4, CODE_SUCCESS);
+            add_number(ptr, transId);
+            write(sndr_pipe, buff, BUFFER_LENGTH);
+
+            free(buff);
+
+            return 0;
+        }
+
+        free(buff);
+    }
+
+    return 0;
 }

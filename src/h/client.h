@@ -4,12 +4,27 @@
 
 #include "common.h"
 
+//  La représentation côté client d'un transfert de fichier
+typedef struct _file_transfert {
+    int id;                 //  Identifiant du transfert
+    int serie;              //  Le numéro du prochain paquet à envoyer
+    int sending;            //  1 si le lcient est l'envoyeur, 0 sinon
+    char *filename;         //  Nom du fichier en transfert
+    char *filepath;         //  Chemin du fichier en transfert (NULL si le client est le récepteur)
+    char *username;         //  Pseudonyme du récepteur (NULL si le client est le récepteur)
+    int file;               //  Descripteur du fichier
+    long length;            //  Longueur du fichier
+    long remaining_length;  //  Longueur restante à tranférer
+    struct _file_transfert *next;
+} file_transfert;
+
 //  La représentation côté client d'un client
 typedef struct _client {
     int id;         //  L'identifiant universel du client
     char *username; //  Le pseudonyme de l'utilisateur
     char *pipepath; //  Le chemin du tube client
     int pipe;       //  Le tube client
+    file_transfert *ft_list;
 } client;
 
 //  La représentation côté client d'un serveur
@@ -60,5 +75,23 @@ int process_message(request *req);
 
 //  Fais vivre le client
 int client_loop(client *clnt, server *srvr);
+
+//  Initialise l'envoi d'un fichier
+int request_send_file(char *buff, client *clnt, server *srvr);
+
+//  Supprime un transfert de fichier d'identifiant id de la liste de transferts en cours
+void remove_file_transfert(int id, client *clnt);
+
+//  Libère un transfert de fichier
+void free_file_transfert(file_transfert *ft);
+
+//  Met fin et libère les transferts de fichiers inachevés
+void terminate_file_transferts(client *clnt);
+
+//  Continue d'envoyer les fichiers en cours d'échange
+void send_files(server *srvr, client *clnt);
+
+//  Traite la réception d'un fichier
+int receive_file(client *clnt, request *req);
 
 #endif

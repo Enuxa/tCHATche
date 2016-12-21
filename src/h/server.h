@@ -19,6 +19,17 @@ typedef struct _client_list {
     struct _client_list *next;
 } client_list;
 
+//  La représentation côté serveur d'un transfert de fichier
+typedef struct _file_transfert {
+    int id;                 //  Identifiant du transfert
+    client *sndr;             //  L'envoyeur
+    client *dst;              //  Le récepteur
+    char *filename;         //  Nom du fichier en transfert
+    long length;            //  Longueur du fichier
+    long remaining_length;  //  Longueur restante à tranférer
+    struct _file_transfert *next;
+} file_transfert;
+
 //  La représentation côté serveur d'un serveur
 typedef struct _server {
     char *pipe_path;    //  Le chemin vers le tube du serveur
@@ -26,6 +37,8 @@ typedef struct _server {
     client_list *clients;// La liste des clients
     int id_counter;     //  Le compteur des identifiants
     int client_count;   //  Le nombre de clients
+    int transfert_id_count; //  Le compteur des identifiants de transferts
+    file_transfert *ft_list;
 } server;
 
 //  Fait vivre le serveur
@@ -47,5 +60,20 @@ int broadcast_message(server *srvr, request *req);
 
 //  Récupère le chaînon contenant le client d'identifiant id, ou NULL s'il n'existe pas
 client_list *find_client_by_id(int id, client_list *list, client_list **previous);
+
+//  Récupère le chaînon contenant le client de nom d'utilisateur username, ou NULL s'il n'existe pas
+client_list *find_client_by_username(char *username, client_list *list, client_list **previous);
+
+//  Traite un echange de fichier
+int process_file_transfert(request *req, server *srvr);
+
+//  Supprime un transfert de fichier d'identifiant id de la liste de transferts en cours
+void remove_file_transfert(int id, server *srvr);
+
+//  Libère un transfert de fichier
+void free_file_transfert(file_transfert *ft);
+
+//  Met fin et libère les transferts de fichiers inachevés
+void terminate_file_transferts(server *srvr);
 
 #endif

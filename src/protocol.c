@@ -6,12 +6,17 @@
 
 char* make_header(char *buff, int length, char *type) {
     sprintf(buff, "%04d%s", length, type);
-    return buff + 8;
+    return buff + MIN_REQUEST_LENGTH;
 }
 
 char* add_number(char *buff, int n) {
     sprintf(buff, "%04d", n);
     return buff + 4;
+}
+
+char* add_lnumber(char *buff, long n) {
+    sprintf(buff, "%08ld", n);
+    return buff + 8;
 }
 
 char *add_string(char *buff, char *str) {
@@ -20,7 +25,7 @@ char *add_string(char *buff, char *str) {
 }
 
 void monitor_request(request *req) {
-    printf("\n\033[1mNombre\033[0m\t\t%d\n", req->length);
+    printf("\n\033[1mTaille\033[0m\t\t%d\n", req->length);
     printf("\033[1mType\033[0m\t\t%s\n", req->type);
     printf("\033[1mContenu\033[0m\t\t\033[33m%s\033[0m\n\n", req->content);
 }
@@ -36,6 +41,8 @@ request *read_request(char *buff) {
         return NULL;
     }
 
+    req->length -= MIN_REQUEST_LENGTH;
+
     //  Lecture du tye de la requête
     for (int i = 0; i < 4; i++)
         req->type[i] = buff[4 + i];
@@ -43,8 +50,7 @@ request *read_request(char *buff) {
 
     //  Lecture du contenu de la requête
     req->content = calloc(req->length, 1);
-    for (int i = 0; i < req->length; i++)
-        req->content[i] = buff[MIN_REQUEST_LENGTH + i];
+    memcpy(req->content, buff + MIN_REQUEST_LENGTH, req->length);
 
     return req;
 }
@@ -60,9 +66,10 @@ char *read_number(char *buff, int remaining, int *n) {
     if (remaining < 4)
         return NULL;
 
-    char nb[4];
+    char nb[5];
     for (int i = 0; i < 4; i++) //  Lecture du nombre
         nb[i] = buff[i];
+    nb[4] = '\0';
 
     if (sscanf(nb, "%d", n) != 1)
         return NULL;
@@ -70,26 +77,36 @@ char *read_number(char *buff, int remaining, int *n) {
     return buff + 4;
 }
 
-char *read_string(char *buff, char **str, int remaining) {
+char *read_lnumber(char *buff, int remaining, long *n) {
     //  S'il ne reste pas assez de caractères à lire dans le buffer
-    if (remaining < 4)
+    if (remaining < 8)
         return NULL;
 
-    int l;
-    char nb[4];
-    for (int i = 0; i < 4; i++)//   Lecture de la longueur de la chaîne
+    char nb[9];
+    for (int i = 0; i < 8; i++) //  Lecture du nombre
         nb[i] = buff[i];
-    if (sscanf(nb, "%d", &l) != 1)
+    nb[8] = '\0';
+
+    if (sscanf(nb, "%ld", n) != 1)
         return NULL;
 
-    if (remaining - 4 < l) //   S'il ne reste pas assez de caractères dans le buffer
+    return buff + 8;
+}
+
+char *read_string(char *buff, char **str, int remaining) {
+    int l;
+    char *ptr;
+    if (!(ptr = read_number(buff, remaining, &l)))
+      return NULL;
+
+    if (remaining - (ptr - buff) < l) //   S'il ne reste pas assez de caractères dans le buffer
         return NULL;
 
     *str = calloc(l + 1, 1);
     for (int i = 0; i < l; i++) //  Lecture de la chaîne
         (*str)[i] = buff[4 + i];
 
-    (*str)[l] = '\0'; //    On ajoute le caractère de fi de chaîne
+    (*str)[l] = '\0'; //    On ajoute le caractère de fin de chaîne
 
-    return buff + 4 + l;
+    return ptr + l;
 }

@@ -1,7 +1,6 @@
 # A finir
-- Corriger le fait que l'identifiant du premier transfert soit toujours 59
+- Vérifier qu'on n'essaye pas de s'envoyer le fichier à soi même
 - Vérifier que les pseudo ne contiennent pas d'espace
-- Toujours ajouter `'\0'` aux requêtes lues par le serveur
 
 # Base
 - [x] Démarrage / fin propre du serveur
@@ -20,10 +19,9 @@
 - [x] Messages privés
 - [x] Liste d'utilisateurs
 - [x] Commande `shut` de la part d'un utilisateur
-- [ ] Envoi de fichiers
+- [x] Envoi de fichiers
 - [ ] Débogage
 
 # Fonctionnalités supplémentaires
 - [ ] Commande `kick` de la part du serveur
 - [ ] Commande `help` du serveur et client
-- [ ] Filtrage d'injures

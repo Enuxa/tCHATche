@@ -116,7 +116,7 @@ int run_server(server *srvr) {
     //  Rendre la lecture sur stdin non bloquante
     fcntl(0, F_SETFL, O_NONBLOCK | fcntl(0, F_GETFL, 0));
 
-    char *buff_pipe = calloc(BUFFER_LENGTH, 1);
+    char *buff_pipe = calloc(BUFFER_LENGTH + 1, 1);
     char *buff_stdin = calloc(BUFFER_LENGTH, 1);
 
     PROMPT();
@@ -126,6 +126,7 @@ int run_server(server *srvr) {
         //  Lecture d'un message sur le tube
         read_ret = read(srvr->pipe, buff_pipe, BUFFER_LENGTH);
         if (read_ret >= MIN_REQUEST_LENGTH) {//   Si on a lu quelque chose
+            buff_pipe[read_ret] = '\0';
             request *req = read_request(buff_pipe);
             monitor_request(req);
             process_request(srvr, req, &alive);
@@ -366,7 +367,7 @@ int process_request(server *srvr, request *req, int *alive) {
     if (!strcmp(req->type, CODE_JOIN)) {
         char *username = NULL, *pipepath = NULL, *ptr;
         if (!(ptr = read_string(req->content, &username, req->length)) ||
-            !(read_string(ptr, &pipepath, req->length - (req->content - ptr)))) {
+            !(read_string(ptr, &pipepath, req->length - (ptr - req->content)))) {
 
             printf("Requête invalide %s\n", username);
 
@@ -533,6 +534,8 @@ int process_new_file_transfert(request *req, server *srvr, int *sndr_pipe, int *
     ft->remaining_length = length;
     srvr->ft_list = ft;
 
+    *transId = srvr->transfert_id_count;
+
     srvr->transfert_id_count++;
 
     free(buff);
@@ -552,8 +555,8 @@ int process_existing_file_transfert(char *dat, int serie, int remaining, server 
 
     char *buff = calloc(BUFFER_LENGTH, 1);
     char *ptr = make_header(buff, MIN_REQUEST_LENGTH + (4) + (4) + remaining, CODE_FILE);
-    ptr = add_number(buff, serie);
-    ptr = add_number(buff, transId);
+    ptr = add_number(ptr, serie);
+    ptr = add_number(ptr, transId);
     memcpy(ptr, dat, remaining);
 
     if (write(ft->dst->pipe, buff, BUFFER_LENGTH) < BUFFER_LENGTH) {
@@ -561,8 +564,22 @@ int process_existing_file_transfert(char *dat, int serie, int remaining, server 
         free(buff);
         return 1;
     }
-    
+
     free(buff);
+
+    ft->remaining_length -= remaining;
+
+    if (ft->remaining_length <= 0) {
+        if (srvr->ft_list == ft)
+            srvr->ft_list = ft->next;
+        else {
+          file_transfert *tmp = srvr->ft_list;
+          while (tmp->next != ft) {
+              tmp->next = ft->next;
+          }
+        }
+        free_file_transfert(ft);
+    }
 
     return 0;
 }
@@ -577,12 +594,12 @@ int process_file_transfert(request *req, server *srvr) {
     //  Si on continue un transfert
     if (serie) {
         int transId;
-        if (!(ptr = read_number(ptr, req->length - (req->content - ptr), &transId))) {
+        if (!(ptr = read_number(ptr, req->length - (ptr - req->content), &transId))) {
             printf("Requête invalide\n");
             return 1;
         }
 
-        return process_existing_file_transfert(ptr, serie, req->length - (req->content - ptr), srvr, transId);
+        return process_existing_file_transfert(ptr, serie, req->length - (ptr - req->content), srvr, transId);
     } else {//  Si on commence un nouveau transfert
         int sndr_pipe, transId;
         char *buff = calloc(BUFFER_LENGTH, 1);

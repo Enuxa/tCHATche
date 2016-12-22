@@ -43,6 +43,12 @@ request *read_request(char *buff) {
 
     req->length -= MIN_REQUEST_LENGTH;
 
+    if (req->length < 0) {
+        free(req->type);
+        free(req);
+        return NULL;
+    }
+
     //  Lecture du tye de la requête
     for (int i = 0; i < 4; i++)
         req->type[i] = buff[4 + i];

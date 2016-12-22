@@ -276,6 +276,10 @@ int client_loop(client *clnt, server *srvr) {
             fflush(stdout);
         } else if (read_ret >= MIN_REQUEST_LENGTH) {
             request *req = read_request(buff_pipe);
+            if (!req) {
+              printf("Requête invalide\n");
+              continue;
+            }
             if (!strcmp(req->type, CODE_SHUTDOWN)) {
                 printf("Le serveur a été fermé\n");
                 alive = 0;
@@ -444,7 +448,7 @@ int request_send_file(char *buff, client *clnt, server *srvr) {
 
     if (write(srvr->pipe, buff_request, BUFFER_LENGTH) < BUFFER_LENGTH) {
         printf("Erreur lors de l'envoi de demande de transfert\n");
-        free(st);
+        free_file_transfert(st);
         free(buff_request);
         return 1;
     }
@@ -456,8 +460,14 @@ int request_send_file(char *buff, client *clnt, server *srvr) {
           putchar('.');
           fflush(stdout);
     }
-    printf("\n");
+    
     request *req = read_request(buff_request);
+    if (!req) {
+        printf("Réponse invalide\n");
+        free(buff_request);
+        free_file_transfert(st);
+        return 1;
+    }
     if (!strcmp(req->type, CODE_FAIL)) {
       printf("Le transfert de fichier a été refusé par le serveur\n");
 
@@ -474,7 +484,7 @@ int request_send_file(char *buff, client *clnt, server *srvr) {
           free_file_transfert(st);
           return 1;
       }
-      printf("Transfert Initialisé\n");
+      printf("Transfert Initialisé [id=%d]\n", st->id);
     }
 
     if (!clnt->ft_list) {
@@ -497,8 +507,8 @@ void free_file_transfert(file_transfert *ft) {
     close(ft->file);
     if (ft->sending) {
       free(ft->username);
-      free(ft->filepath);
     }
+    free(ft->filepath);
     free(ft->filename);
     free(ft);
 }
@@ -522,8 +532,9 @@ int send_file(server *srvr, file_transfert *ft) {
     ft->serie++;
     ft->remaining_length -= block_size;
 
-    if (write(srvr->pipe, buff, BUFFER_LENGTH) < BUFFER_LENGTH) {
-      printf("Erreur lors de la transmission du paquet no %d à %s\n", ft->serie, ft->username);
+    int k;
+    if ((k = write(srvr->pipe, buff, BUFFER_LENGTH)) < BUFFER_LENGTH) {
+      printf("Erreur lors de la transmission du paquet no %d à %s (%d/%d octets ecrits)\n", ft->serie, ft->username, k, block_size);
       free(buff);
 
       return -1;
@@ -569,13 +580,13 @@ int receive_file(client *clnt, request *req) {
     }
     //  Si on doit continuer à recevoir un fichier
     if (serie) {
-        printf("Reception d'un paquet de %d\n", transId);
         file_transfert *ft = clnt->ft_list, *prev = NULL;
         int block_size = req->length - 4 - 4;
         while (ft && ft->id != transId) {
             prev = ft;
             ft = ft->next;
         }
+
         if (!ft) {
           printf("Transfert d'identifiant %d introuvable\n", transId);
           return 1;
@@ -585,7 +596,7 @@ int receive_file(client *clnt, request *req) {
           return 1;
         }
         ft->remaining_length -= block_size;
-        if (!ft->remaining_length) {
+        if (ft->remaining_length <= 0) {
           file_transfert *tmp = ft;
           if (prev)
             prev->next = ft->next;

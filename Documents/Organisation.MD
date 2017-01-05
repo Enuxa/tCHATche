@@ -1,6 +1,4 @@
 # A finir
-- Vérifier qu'on n'essaye pas de s'envoyer le fichier à soi même
-- Vérifier que les pseudo ne contiennent pas d'espace
 
 # Base
 - [x] Démarrage / fin propre du serveur

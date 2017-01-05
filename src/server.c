@@ -175,8 +175,8 @@ int process_join(server *srvr, char *username, char *pipepath) {
     client_list *link = calloc(1, sizeof(client_list));
     char *buff = calloc(BUFFER_LENGTH, 1);
 
-    link->clnt.name = calloc(BUFFER_LENGTH, 1);
-    link->clnt.pipe_path = calloc(BUFFER_LENGTH, 1);
+    link->clnt.name = calloc(USERNAME_LENGTH, 1);
+    link->clnt.pipe_path = calloc(PATH_LENGTH, 1);
     link->next = NULL;
     link->clnt.id = 0;
     strcpy(link->clnt.name, username);
@@ -184,7 +184,7 @@ int process_join(server *srvr, char *username, char *pipepath) {
     link->clnt.pipe = open(pipepath, O_WRONLY | O_NONBLOCK);
 
     //  Si on a échoué à ouvrir le tube client ou que le nom d'utilisateur est trop long
-    if (link->clnt.pipe < 0 || strlen(link->clnt.name) > USERNAME_LENGTH) {
+    if (link->clnt.pipe < 0) {
         if (link->clnt.pipe < 0) {
             printf("\033[31mImpossible d'ouvrir le tube à l'adresse %s\033[0m", pipepath);
             fflush(stdout);
@@ -197,34 +197,45 @@ int process_join(server *srvr, char *username, char *pipepath) {
         return 1;
     }
 
+    //  On vérifie que le nom est correct
+    int username_valid = (strlen(username) > 0 && strlen(username) <= USERNAME_LENGTH);
+    for (int i = 0; username[i] != '\0' && username_valid; i++) {
+        if (username[i] == ' ' || username[i] == '\t' || username[i] == '\n')
+            username_valid = 0;
+    }
+
     //  S'il n'y a pas encore de clients connectés
-    if (!srvr->clients)
+    if (username_valid && !srvr->clients) {
         srvr->clients = link;
-    else {
+    } else if (username_valid) {
         client_list *list = srvr->clients;
         client_list *prev;
-        while (list) {
+        while (list && username_valid) {
             //  Si le nom d'utilisateur n'est pas disponible
-            if (!strcmp(list->clnt.name, username)) {
-                make_header(buff, 8, CODE_FAIL);
-                if (write(link->clnt.pipe, buff, BUFFER_LENGTH) < BUFFER_LENGTH) {
-                    perror("\033[31mErreur lors de l'envoi d'echec de connexion\033[0m");
-                    return 1;
-                }
-                free(link->clnt.name);
-                free(link->clnt.pipe_path);
-                free(link);
-                close(link->clnt.pipe);
-
-                printf("\033[31mTentative de connexion avec le nom %s refusée\033[0m\n", username);
-
-                return 1;
-            }
+            if (!strcmp(list->clnt.name, username))
+                username_valid = 0;
 
             prev = list;
             list = list->next;
         }
         prev->next = link;
+    }
+
+    if (!username_valid) {
+        make_header(buff, 8, CODE_FAIL);
+        if (write(link->clnt.pipe, buff, BUFFER_LENGTH) < BUFFER_LENGTH) {
+            perror("\033[31mErreur lors de l'envoi d'echec de connexion\033[0m");
+            return 1;
+        }
+        free(link->clnt.name);
+        free(link->clnt.pipe_path);
+        close(link->clnt.pipe);
+        free(link);
+        free(buff);
+
+        printf("\033[31mTentative de connexion avec le nom '%s' refusée\033[0m\n", username);
+
+        return 1;
     }
 
     link->clnt.id = srvr->id_counter;
@@ -347,7 +358,7 @@ int process_list(server *srvr, request *req) {
     client_list *link = srvr->clients;
     char *buff = calloc(BUFFER_LENGTH, 1);
     while (link) {
-        char *ptr = make_header(buff, MIN_REQUEST_LENGTH + 4 + strlen(link->clnt.name), CODE_LIST);
+        char *ptr = make_header(buff, MIN_REQUEST_LENGTH + 4 + 4 + strlen(link->clnt.name), CODE_LIST);
         ptr = add_number(ptr, srvr->client_count);
         add_string(ptr, link->clnt.name);
 
@@ -369,7 +380,7 @@ int process_request(server *srvr, request *req, int *alive) {
         if (!(ptr = read_string(req->content, &username, req->length)) ||
             !(read_string(ptr, &pipepath, req->length - (ptr - req->content)))) {
 
-            printf("Requête invalide %s\n", username);
+            printf("Requête invalide\n");
 
             if (username)
                 free(username);
@@ -508,6 +519,10 @@ int process_new_file_transfert(request *req, server *srvr, int *sndr_pipe, int *
 
         return 1;
     }
+
+    //  Si le client essaye de s'envoyer le fichier à lui même
+    if (dst->clnt.id == sndr->clnt.id)
+      return 1;
 
     printf("Transfert[transid=%d] -- Demande d'envoi de %s[id=%d] vers %s[id=%d] du fichier '%s' (%ld octets)\n",
             srvr->transfert_id_count,

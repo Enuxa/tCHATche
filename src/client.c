@@ -113,7 +113,7 @@ int join(client *clnt, char *username, server *srvr) {
     //  Construction du message
     int length = MIN_REQUEST_LENGTH + 4 + strlen(username) + 4 + strlen(clnt->pipepath);
 
-    if (strlen(username) > USERNAME_LENGTH || length > BUFFER_LENGTH) {
+    if (length > BUFFER_LENGTH) {
         printf("Erreur : l'adresse du serveur ou votre nom d'utilisateur est trop long %s\n", clnt->pipepath);
         fflush(stdout);
         close(clnt->pipe);
@@ -288,7 +288,7 @@ int client_loop(client *clnt, server *srvr) {
             } else if(!strcmp(req->type, CODE_LIST)) {
                 int n;
                 char *ptr, *username;
-                if((ptr = read_number(req->content, req->length, &n)) && read_string(ptr, &username, req->length)) {
+                if((ptr = read_number(req->content, req->length, &n)) && read_string(ptr, &username, req->length - (ptr - req->content))) {
                     printf("Utilisateur : %s\n", username);
                     free(username);
                 } else printf("Erreur de réception de la liste\n");
@@ -342,7 +342,7 @@ int run_client(client *clnt, const char *sp, const char *un) {
             printf("Nom d'utilisateur invalide : %s\n", server_path);
             return 1;
         }
-        username[strlen(username)] = '\0';
+        username[strlen(username) - 1] = '\0';
     } else {
         strncpy(username, un, USERNAME_LENGTH + 2);
         username[USERNAME_LENGTH + 1] = '\0';
@@ -376,7 +376,6 @@ int run_client(client *clnt, const char *sp, const char *un) {
 
 int send_message(client *clnt, server *srvr, char *msg, char *dst) {
     char *buff = calloc(BUFFER_LENGTH, 1);
-    printf("Envoi de %s\n", msg);
     int length = MIN_REQUEST_LENGTH +
                  (4) +
                 ( dst ? (4 + strlen(dst)) : (0)) +
@@ -460,7 +459,7 @@ int request_send_file(char *buff, client *clnt, server *srvr) {
           putchar('.');
           fflush(stdout);
     }
-    
+
     request *req = read_request(buff_request);
     if (!req) {
         printf("Réponse invalide\n");

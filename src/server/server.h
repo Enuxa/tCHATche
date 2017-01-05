@@ -64,16 +64,4 @@ client_list *find_client_by_id(int id, client_list *list, client_list **previous
 //  Récupère le chaînon contenant le client de nom d'utilisateur username, ou NULL s'il n'existe pas
 client_list *find_client_by_username(char *username, client_list *list, client_list **previous);
 
-//  Traite un echange de fichier
-int process_file_transfert(request *req, server *srvr);
-
-//  Supprime un transfert de fichier d'identifiant id de la liste de transferts en cours
-void remove_file_transfert(int id, server *srvr);
-
-//  Libère un transfert de fichier
-void free_file_transfert(file_transfert *ft);
-
-//  Met fin et libère les transferts de fichiers inachevés
-void terminate_file_transferts(server *srvr);
-
 #endif

@@ -1,7 +1,7 @@
 #define  _POSIX_C_SOURCE 199309L
 
-#include "h/server.h"
-#include "h/common.h"
+#include "server.h"
+#include "common.h"
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>

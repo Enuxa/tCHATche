@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "h/protocol.h"
+#include "protocol.h"
 
 char* make_header(char *buff, int length, char *type) {
     sprintf(buff, "%04d%s", length, type);

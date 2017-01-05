@@ -1,7 +1,7 @@
 #define  _POSIX_C_SOURCE 199309L
 
-#include "h/client.h"
-#include "h/common.h"
+#include "client.h"
+#include "common.h"
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>

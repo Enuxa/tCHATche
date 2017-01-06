@@ -21,12 +21,16 @@
 #define SHUT_COMMAND 4
 #define SEND_COMMAND 5
 #define INTERNAL_DEBUG_COMMAND 6
+#define HELP_COMMAND 7
+#define DEBUG_COMMAND 8
 #define QUIT_SEQUENCE "/quit"
 #define PM_SEQUENCE "/pm"
 #define LIST_SEQUENCE "/list"
 #define SHUT_SEQUENCE "/shut"
 #define SEND_SEQUENCE "/send"
 #define INTERNAL_DEBUG_SEQUENCE "/indbg"
+#define HELP_SEQUENCE "/help"
+#define DEBUG_SEQUENCE "/dbg"
 
 extern struct timespec sleep_time;
 
@@ -59,6 +63,19 @@ int process_command(char *buff) {
         internal_debug = (internal_debug + 1) % 2;
         printf("Débogage interne %sactivé\n", internal_debug ? "" : "dés");
         return INTERNAL_DEBUG_COMMAND;
+    } else if (!strcmp(buff, HELP_SEQUENCE)) {
+      printf("%s\tDéconnecte du serveur\n", QUIT_SEQUENCE);
+      printf("%s dst msg\t\tEnvoie msg uniquement à dst\n", PM_SEQUENCE);
+      printf("%s\t\tAffiche la liste des utilisateurs connectés au serveur\n", LIST_SEQUENCE);
+      printf("%s\t\tFerme le serveur\n", SHUT_SEQUENCE);
+      printf("%s dst file\t\tEnvoie le fichier file à dst\n", SEND_SEQUENCE);
+      printf("%s\t\tActive le débogage du client\n", INTERNAL_DEBUG_SEQUENCE);
+      printf("%s\t\tDemande au serveur d'afficher des informations de débogage\n", DEBUG_SEQUENCE);
+      printf("%s\t\tAffiche la liste des comandes\n", HELP_SEQUENCE);
+
+      return HELP_COMMAND;
+    } else if (!strcmp(buff, DEBUG_SEQUENCE)) {
+      return DEBUG_COMMAND;
     }
 
     return 0;
@@ -273,6 +290,10 @@ int client_loop(client *clnt, server *srvr) {
                     perror("Erreur lors de la demande de fermeture du serveur");
             } else if (cmd == SEND_COMMAND) {
                 request_send_file(buff_stdin + strlen(SEND_SEQUENCE) + 1, clnt, srvr);
+            } else if (cmd == DEBUG_COMMAND) {
+                make_header(buff_request, MIN_REQUEST_LENGTH, CODE_DEBUG);
+                if (write(srvr->pipe, buff_request, BUFFER_LENGTH) < BUFFER_LENGTH)
+                    perror("Erreur lors de la demande de fermeture du serveur");
             } else if (!cmd)
                 printf("Erreur : commande inconnue \"%s\"\n", buff_stdin);
         }

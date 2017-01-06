@@ -3,7 +3,9 @@
 
 #include "protocol.h"
 
-#define STOP_SERVER 1
+#define STOP_COMMAND 1
+#define DEBUG_COMMAND 2
+#define HELP_COMMAND 3
 
 //  La représentation côté serveur d'un client
 typedef struct _client {

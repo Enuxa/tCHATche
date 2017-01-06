@@ -1,4 +1,5 @@
-# A finir
+# Bugs constatés
+- Après l'envoi d'un fichier volumineux (plusieurs Mo), l'entrée standard du serveur n'est pas vide, même si l'utilisateur n'a rien saisi
 
 # Base
 - [x] Démarrage / fin propre du serveur
@@ -18,8 +19,7 @@
 - [x] Liste d'utilisateurs
 - [x] Commande `shut` de la part d'un utilisateur
 - [x] Envoi de fichiers
-- [ ] Débogage
+- [x] Débogage
 
 # Fonctionnalités supplémentaires
-- [ ] Commande `kick` de la part du serveur
-- [ ] Commande `help` du serveur et client
+- [x] Commande `help` du serveur et client

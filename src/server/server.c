@@ -70,6 +70,24 @@ int start_server(server *srvr) {
     return 0;
 }
 
+void debug_display(server *srvr) {
+  client_list *list = srvr->clients;
+  if (!list)
+    printf("\033[1mAucun utilisateur connecté\033[0m\n");
+  while (list) {
+    printf("\033[1mUtilisateur %s(id=%d)\tpipe=%d@%s\033[0m\n", list->clnt.name, list->clnt.id, list->clnt.pipe, list->clnt.pipe_path);
+    list = list->next;
+  }
+
+  file_transfert *link = srvr->ft_list;
+  if (!link)
+    printf("\033[1mAucun transfert de fichier en cours\033[0m\n");
+  while (link) {
+    printf("\033[1mTranfert de %s(id=%d)\tde %s à %s (%ld/%ld octets transmis)\n", link->filename, link->id, link->sndr->name, link->dst->name, link->remaining_length, link->length);
+    link = link->next;
+  }
+}
+
 int close_server(server *srvr) {
     //  Déconnecter les clients
     client_list *list = srvr->clients, *link;
@@ -143,9 +161,11 @@ int run_server(server *srvr) {
         if ((read_ret = read(0, buff_stdin, BUFFER_LENGTH)) > 0) {
             buff_stdin[read_ret - 1] = '\0';
             int cmd = process_command(srvr, buff_stdin);
-            if (cmd == STOP_SERVER) {
+            if (cmd == STOP_COMMAND) {
                 alive = 0;
-            } else {
+            } else if (cmd == DEBUG_COMMAND) {
+                debug_display(srvr);
+            } else if (cmd == 0) {
                 printf("\033[31mCommande inconnue\033[0m\n");
             }
             PROMPT();
@@ -167,7 +187,17 @@ int run_server(server *srvr) {
 int process_command(server *srvr, char *line) {
     //  Commande d'arrêt du serveur
     if (!strcmp(line, "stop"))
-        return STOP_SERVER;
+        return STOP_COMMAND;
+    //  Débogage du serveur
+    else if (!strcmp(line, "debug"))
+        return DEBUG_COMMAND;
+    //  Liste des commandes
+    else if (!strcmp(line, "help")) {
+      printf("\033[1mstop\tFerme le serveur\033[0m\n");
+      printf("\033[1mdebug\tAffiche des informations de débogage\033[0m\n");
+      printf("\033[1mhelp\tAffiche les commandes\033[0m\n");
+      return HELP_COMMAND;
+    }
 
     return 0;
 }
@@ -316,10 +346,6 @@ int broadcast_message(server *srvr, request *req) {
         return 1;
     }
 
-    request *br = read_request(buff);
-    printf("Diffusion du message suivant :\n");
-    monitor_request(br);
-
     int ret_val = 0;
     list = srvr->clients;
     while (list) {
@@ -335,7 +361,6 @@ int broadcast_message(server *srvr, request *req) {
     }
 
     free(buff);
-    free_request(br);
     free(msg);
 
     if (username)
@@ -414,8 +439,11 @@ int process_request(server *srvr, request *req, int *alive) {
     //  Demande de fermeture du serveur
     } else if (!strcmp(req->type, CODE_SHUTDOWN)) {
         *alive = 0;
+    //  Echange de fichiers
     } else if (!strcmp(req->type, CODE_FILE)) {
         process_file_transfert(req, srvr);
+    } else if (!strcmp(req->type, CODE_DEBUG)) {
+        debug_display(srvr);
     }
 
     return 1;

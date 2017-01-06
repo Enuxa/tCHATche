@@ -20,13 +20,17 @@
 #define LIST_COMMAND 3
 #define SHUT_COMMAND 4
 #define SEND_COMMAND 5
+#define INTERNAL_DEBUG_COMMAND 6
 #define QUIT_SEQUENCE "/quit"
 #define PM_SEQUENCE "/pm"
 #define LIST_SEQUENCE "/list"
 #define SHUT_SEQUENCE "/shut"
 #define SEND_SEQUENCE "/send"
+#define INTERNAL_DEBUG_SEQUENCE "/indbg"
 
 extern struct timespec sleep_time;
+
+int internal_debug = 0;
 
 int process_command(char *buff) {
     if (!strcmp(buff, QUIT_SEQUENCE))
@@ -51,6 +55,10 @@ int process_command(char *buff) {
       if (buff[strlen(SEND_SEQUENCE)] != ' ')
           return 0;
         return SEND_COMMAND;
+    } else if (!strcmp(buff, INTERNAL_DEBUG_SEQUENCE)) {
+        internal_debug = (internal_debug + 1) % 2;
+        printf("Débogage interne %sactivé\n", internal_debug ? "" : "dés");
+        return INTERNAL_DEBUG_COMMAND;
     }
 
     return 0;
@@ -231,7 +239,7 @@ int client_loop(client *clnt, server *srvr) {
     fcntl(0, F_SETFL, O_NONBLOCK | fcntl(0, F_GETFL, 0));
 
     char *buff_stdin = calloc(BUFFER_LENGTH, 1);
-    char *buff_pipe = calloc(BUFFER_LENGTH, 1);
+    char *buff_pipe = calloc(BUFFER_LENGTH + 1, 1);
     char *buff_request = calloc(BUFFER_LENGTH, 1);
 
     int alive = 1;
@@ -271,16 +279,21 @@ int client_loop(client *clnt, server *srvr) {
 
         //  Lecture depuis le tube client
         read_ret = read(clnt->pipe, buff_pipe, BUFFER_LENGTH);
+        if (read_ret >= 0)
+          buff_pipe[read_ret] = '\0'; //  Pour pouvoir afficher le contenu du tube
         if (read_ret < MIN_REQUEST_LENGTH && errno != EAGAIN) {
             perror("Erreur de lecture depuis le tube");
-            printf("%d\n", srvr->pipe);
+            printf("%d", srvr->pipe);
             fflush(stdout);
         } else if (read_ret >= MIN_REQUEST_LENGTH) {
             request *req = read_request(buff_pipe);
+            if (internal_debug)
+              printf("\033[1mLu sur le tube : \033[0m\033[33m%s\033[0m\n", buff_pipe);
             if (!req) {
               printf("Requête invalide\n");
               continue;
-            }
+            } else if (internal_debug)
+              monitor_request(req);
             if (!strcmp(req->type, CODE_SHUTDOWN)) {
                 printf("Le serveur a été fermé\n");
                 alive = 0;

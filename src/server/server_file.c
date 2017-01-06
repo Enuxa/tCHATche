@@ -55,7 +55,7 @@ int process_new_file_transfert(request *req, server *srvr, int *sndr_pipe, int *
         return -1;
     }
     char *buff = calloc(BUFFER_LENGTH, 1);
-    ptr = make_header(buff, MIN_REQUEST_LENGTH + (4) + (4) + (8 + length) + (4 + strlen(filename)), CODE_FILE);
+    ptr = make_header(buff, MIN_REQUEST_LENGTH + (4) + (4) + (8) + (4 + strlen(filename)), CODE_FILE);
     ptr = add_number(ptr, 0);
     ptr = add_number(ptr, srvr->transfert_id_count);
     ptr = add_lnumber(ptr, length);
@@ -86,8 +86,13 @@ int process_new_file_transfert(request *req, server *srvr, int *sndr_pipe, int *
     }
 
     //  Si le client essaye de s'envoyer le fichier à lui même
-    if (dst->clnt.id == sndr->clnt.id)
+    if (dst->clnt.id == sndr->clnt.id) {
+      free(username);
+      free(filename);
+      free(buff);
+
       return 1;
+    }
 
     printf("Transfert[transid=%d] -- Demande d'envoi de %s[id=%d] vers %s[id=%d] du fichier '%s' (%ld octets)\n",
             srvr->transfert_id_count,
@@ -103,6 +108,8 @@ int process_new_file_transfert(request *req, server *srvr, int *sndr_pipe, int *
         free(filename);
         return 1;
     }
+
+    printf("Envoyé : %s\n", buff);
 
     file_transfert *ft = calloc(1, sizeof(file_transfert));
     ft->next = srvr->ft_list;

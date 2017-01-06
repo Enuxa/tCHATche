@@ -10,6 +10,7 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <libgen.h>
+#include <errno.h>
 
 extern struct timespec sleep_time;
 
@@ -133,13 +134,22 @@ int send_file(server *srvr, file_transfert *ft) {
     char *ptr = make_header(buff, MIN_REQUEST_LENGTH + (4) + (4) + block_size, CODE_FILE);
     ptr = add_number(ptr, ft->serie);
     ptr = add_number(ptr, ft->id);
+    long position = lseek(ft->file, 0, SEEK_CUR);
     read(ft->file, ptr, block_size);
     ft->serie++;
     ft->remaining_length -= block_size;
 
     int k;
     if ((k = write(srvr->pipe, buff, BUFFER_LENGTH)) < BUFFER_LENGTH) {
-      printf("Erreur lors de la transmission du paquet no %d à %s (%d/%d octets ecrits)\n", ft->serie, ft->username, k, block_size);
+      if (errno == EAGAIN) {  //  Si le tube est plein et doit d'abord être vidé
+        ft->serie--;
+        ft->remaining_length += block_size;
+        lseek(ft->file, position, SEEK_SET);
+      } else {
+        printf("Erreur lors de la transmission du paquet no %d à %s (%d/%d octets ecrits) : ", ft->serie, ft->username, k, block_size);
+        perror("");
+      }
+      fflush(stdout);
       free(buff);
 
       return -1;

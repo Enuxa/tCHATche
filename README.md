@@ -6,7 +6,8 @@
 - `/quit` : déconnecte du serveur
 - `/pm dest msg` : envoie le message `msg` à l'utilisateur nommé `dest`
 - `/help` : affiche une liste des commandes (TODO)
-- `/shut` : ferme le serveur (TODO)
+- `/shut` : ferme le serveur
+- `/indbg`: active des informations de débogage du client
 
 ## Commandes serveur
 - `stop` : ferme le serveur

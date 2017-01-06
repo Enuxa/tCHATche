@@ -41,3 +41,648 @@ En [[informatique]], la notion de texte s'oppose à la notion de [[données bina
 {{Portail|Littérature|Écriture}}
 
 [[Catégorie:Lexique littéraire]]
+Un '''texte''' est une série orale ou écrite de mots perçus comme constituant un ensemble cohérent, porteur de sens et utilisant les structures propres à une [[langue]] (conjugaisons, construction et association des phrases…)<ref>François Rastier définit le texte comme {{Citation|une suite linguistique autonome (orale ou écrite) constituant une unité empirique, et produite par un ou plusieurs énonciateurs dans une pratique sociale attestée}} (François Rastier, 2001, ''Arts et sciences du texte'', Paris, PUF, page 302).</ref>. Un texte n'a pas de longueur déterminée sauf dans le cas de [[poème]]s à forme fixe comme le [[sonnet]] ou le [[haïku]].
+
+L'étude formelle des textes s'appuie sur la [[linguistique]] qui est l'approche scientifique du langage.
+
+== Étymologie ==
+« Texte » est issu du mot latin « textum », dérivé du verbe « texere » qui signifie « tisser ». Le mot s'applique à l'entrelacement des fibres utilisées dans le tissage, voir par exemple [[Ovide]] : « Quo super iniecit textum rude sedula Baucis = (un siège) sur lequel Baucis empressée avait jeté un tissu grossier »<ref>[http://bcs.fltr.ucl.ac.be/METAM/Met08/M-08-547-724.htm ''Métamorphoses'' 8, 640]</ref> ou au tressage  (exemple chez [[Martial]] « Vimineum textum = panier d'osier tressé »). Le verbe a aussi le sens large de construire comme dans « basilicam texere = construire une basilique » chez [[Cicéron]]<ref>[[Lucius Aemilius Paullus (consul en -50)|Paullus]] in medio foro jam paene basilicam texuit iisdem antiquis columnis [https://books.google.fr/books?id=eshGAQAAMAAJ&pg=PA306&lpg=PA306&dq=Paullus+in+medio+foro+jam+paene+basilicam+texuit&source=bl&ots=_uIh9eCKyW&sig=28Yo5gvBvD7wYO2RmezR3PDsVjI&hl=fr&sa=X&ved=0ahUKEwjx86f-mNrPAhWnAcAKHfBgDacQ6AEIKTAB#v=onepage&q=Paullus%20in%20medio%20foro%20jam%20paene%20basilicam%20texuit&f=false] Ciceron, ''Ad Atticum'', 4,16, 14, Lettre CXLIX - page 306</ref>.
+
+Le [[sens figuré]] d'éléments de langage organisés et enchaînés apparaît avant l'[[Empire romain]] : il désigne un agencement particulier du discours. Exemple : « epistolas texere = composer des épîtres » - Cicéron (1er siècle avant J.-C)<ref>« epistolas quotidianis verbis texere solemus » Ciceron, Lettres  : Ad Familiares, IX, 21, lettre DCLVIII [https://books.google.fr/books?id=1ldDAAAAYAAJ&pg=PA200&lpg=PA200&dq=epistolas+quotidianis+verbis+texere+solemus&source=bl&ots=-v9nCm6nnM&sig=SAAOH0nwqng3JhE23i9iysTmWzs&hl=fr&sa=X&ved=0ahUKEwjozrXH8NnPAhUsCsAKHXdJBsIQ6AEIKjAB#v=onepage&q=epistolas%20quotidianis%20verbis%20texere%20solemus&f=false]</ref> ou plus nettement chez [[Quintilien]] (1er siècle après J.-C.) : « verba in textu jungantur =  l'agencement des mots dans la phrase »<ref>« quantumque interest, sensus idem quibus verbis efferatur, tantum , verba eadem qua in compositione vel in textu jungantur = (autant la valeur de la pensée varie suivant les mots qui l'expriment, autant celle des mots varie selon leur harmonie et selon leur agencement) - Quintilien De l'Institution oratoire Livre IX, ch. 4 ''De compositione'' (''De l'arrangement des mots'') [https://books.google.fr/books?id=2UAMAAAAIAAJ&pg=PA156&lpg=PA156&dq=quintilien+textus&source=bl&ots=jDzK22q6c7&sig=n3bGNfTCT1UcfAGQOEwe3SNPZxU&hl=fr&sa=X&ved=0ahUKEwjqgNa99tnPAhVGDsAKHRjGDqgQ6AEIIzAA#v=onepage&q=quintilien%20textus&f=false]  page 326, ou page 392 ibidem « Historia non tam finitos numeros, quam orbem quemdam contextumque desiderat : namque omnia ejus membra connexa sunt, quoniam lubrica est, ac fluit »  page 392 = « L'histoire n'exige pas tant une prose parfaitement cadencée, qu'une suite de phrases dont le tissu soit bien lié; car tout s'y enchaîne, tout y coule, tout y glisse. »</ref>.
+
+Les formes anciennes du [[Moyen Âge]] désignent au XIIe siècle le volume qui contient le texte sacré des Évangiles, puis au XIIIe s. le texte original d'un livre saint ou des propos de quelqu'un. Au XVIIe siècle le mot s’applique au passage d'un ouvrage pris comme référence et au début du XIXe siècle le mot texte a son sens général d'« écrit »<ref>[http://www.cnrtl.fr/lexicographie/texte Dictionnaire CNRTL]</ref>.
+
+== Texte littéraire ==
+Un texte répond de façon plus ou moins pertinente à des critères qui en déterminent la qualité [[littérature|littéraire]]. On retient en particulier la structure d'ensemble, la [[syntaxe]] et la ponctuation, l'orthographe lexicale et grammaticale, la pertinence et la richesse du vocabulaire, la présence de [[figures de style]], le [[registre de langue]] et la [[Schéma de Jakobson|fonction]] recherchée (narrative, descriptive, expressive, argumentative, injonctive, poétique). C'est l'objet de l'analyse littéraire.
+
+== En informatique ==
+En [[informatique]], la notion de texte s'oppose à la notion de [[données binaires]], on parle alors :
+* de [[texte brut]] dans un protocole de télécommunication ;
+* de document texte si le logiciel utilisé permet de formater le texte ;
+* ou encore de texte formaté ou riche lorsque les indications de formats sont données en texte brut (exemple : [[Rich Text Format]]) ;
+* de [[fichier texte]] dans un fichier qui ne contient que des caractères sans mise en forme autre que les sauts de lignes et le choix des caractères.
+
+== Notes et références ==
+{{Références}}
+
+== Voir aussi ==
+{{Autres projets|wiktionary=texte}}
+
+=== Bibliographie ===
+* [[Roland Barthes]] :
+# ''S/Z'', Paris, 1970 ;
+# ''Le Plaisir du texte'', Paris, 1973 ;
+# ''L'Avenir sémiologique'', Paris, Seuil, 1985.
+* J. Baudrillard, ''Pour une critique de l'économie politique du signe'', Paris, 1972.
+* [[Jacques Derrida]], ''De la grammatologie'', Paris, 1967.
+* [[Tzvetan Todorov]], « Texte », in O.Ducrot et Tzvetan Todorov, ''Dictionnaire encyclopédique des sciences du langage'', Paris, 1972.
+
+=== Articles connexes ===
+* [[Texte de loi]]
+* [[Fichier texte]]
+
+{{Portail|Littérature|Écriture}}
+
+[[Catégorie:Lexique littéraire]]
+Un '''texte''' est une série orale ou écrite de mots perçus comme constituant un ensemble cohérent, porteur de sens et utilisant les structures propres à une [[langue]] (conjugaisons, construction et association des phrases…)<ref>François Rastier définit le texte comme {{Citation|une suite linguistique autonome (orale ou écrite) constituant une unité empirique, et produite par un ou plusieurs énonciateurs dans une pratique sociale attestée}} (François Rastier, 2001, ''Arts et sciences du texte'', Paris, PUF, page 302).</ref>. Un texte n'a pas de longueur déterminée sauf dans le cas de [[poème]]s à forme fixe comme le [[sonnet]] ou le [[haïku]].
+
+L'étude formelle des textes s'appuie sur la [[linguistique]] qui est l'approche scientifique du langage.
+
+== Étymologie ==
+« Texte » est issu du mot latin « textum », dérivé du verbe « texere » qui signifie « tisser ». Le mot s'applique à l'entrelacement des fibres utilisées dans le tissage, voir par exemple [[Ovide]] : « Quo super iniecit textum rude sedula Baucis = (un siège) sur lequel Baucis empressée avait jeté un tissu grossier »<ref>[http://bcs.fltr.ucl.ac.be/METAM/Met08/M-08-547-724.htm ''Métamorphoses'' 8, 640]</ref> ou au tressage  (exemple chez [[Martial]] « Vimineum textum = panier d'osier tressé »). Le verbe a aussi le sens large de construire comme dans « basilicam texere = construire une basilique » chez [[Cicéron]]<ref>[[Lucius Aemilius Paullus (consul en -50)|Paullus]] in medio foro jam paene basilicam texuit iisdem antiquis columnis [https://books.google.fr/books?id=eshGAQAAMAAJ&pg=PA306&lpg=PA306&dq=Paullus+in+medio+foro+jam+paene+basilicam+texuit&source=bl&ots=_uIh9eCKyW&sig=28Yo5gvBvD7wYO2RmezR3PDsVjI&hl=fr&sa=X&ved=0ahUKEwjx86f-mNrPAhWnAcAKHfBgDacQ6AEIKTAB#v=onepage&q=Paullus%20in%20medio%20foro%20jam%20paene%20basilicam%20texuit&f=false] Ciceron, ''Ad Atticum'', 4,16, 14, Lettre CXLIX - page 306</ref>.
+
+Le [[sens figuré]] d'éléments de langage organisés et enchaînés apparaît avant l'[[Empire romain]] : il désigne un agencement particulier du discours. Exemple : « epistolas texere = composer des épîtres » - Cicéron (1er siècle avant J.-C)<ref>« epistolas quotidianis verbis texere solemus » Ciceron, Lettres  : Ad Familiares, IX, 21, lettre DCLVIII [https://books.google.fr/books?id=1ldDAAAAYAAJ&pg=PA200&lpg=PA200&dq=epistolas+quotidianis+verbis+texere+solemus&source=bl&ots=-v9nCm6nnM&sig=SAAOH0nwqng3JhE23i9iysTmWzs&hl=fr&sa=X&ved=0ahUKEwjozrXH8NnPAhUsCsAKHXdJBsIQ6AEIKjAB#v=onepage&q=epistolas%20quotidianis%20verbis%20texere%20solemus&f=false]</ref> ou plus nettement chez [[Quintilien]] (1er siècle après J.-C.) : « verba in textu jungantur =  l'agencement des mots dans la phrase »<ref>« quantumque interest, sensus idem quibus verbis efferatur, tantum , verba eadem qua in compositione vel in textu jungantur = (autant la valeur de la pensée varie suivant les mots qui l'expriment, autant celle des mots varie selon leur harmonie et selon leur agencement) - Quintilien De l'Institution oratoire Livre IX, ch. 4 ''De compositione'' (''De l'arrangement des mots'') [https://books.google.fr/books?id=2UAMAAAAIAAJ&pg=PA156&lpg=PA156&dq=quintilien+textus&source=bl&ots=jDzK22q6c7&sig=n3bGNfTCT1UcfAGQOEwe3SNPZxU&hl=fr&sa=X&ved=0ahUKEwjqgNa99tnPAhVGDsAKHRjGDqgQ6AEIIzAA#v=onepage&q=quintilien%20textus&f=false]  page 326, ou page 392 ibidem « Historia non tam finitos numeros, quam orbem quemdam contextumque desiderat : namque omnia ejus membra connexa sunt, quoniam lubrica est, ac fluit »  page 392 = « L'histoire n'exige pas tant une prose parfaitement cadencée, qu'une suite de phrases dont le tissu soit bien lié; car tout s'y enchaîne, tout y coule, tout y glisse. »</ref>.
+
+Les formes anciennes du [[Moyen Âge]] désignent au XIIe siècle le volume qui contient le texte sacré des Évangiles, puis au XIIIe s. le texte original d'un livre saint ou des propos de quelqu'un. Au XVIIe siècle le mot s’applique au passage d'un ouvrage pris comme référence et au début du XIXe siècle le mot texte a son sens général d'« écrit »<ref>[http://www.cnrtl.fr/lexicographie/texte Dictionnaire CNRTL]</ref>.
+
+== Texte littéraire ==
+Un texte répond de façon plus ou moins pertinente à des critères qui en déterminent la qualité [[littérature|littéraire]]. On retient en particulier la structure d'ensemble, la [[syntaxe]] et la ponctuation, l'orthographe lexicale et grammaticale, la pertinence et la richesse du vocabulaire, la présence de [[figures de style]], le [[registre de langue]] et la [[Schéma de Jakobson|fonction]] recherchée (narrative, descriptive, expressive, argumentative, injonctive, poétique). C'est l'objet de l'analyse littéraire.
+
+== En informatique ==
+En [[informatique]], la notion de texte s'oppose à la notion de [[données binaires]], on parle alors :
+* de [[texte brut]] dans un protocole de télécommunication ;
+* de document texte si le logiciel utilisé permet de formater le texte ;
+* ou encore de texte formaté ou riche lorsque les indications de formats sont données en texte brut (exemple : [[Rich Text Format]]) ;
+* de [[fichier texte]] dans un fichier qui ne contient que des caractères sans mise en forme autre que les sauts de lignes et le choix des caractères.
+
+== Notes et références ==
+{{Références}}
+
+== Voir aussi ==
+{{Autres projets|wiktionary=texte}}
+
+=== Bibliographie ===
+* [[Roland Barthes]] :
+# ''S/Z'', Paris, 1970 ;
+# ''Le Plaisir du texte'', Paris, 1973 ;
+# ''L'Avenir sémiologique'', Paris, Seuil, 1985.
+* J. Baudrillard, ''Pour une critique de l'économie politique du signe'', Paris, 1972.
+* [[Jacques Derrida]], ''De la grammatologie'', Paris, 1967.
+* [[Tzvetan Todorov]], « Texte », in O.Ducrot et Tzvetan Todorov, ''Dictionnaire encyclopédique des sciences du langage'', Paris, 1972.
+
+=== Articles connexes ===
+* [[Texte de loi]]
+* [[Fichier texte]]
+
+{{Portail|Littérature|Écriture}}
+
+[[Catégorie:Lexique littéraire]]
+Un '''texte''' est une série orale ou écrite de mots perçus comme constituant un ensemble cohérent, porteur de sens et utilisant les structures propres à une [[langue]] (conjugaisons, construction et association des phrases…)<ref>François Rastier définit le texte comme {{Citation|une suite linguistique autonome (orale ou écrite) constituant une unité empirique, et produite par un ou plusieurs énonciateurs dans une pratique sociale attestée}} (François Rastier, 2001, ''Arts et sciences du texte'', Paris, PUF, page 302).</ref>. Un texte n'a pas de longueur déterminée sauf dans le cas de [[poème]]s à forme fixe comme le [[sonnet]] ou le [[haïku]].
+
+L'étude formelle des textes s'appuie sur la [[linguistique]] qui est l'approche scientifique du langage.
+
+== Étymologie ==
+« Texte » est issu du mot latin « textum », dérivé du verbe « texere » qui signifie « tisser ». Le mot s'applique à l'entrelacement des fibres utilisées dans le tissage, voir par exemple [[Ovide]] : « Quo super iniecit textum rude sedula Baucis = (un siège) sur lequel Baucis empressée avait jeté un tissu grossier »<ref>[http://bcs.fltr.ucl.ac.be/METAM/Met08/M-08-547-724.htm ''Métamorphoses'' 8, 640]</ref> ou au tressage  (exemple chez [[Martial]] « Vimineum textum = panier d'osier tressé »). Le verbe a aussi le sens large de construire comme dans « basilicam texere = construire une basilique » chez [[Cicéron]]<ref>[[Lucius Aemilius Paullus (consul en -50)|Paullus]] in medio foro jam paene basilicam texuit iisdem antiquis columnis [https://books.google.fr/books?id=eshGAQAAMAAJ&pg=PA306&lpg=PA306&dq=Paullus+in+medio+foro+jam+paene+basilicam+texuit&source=bl&ots=_uIh9eCKyW&sig=28Yo5gvBvD7wYO2RmezR3PDsVjI&hl=fr&sa=X&ved=0ahUKEwjx86f-mNrPAhWnAcAKHfBgDacQ6AEIKTAB#v=onepage&q=Paullus%20in%20medio%20foro%20jam%20paene%20basilicam%20texuit&f=false] Ciceron, ''Ad Atticum'', 4,16, 14, Lettre CXLIX - page 306</ref>.
+
+Le [[sens figuré]] d'éléments de langage organisés et enchaînés apparaît avant l'[[Empire romain]] : il désigne un agencement particulier du discours. Exemple : « epistolas texere = composer des épîtres » - Cicéron (1er siècle avant J.-C)<ref>« epistolas quotidianis verbis texere solemus » Ciceron, Lettres  : Ad Familiares, IX, 21, lettre DCLVIII [https://books.google.fr/books?id=1ldDAAAAYAAJ&pg=PA200&lpg=PA200&dq=epistolas+quotidianis+verbis+texere+solemus&source=bl&ots=-v9nCm6nnM&sig=SAAOH0nwqng3JhE23i9iysTmWzs&hl=fr&sa=X&ved=0ahUKEwjozrXH8NnPAhUsCsAKHXdJBsIQ6AEIKjAB#v=onepage&q=epistolas%20quotidianis%20verbis%20texere%20solemus&f=false]</ref> ou plus nettement chez [[Quintilien]] (1er siècle après J.-C.) : « verba in textu jungantur =  l'agencement des mots dans la phrase »<ref>« quantumque interest, sensus idem quibus verbis efferatur, tantum , verba eadem qua in compositione vel in textu jungantur = (autant la valeur de la pensée varie suivant les mots qui l'expriment, autant celle des mots varie selon leur harmonie et selon leur agencement) - Quintilien De l'Institution oratoire Livre IX, ch. 4 ''De compositione'' (''De l'arrangement des mots'') [https://books.google.fr/books?id=2UAMAAAAIAAJ&pg=PA156&lpg=PA156&dq=quintilien+textus&source=bl&ots=jDzK22q6c7&sig=n3bGNfTCT1UcfAGQOEwe3SNPZxU&hl=fr&sa=X&ved=0ahUKEwjqgNa99tnPAhVGDsAKHRjGDqgQ6AEIIzAA#v=onepage&q=quintilien%20textus&f=false]  page 326, ou page 392 ibidem « Historia non tam finitos numeros, quam orbem quemdam contextumque desiderat : namque omnia ejus membra connexa sunt, quoniam lubrica est, ac fluit »  page 392 = « L'histoire n'exige pas tant une prose parfaitement cadencée, qu'une suite de phrases dont le tissu soit bien lié; car tout s'y enchaîne, tout y coule, tout y glisse. »</ref>.
+
+Les formes anciennes du [[Moyen Âge]] désignent au XIIe siècle le volume qui contient le texte sacré des Évangiles, puis au XIIIe s. le texte original d'un livre saint ou des propos de quelqu'un. Au XVIIe siècle le mot s’applique au passage d'un ouvrage pris comme référence et au début du XIXe siècle le mot texte a son sens général d'« écrit »<ref>[http://www.cnrtl.fr/lexicographie/texte Dictionnaire CNRTL]</ref>.
+
+== Texte littéraire ==
+Un texte répond de façon plus ou moins pertinente à des critères qui en déterminent la qualité [[littérature|littéraire]]. On retient en particulier la structure d'ensemble, la [[syntaxe]] et la ponctuation, l'orthographe lexicale et grammaticale, la pertinence et la richesse du vocabulaire, la présence de [[figures de style]], le [[registre de langue]] et la [[Schéma de Jakobson|fonction]] recherchée (narrative, descriptive, expressive, argumentative, injonctive, poétique). C'est l'objet de l'analyse littéraire.
+
+== En informatique ==
+En [[informatique]], la notion de texte s'oppose à la notion de [[données binaires]], on parle alors :
+* de [[texte brut]] dans un protocole de télécommunication ;
+* de document texte si le logiciel utilisé permet de formater le texte ;
+* ou encore de texte formaté ou riche lorsque les indications de formats sont données en texte brut (exemple : [[Rich Text Format]]) ;
+* de [[fichier texte]] dans un fichier qui ne contient que des caractères sans mise en forme autre que les sauts de lignes et le choix des caractères.
+
+== Notes et références ==
+{{Références}}
+
+== Voir aussi ==
+{{Autres projets|wiktionary=texte}}
+
+=== Bibliographie ===
+* [[Roland Barthes]] :
+# ''S/Z'', Paris, 1970 ;
+# ''Le Plaisir du texte'', Paris, 1973 ;
+# ''L'Avenir sémiologique'', Paris, Seuil, 1985.
+* J. Baudrillard, ''Pour une critique de l'économie politique du signe'', Paris, 1972.
+* [[Jacques Derrida]], ''De la grammatologie'', Paris, 1967.
+* [[Tzvetan Todorov]], « Texte », in O.Ducrot et Tzvetan Todorov, ''Dictionnaire encyclopédique des sciences du langage'', Paris, 1972.
+
+=== Articles connexes ===
+* [[Texte de loi]]
+* [[Fichier texte]]
+
+{{Portail|Littérature|Écriture}}
+
+[[Catégorie:Lexique littéraire]]
+Un '''texte''' est une série orale ou écrite de mots perçus comme constituant un ensemble cohérent, porteur de sens et utilisant les structures propres à une [[langue]] (conjugaisons, construction et association des phrases…)<ref>François Rastier définit le texte comme {{Citation|une suite linguistique autonome (orale ou écrite) constituant une unité empirique, et produite par un ou plusieurs énonciateurs dans une pratique sociale attestée}} (François Rastier, 2001, ''Arts et sciences du texte'', Paris, PUF, page 302).</ref>. Un texte n'a pas de longueur déterminée sauf dans le cas de [[poème]]s à forme fixe comme le [[sonnet]] ou le [[haïku]].
+
+L'étude formelle des textes s'appuie sur la [[linguistique]] qui est l'approche scientifique du langage.
+
+== Étymologie ==
+« Texte » est issu du mot latin « textum », dérivé du verbe « texere » qui signifie « tisser ». Le mot s'applique à l'entrelacement des fibres utilisées dans le tissage, voir par exemple [[Ovide]] : « Quo super iniecit textum rude sedula Baucis = (un siège) sur lequel Baucis empressée avait jeté un tissu grossier »<ref>[http://bcs.fltr.ucl.ac.be/METAM/Met08/M-08-547-724.htm ''Métamorphoses'' 8, 640]</ref> ou au tressage  (exemple chez [[Martial]] « Vimineum textum = panier d'osier tressé »). Le verbe a aussi le sens large de construire comme dans « basilicam texere = construire une basilique » chez [[Cicéron]]<ref>[[Lucius Aemilius Paullus (consul en -50)|Paullus]] in medio foro jam paene basilicam texuit iisdem antiquis columnis [https://books.google.fr/books?id=eshGAQAAMAAJ&pg=PA306&lpg=PA306&dq=Paullus+in+medio+foro+jam+paene+basilicam+texuit&source=bl&ots=_uIh9eCKyW&sig=28Yo5gvBvD7wYO2RmezR3PDsVjI&hl=fr&sa=X&ved=0ahUKEwjx86f-mNrPAhWnAcAKHfBgDacQ6AEIKTAB#v=onepage&q=Paullus%20in%20medio%20foro%20jam%20paene%20basilicam%20texuit&f=false] Ciceron, ''Ad Atticum'', 4,16, 14, Lettre CXLIX - page 306</ref>.
+
+Le [[sens figuré]] d'éléments de langage organisés et enchaînés apparaît avant l'[[Empire romain]] : il désigne un agencement particulier du discours. Exemple : « epistolas texere = composer des épîtres » - Cicéron (1er siècle avant J.-C)<ref>« epistolas quotidianis verbis texere solemus » Ciceron, Lettres  : Ad Familiares, IX, 21, lettre DCLVIII [https://books.google.fr/books?id=1ldDAAAAYAAJ&pg=PA200&lpg=PA200&dq=epistolas+quotidianis+verbis+texere+solemus&source=bl&ots=-v9nCm6nnM&sig=SAAOH0nwqng3JhE23i9iysTmWzs&hl=fr&sa=X&ved=0ahUKEwjozrXH8NnPAhUsCsAKHXdJBsIQ6AEIKjAB#v=onepage&q=epistolas%20quotidianis%20verbis%20texere%20solemus&f=false]</ref> ou plus nettement chez [[Quintilien]] (1er siècle après J.-C.) : « verba in textu jungantur =  l'agencement des mots dans la phrase »<ref>« quantumque interest, sensus idem quibus verbis efferatur, tantum , verba eadem qua in compositione vel in textu jungantur = (autant la valeur de la pensée varie suivant les mots qui l'expriment, autant celle des mots varie selon leur harmonie et selon leur agencement) - Quintilien De l'Institution oratoire Livre IX, ch. 4 ''De compositione'' (''De l'arrangement des mots'') [https://books.google.fr/books?id=2UAMAAAAIAAJ&pg=PA156&lpg=PA156&dq=quintilien+textus&source=bl&ots=jDzK22q6c7&sig=n3bGNfTCT1UcfAGQOEwe3SNPZxU&hl=fr&sa=X&ved=0ahUKEwjqgNa99tnPAhVGDsAKHRjGDqgQ6AEIIzAA#v=onepage&q=quintilien%20textus&f=false]  page 326, ou page 392 ibidem « Historia non tam finitos numeros, quam orbem quemdam contextumque desiderat : namque omnia ejus membra connexa sunt, quoniam lubrica est, ac fluit »  page 392 = « L'histoire n'exige pas tant une prose parfaitement cadencée, qu'une suite de phrases dont le tissu soit bien lié; car tout s'y enchaîne, tout y coule, tout y glisse. »</ref>.
+
+Les formes anciennes du [[Moyen Âge]] désignent au XIIe siècle le volume qui contient le texte sacré des Évangiles, puis au XIIIe s. le texte original d'un livre saint ou des propos de quelqu'un. Au XVIIe siècle le mot s’applique au passage d'un ouvrage pris comme référence et au début du XIXe siècle le mot texte a son sens général d'« écrit »<ref>[http://www.cnrtl.fr/lexicographie/texte Dictionnaire CNRTL]</ref>.
+
+== Texte littéraire ==
+Un texte répond de façon plus ou moins pertinente à des critères qui en déterminent la qualité [[littérature|littéraire]]. On retient en particulier la structure d'ensemble, la [[syntaxe]] et la ponctuation, l'orthographe lexicale et grammaticale, la pertinence et la richesse du vocabulaire, la présence de [[figures de style]], le [[registre de langue]] et la [[Schéma de Jakobson|fonction]] recherchée (narrative, descriptive, expressive, argumentative, injonctive, poétique). C'est l'objet de l'analyse littéraire.
+
+== En informatique ==
+En [[informatique]], la notion de texte s'oppose à la notion de [[données binaires]], on parle alors :
+* de [[texte brut]] dans un protocole de télécommunication ;
+* de document texte si le logiciel utilisé permet de formater le texte ;
+* ou encore de texte formaté ou riche lorsque les indications de formats sont données en texte brut (exemple : [[Rich Text Format]]) ;
+* de [[fichier texte]] dans un fichier qui ne contient que des caractères sans mise en forme autre que les sauts de lignes et le choix des caractères.
+
+== Notes et références ==
+{{Références}}
+
+== Voir aussi ==
+{{Autres projets|wiktionary=texte}}
+
+=== Bibliographie ===
+* [[Roland Barthes]] :
+# ''S/Z'', Paris, 1970 ;
+# ''Le Plaisir du texte'', Paris, 1973 ;
+# ''L'Avenir sémiologique'', Paris, Seuil, 1985.
+* J. Baudrillard, ''Pour une critique de l'économie politique du signe'', Paris, 1972.
+* [[Jacques Derrida]], ''De la grammatologie'', Paris, 1967.
+* [[Tzvetan Todorov]], « Texte », in O.Ducrot et Tzvetan Todorov, ''Dictionnaire encyclopédique des sciences du langage'', Paris, 1972.
+
+=== Articles connexes ===
+* [[Texte de loi]]
+* [[Fichier texte]]
+
+{{Portail|Littérature|Écriture}}
+
+[[Catégorie:Lexique littéraire]]
+Un '''texte''' est une série orale ou écrite de mots perçus comme constituant un ensemble cohérent, porteur de sens et utilisant les structures propres à une [[langue]] (conjugaisons, construction et association des phrases…)<ref>François Rastier définit le texte comme {{Citation|une suite linguistique autonome (orale ou écrite) constituant une unité empirique, et produite par un ou plusieurs énonciateurs dans une pratique sociale attestée}} (François Rastier, 2001, ''Arts et sciences du texte'', Paris, PUF, page 302).</ref>. Un texte n'a pas de longueur déterminée sauf dans le cas de [[poème]]s à forme fixe comme le [[sonnet]] ou le [[haïku]].
+
+L'étude formelle des textes s'appuie sur la [[linguistique]] qui est l'approche scientifique du langage.
+
+== Étymologie ==
+« Texte » est issu du mot latin « textum », dérivé du verbe « texere » qui signifie « tisser ». Le mot s'applique à l'entrelacement des fibres utilisées dans le tissage, voir par exemple [[Ovide]] : « Quo super iniecit textum rude sedula Baucis = (un siège) sur lequel Baucis empressée avait jeté un tissu grossier »<ref>[http://bcs.fltr.ucl.ac.be/METAM/Met08/M-08-547-724.htm ''Métamorphoses'' 8, 640]</ref> ou au tressage  (exemple chez [[Martial]] « Vimineum textum = panier d'osier tressé »). Le verbe a aussi le sens large de construire comme dans « basilicam texere = construire une basilique » chez [[Cicéron]]<ref>[[Lucius Aemilius Paullus (consul en -50)|Paullus]] in medio foro jam paene basilicam texuit iisdem antiquis columnis [https://books.google.fr/books?id=eshGAQAAMAAJ&pg=PA306&lpg=PA306&dq=Paullus+in+medio+foro+jam+paene+basilicam+texuit&source=bl&ots=_uIh9eCKyW&sig=28Yo5gvBvD7wYO2RmezR3PDsVjI&hl=fr&sa=X&ved=0ahUKEwjx86f-mNrPAhWnAcAKHfBgDacQ6AEIKTAB#v=onepage&q=Paullus%20in%20medio%20foro%20jam%20paene%20basilicam%20texuit&f=false] Ciceron, ''Ad Atticum'', 4,16, 14, Lettre CXLIX - page 306</ref>.
+
+Le [[sens figuré]] d'éléments de langage organisés et enchaînés apparaît avant l'[[Empire romain]] : il désigne un agencement particulier du discours. Exemple : « epistolas texere = composer des épîtres » - Cicéron (1er siècle avant J.-C)<ref>« epistolas quotidianis verbis texere solemus » Ciceron, Lettres  : Ad Familiares, IX, 21, lettre DCLVIII [https://books.google.fr/books?id=1ldDAAAAYAAJ&pg=PA200&lpg=PA200&dq=epistolas+quotidianis+verbis+texere+solemus&source=bl&ots=-v9nCm6nnM&sig=SAAOH0nwqng3JhE23i9iysTmWzs&hl=fr&sa=X&ved=0ahUKEwjozrXH8NnPAhUsCsAKHXdJBsIQ6AEIKjAB#v=onepage&q=epistolas%20quotidianis%20verbis%20texere%20solemus&f=false]</ref> ou plus nettement chez [[Quintilien]] (1er siècle après J.-C.) : « verba in textu jungantur =  l'agencement des mots dans la phrase »<ref>« quantumque interest, sensus idem quibus verbis efferatur, tantum , verba eadem qua in compositione vel in textu jungantur = (autant la valeur de la pensée varie suivant les mots qui l'expriment, autant celle des mots varie selon leur harmonie et selon leur agencement) - Quintilien De l'Institution oratoire Livre IX, ch. 4 ''De compositione'' (''De l'arrangement des mots'') [https://books.google.fr/books?id=2UAMAAAAIAAJ&pg=PA156&lpg=PA156&dq=quintilien+textus&source=bl&ots=jDzK22q6c7&sig=n3bGNfTCT1UcfAGQOEwe3SNPZxU&hl=fr&sa=X&ved=0ahUKEwjqgNa99tnPAhVGDsAKHRjGDqgQ6AEIIzAA#v=onepage&q=quintilien%20textus&f=false]  page 326, ou page 392 ibidem « Historia non tam finitos numeros, quam orbem quemdam contextumque desiderat : namque omnia ejus membra connexa sunt, quoniam lubrica est, ac fluit »  page 392 = « L'histoire n'exige pas tant une prose parfaitement cadencée, qu'une suite de phrases dont le tissu soit bien lié; car tout s'y enchaîne, tout y coule, tout y glisse. »</ref>.
+
+Les formes anciennes du [[Moyen Âge]] désignent au XIIe siècle le volume qui contient le texte sacré des Évangiles, puis au XIIIe s. le texte original d'un livre saint ou des propos de quelqu'un. Au XVIIe siècle le mot s’applique au passage d'un ouvrage pris comme référence et au début du XIXe siècle le mot texte a son sens général d'« écrit »<ref>[http://www.cnrtl.fr/lexicographie/texte Dictionnaire CNRTL]</ref>.
+
+== Texte littéraire ==
+Un texte répond de façon plus ou moins pertinente à des critères qui en déterminent la qualité [[littérature|littéraire]]. On retient en particulier la structure d'ensemble, la [[syntaxe]] et la ponctuation, l'orthographe lexicale et grammaticale, la pertinence et la richesse du vocabulaire, la présence de [[figures de style]], le [[registre de langue]] et la [[Schéma de Jakobson|fonction]] recherchée (narrative, descriptive, expressive, argumentative, injonctive, poétique). C'est l'objet de l'analyse littéraire.
+
+== En informatique ==
+En [[informatique]], la notion de texte s'oppose à la notion de [[données binaires]], on parle alors :
+* de [[texte brut]] dans un protocole de télécommunication ;
+* de document texte si le logiciel utilisé permet de formater le texte ;
+* ou encore de texte formaté ou riche lorsque les indications de formats sont données en texte brut (exemple : [[Rich Text Format]]) ;
+* de [[fichier texte]] dans un fichier qui ne contient que des caractères sans mise en forme autre que les sauts de lignes et le choix des caractères.
+
+== Notes et références ==
+{{Références}}
+
+== Voir aussi ==
+{{Autres projets|wiktionary=texte}}
+
+=== Bibliographie ===
+* [[Roland Barthes]] :
+# ''S/Z'', Paris, 1970 ;
+# ''Le Plaisir du texte'', Paris, 1973 ;
+# ''L'Avenir sémiologique'', Paris, Seuil, 1985.
+* J. Baudrillard, ''Pour une critique de l'économie politique du signe'', Paris, 1972.
+* [[Jacques Derrida]], ''De la grammatologie'', Paris, 1967.
+* [[Tzvetan Todorov]], « Texte », in O.Ducrot et Tzvetan Todorov, ''Dictionnaire encyclopédique des sciences du langage'', Paris, 1972.
+
+=== Articles connexes ===
+* [[Texte de loi]]
+* [[Fichier texte]]
+
+{{Portail|Littérature|Écriture}}
+
+[[Catégorie:Lexique littéraire]]
+Un '''texte''' est une série orale ou écrite de mots perçus comme constituant un ensemble cohérent, porteur de sens et utilisant les structures propres à une [[langue]] (conjugaisons, construction et association des phrases…)<ref>François Rastier définit le texte comme {{Citation|une suite linguistique autonome (orale ou écrite) constituant une unité empirique, et produite par un ou plusieurs énonciateurs dans une pratique sociale attestée}} (François Rastier, 2001, ''Arts et sciences du texte'', Paris, PUF, page 302).</ref>. Un texte n'a pas de longueur déterminée sauf dans le cas de [[poème]]s à forme fixe comme le [[sonnet]] ou le [[haïku]].
+
+L'étude formelle des textes s'appuie sur la [[linguistique]] qui est l'approche scientifique du langage.
+
+== Étymologie ==
+« Texte » est issu du mot latin « textum », dérivé du verbe « texere » qui signifie « tisser ». Le mot s'applique à l'entrelacement des fibres utilisées dans le tissage, voir par exemple [[Ovide]] : « Quo super iniecit textum rude sedula Baucis = (un siège) sur lequel Baucis empressée avait jeté un tissu grossier »<ref>[http://bcs.fltr.ucl.ac.be/METAM/Met08/M-08-547-724.htm ''Métamorphoses'' 8, 640]</ref> ou au tressage  (exemple chez [[Martial]] « Vimineum textum = panier d'osier tressé »). Le verbe a aussi le sens large de construire comme dans « basilicam texere = construire une basilique » chez [[Cicéron]]<ref>[[Lucius Aemilius Paullus (consul en -50)|Paullus]] in medio foro jam paene basilicam texuit iisdem antiquis columnis [https://books.google.fr/books?id=eshGAQAAMAAJ&pg=PA306&lpg=PA306&dq=Paullus+in+medio+foro+jam+paene+basilicam+texuit&source=bl&ots=_uIh9eCKyW&sig=28Yo5gvBvD7wYO2RmezR3PDsVjI&hl=fr&sa=X&ved=0ahUKEwjx86f-mNrPAhWnAcAKHfBgDacQ6AEIKTAB#v=onepage&q=Paullus%20in%20medio%20foro%20jam%20paene%20basilicam%20texuit&f=false] Ciceron, ''Ad Atticum'', 4,16, 14, Lettre CXLIX - page 306</ref>.
+
+Le [[sens figuré]] d'éléments de langage organisés et enchaînés apparaît avant l'[[Empire romain]] : il désigne un agencement particulier du discours. Exemple : « epistolas texere = composer des épîtres » - Cicéron (1er siècle avant J.-C)<ref>« epistolas quotidianis verbis texere solemus » Ciceron, Lettres  : Ad Familiares, IX, 21, lettre DCLVIII [https://books.google.fr/books?id=1ldDAAAAYAAJ&pg=PA200&lpg=PA200&dq=epistolas+quotidianis+verbis+texere+solemus&source=bl&ots=-v9nCm6nnM&sig=SAAOH0nwqng3JhE23i9iysTmWzs&hl=fr&sa=X&ved=0ahUKEwjozrXH8NnPAhUsCsAKHXdJBsIQ6AEIKjAB#v=onepage&q=epistolas%20quotidianis%20verbis%20texere%20solemus&f=false]</ref> ou plus nettement chez [[Quintilien]] (1er siècle après J.-C.) : « verba in textu jungantur =  l'agencement des mots dans la phrase »<ref>« quantumque interest, sensus idem quibus verbis efferatur, tantum , verba eadem qua in compositione vel in textu jungantur = (autant la valeur de la pensée varie suivant les mots qui l'expriment, autant celle des mots varie selon leur harmonie et selon leur agencement) - Quintilien De l'Institution oratoire Livre IX, ch. 4 ''De compositione'' (''De l'arrangement des mots'') [https://books.google.fr/books?id=2UAMAAAAIAAJ&pg=PA156&lpg=PA156&dq=quintilien+textus&source=bl&ots=jDzK22q6c7&sig=n3bGNfTCT1UcfAGQOEwe3SNPZxU&hl=fr&sa=X&ved=0ahUKEwjqgNa99tnPAhVGDsAKHRjGDqgQ6AEIIzAA#v=onepage&q=quintilien%20textus&f=false]  page 326, ou page 392 ibidem « Historia non tam finitos numeros, quam orbem quemdam contextumque desiderat : namque omnia ejus membra connexa sunt, quoniam lubrica est, ac fluit »  page 392 = « L'histoire n'exige pas tant une prose parfaitement cadencée, qu'une suite de phrases dont le tissu soit bien lié; car tout s'y enchaîne, tout y coule, tout y glisse. »</ref>.
+
+Les formes anciennes du [[Moyen Âge]] désignent au XIIe siècle le volume qui contient le texte sacré des Évangiles, puis au XIIIe s. le texte original d'un livre saint ou des propos de quelqu'un. Au XVIIe siècle le mot s’applique au passage d'un ouvrage pris comme référence et au début du XIXe siècle le mot texte a son sens général d'« écrit »<ref>[http://www.cnrtl.fr/lexicographie/texte Dictionnaire CNRTL]</ref>.
+
+== Texte littéraire ==
+Un texte répond de façon plus ou moins pertinente à des critères qui en déterminent la qualité [[littérature|littéraire]]. On retient en particulier la structure d'ensemble, la [[syntaxe]] et la ponctuation, l'orthographe lexicale et grammaticale, la pertinence et la richesse du vocabulaire, la présence de [[figures de style]], le [[registre de langue]] et la [[Schéma de Jakobson|fonction]] recherchée (narrative, descriptive, expressive, argumentative, injonctive, poétique). C'est l'objet de l'analyse littéraire.
+
+== En informatique ==
+En [[informatique]], la notion de texte s'oppose à la notion de [[données binaires]], on parle alors :
+* de [[texte brut]] dans un protocole de télécommunication ;
+* de document texte si le logiciel utilisé permet de formater le texte ;
+* ou encore de texte formaté ou riche lorsque les indications de formats sont données en texte brut (exemple : [[Rich Text Format]]) ;
+* de [[fichier texte]] dans un fichier qui ne contient que des caractères sans mise en forme autre que les sauts de lignes et le choix des caractères.
+
+== Notes et références ==
+{{Références}}
+
+== Voir aussi ==
+{{Autres projets|wiktionary=texte}}
+
+=== Bibliographie ===
+* [[Roland Barthes]] :
+# ''S/Z'', Paris, 1970 ;
+# ''Le Plaisir du texte'', Paris, 1973 ;
+# ''L'Avenir sémiologique'', Paris, Seuil, 1985.
+* J. Baudrillard, ''Pour une critique de l'économie politique du signe'', Paris, 1972.
+* [[Jacques Derrida]], ''De la grammatologie'', Paris, 1967.
+* [[Tzvetan Todorov]], « Texte », in O.Ducrot et Tzvetan Todorov, ''Dictionnaire encyclopédique des sciences du langage'', Paris, 1972.
+
+=== Articles connexes ===
+* [[Texte de loi]]
+* [[Fichier texte]]
+
+{{Portail|Littérature|Écriture}}
+
+[[Catégorie:Lexique littéraire]]
+Un '''texte''' est une série orale ou écrite de mots perçus comme constituant un ensemble cohérent, porteur de sens et utilisant les structures propres à une [[langue]] (conjugaisons, construction et association des phrases…)<ref>François Rastier définit le texte comme {{Citation|une suite linguistique autonome (orale ou écrite) constituant une unité empirique, et produite par un ou plusieurs énonciateurs dans une pratique sociale attestée}} (François Rastier, 2001, ''Arts et sciences du texte'', Paris, PUF, page 302).</ref>. Un texte n'a pas de longueur déterminée sauf dans le cas de [[poème]]s à forme fixe comme le [[sonnet]] ou le [[haïku]].
+
+L'étude formelle des textes s'appuie sur la [[linguistique]] qui est l'approche scientifique du langage.
+
+== Étymologie ==
+« Texte » est issu du mot latin « textum », dérivé du verbe « texere » qui signifie « tisser ». Le mot s'applique à l'entrelacement des fibres utilisées dans le tissage, voir par exemple [[Ovide]] : « Quo super iniecit textum rude sedula Baucis = (un siège) sur lequel Baucis empressée avait jeté un tissu grossier »<ref>[http://bcs.fltr.ucl.ac.be/METAM/Met08/M-08-547-724.htm ''Métamorphoses'' 8, 640]</ref> ou au tressage  (exemple chez [[Martial]] « Vimineum textum = panier d'osier tressé »). Le verbe a aussi le sens large de construire comme dans « basilicam texere = construire une basilique » chez [[Cicéron]]<ref>[[Lucius Aemilius Paullus (consul en -50)|Paullus]] in medio foro jam paene basilicam texuit iisdem antiquis columnis [https://books.google.fr/books?id=eshGAQAAMAAJ&pg=PA306&lpg=PA306&dq=Paullus+in+medio+foro+jam+paene+basilicam+texuit&source=bl&ots=_uIh9eCKyW&sig=28Yo5gvBvD7wYO2RmezR3PDsVjI&hl=fr&sa=X&ved=0ahUKEwjx86f-mNrPAhWnAcAKHfBgDacQ6AEIKTAB#v=onepage&q=Paullus%20in%20medio%20foro%20jam%20paene%20basilicam%20texuit&f=false] Ciceron, ''Ad Atticum'', 4,16, 14, Lettre CXLIX - page 306</ref>.
+
+Le [[sens figuré]] d'éléments de langage organisés et enchaînés apparaît avant l'[[Empire romain]] : il désigne un agencement particulier du discours. Exemple : « epistolas texere = composer des épîtres » - Cicéron (1er siècle avant J.-C)<ref>« epistolas quotidianis verbis texere solemus » Ciceron, Lettres  : Ad Familiares, IX, 21, lettre DCLVIII [https://books.google.fr/books?id=1ldDAAAAYAAJ&pg=PA200&lpg=PA200&dq=epistolas+quotidianis+verbis+texere+solemus&source=bl&ots=-v9nCm6nnM&sig=SAAOH0nwqng3JhE23i9iysTmWzs&hl=fr&sa=X&ved=0ahUKEwjozrXH8NnPAhUsCsAKHXdJBsIQ6AEIKjAB#v=onepage&q=epistolas%20quotidianis%20verbis%20texere%20solemus&f=false]</ref> ou plus nettement chez [[Quintilien]] (1er siècle après J.-C.) : « verba in textu jungantur =  l'agencement des mots dans la phrase »<ref>« quantumque interest, sensus idem quibus verbis efferatur, tantum , verba eadem qua in compositione vel in textu jungantur = (autant la valeur de la pensée varie suivant les mots qui l'expriment, autant celle des mots varie selon leur harmonie et selon leur agencement) - Quintilien De l'Institution oratoire Livre IX, ch. 4 ''De compositione'' (''De l'arrangement des mots'') [https://books.google.fr/books?id=2UAMAAAAIAAJ&pg=PA156&lpg=PA156&dq=quintilien+textus&source=bl&ots=jDzK22q6c7&sig=n3bGNfTCT1UcfAGQOEwe3SNPZxU&hl=fr&sa=X&ved=0ahUKEwjqgNa99tnPAhVGDsAKHRjGDqgQ6AEIIzAA#v=onepage&q=quintilien%20textus&f=false]  page 326, ou page 392 ibidem « Historia non tam finitos numeros, quam orbem quemdam contextumque desiderat : namque omnia ejus membra connexa sunt, quoniam lubrica est, ac fluit »  page 392 = « L'histoire n'exige pas tant une prose parfaitement cadencée, qu'une suite de phrases dont le tissu soit bien lié; car tout s'y enchaîne, tout y coule, tout y glisse. »</ref>.
+
+Les formes anciennes du [[Moyen Âge]] désignent au XIIe siècle le volume qui contient le texte sacré des Évangiles, puis au XIIIe s. le texte original d'un livre saint ou des propos de quelqu'un. Au XVIIe siècle le mot s’applique au passage d'un ouvrage pris comme référence et au début du XIXe siècle le mot texte a son sens général d'« écrit »<ref>[http://www.cnrtl.fr/lexicographie/texte Dictionnaire CNRTL]</ref>.
+
+== Texte littéraire ==
+Un texte répond de façon plus ou moins pertinente à des critères qui en déterminent la qualité [[littérature|littéraire]]. On retient en particulier la structure d'ensemble, la [[syntaxe]] et la ponctuation, l'orthographe lexicale et grammaticale, la pertinence et la richesse du vocabulaire, la présence de [[figures de style]], le [[registre de langue]] et la [[Schéma de Jakobson|fonction]] recherchée (narrative, descriptive, expressive, argumentative, injonctive, poétique). C'est l'objet de l'analyse littéraire.
+
+== En informatique ==
+En [[informatique]], la notion de texte s'oppose à la notion de [[données binaires]], on parle alors :
+* de [[texte brut]] dans un protocole de télécommunication ;
+* de document texte si le logiciel utilisé permet de formater le texte ;
+* ou encore de texte formaté ou riche lorsque les indications de formats sont données en texte brut (exemple : [[Rich Text Format]]) ;
+* de [[fichier texte]] dans un fichier qui ne contient que des caractères sans mise en forme autre que les sauts de lignes et le choix des caractères.
+
+== Notes et références ==
+{{Références}}
+
+== Voir aussi ==
+{{Autres projets|wiktionary=texte}}
+
+=== Bibliographie ===
+* [[Roland Barthes]] :
+# ''S/Z'', Paris, 1970 ;
+# ''Le Plaisir du texte'', Paris, 1973 ;
+# ''L'Avenir sémiologique'', Paris, Seuil, 1985.
+* J. Baudrillard, ''Pour une critique de l'économie politique du signe'', Paris, 1972.
+* [[Jacques Derrida]], ''De la grammatologie'', Paris, 1967.
+* [[Tzvetan Todorov]], « Texte », in O.Ducrot et Tzvetan Todorov, ''Dictionnaire encyclopédique des sciences du langage'', Paris, 1972.
+
+=== Articles connexes ===
+* [[Texte de loi]]
+* [[Fichier texte]]
+
+{{Portail|Littérature|Écriture}}
+
+[[Catégorie:Lexique littéraire]]
+Un '''texte''' est une série orale ou écrite de mots perçus comme constituant un ensemble cohérent, porteur de sens et utilisant les structures propres à une [[langue]] (conjugaisons, construction et association des phrases…)<ref>François Rastier définit le texte comme {{Citation|une suite linguistique autonome (orale ou écrite) constituant une unité empirique, et produite par un ou plusieurs énonciateurs dans une pratique sociale attestée}} (François Rastier, 2001, ''Arts et sciences du texte'', Paris, PUF, page 302).</ref>. Un texte n'a pas de longueur déterminée sauf dans le cas de [[poème]]s à forme fixe comme le [[sonnet]] ou le [[haïku]].
+
+L'étude formelle des textes s'appuie sur la [[linguistique]] qui est l'approche scientifique du langage.
+
+== Étymologie ==
+« Texte » est issu du mot latin « textum », dérivé du verbe « texere » qui signifie « tisser ». Le mot s'applique à l'entrelacement des fibres utilisées dans le tissage, voir par exemple [[Ovide]] : « Quo super iniecit textum rude sedula Baucis = (un siège) sur lequel Baucis empressée avait jeté un tissu grossier »<ref>[http://bcs.fltr.ucl.ac.be/METAM/Met08/M-08-547-724.htm ''Métamorphoses'' 8, 640]</ref> ou au tressage  (exemple chez [[Martial]] « Vimineum textum = panier d'osier tressé »). Le verbe a aussi le sens large de construire comme dans « basilicam texere = construire une basilique » chez [[Cicéron]]<ref>[[Lucius Aemilius Paullus (consul en -50)|Paullus]] in medio foro jam paene basilicam texuit iisdem antiquis columnis [https://books.google.fr/books?id=eshGAQAAMAAJ&pg=PA306&lpg=PA306&dq=Paullus+in+medio+foro+jam+paene+basilicam+texuit&source=bl&ots=_uIh9eCKyW&sig=28Yo5gvBvD7wYO2RmezR3PDsVjI&hl=fr&sa=X&ved=0ahUKEwjx86f-mNrPAhWnAcAKHfBgDacQ6AEIKTAB#v=onepage&q=Paullus%20in%20medio%20foro%20jam%20paene%20basilicam%20texuit&f=false] Ciceron, ''Ad Atticum'', 4,16, 14, Lettre CXLIX - page 306</ref>.
+
+Le [[sens figuré]] d'éléments de langage organisés et enchaînés apparaît avant l'[[Empire romain]] : il désigne un agencement particulier du discours. Exemple : « epistolas texere = composer des épîtres » - Cicéron (1er siècle avant J.-C)<ref>« epistolas quotidianis verbis texere solemus » Ciceron, Lettres  : Ad Familiares, IX, 21, lettre DCLVIII [https://books.google.fr/books?id=1ldDAAAAYAAJ&pg=PA200&lpg=PA200&dq=epistolas+quotidianis+verbis+texere+solemus&source=bl&ots=-v9nCm6nnM&sig=SAAOH0nwqng3JhE23i9iysTmWzs&hl=fr&sa=X&ved=0ahUKEwjozrXH8NnPAhUsCsAKHXdJBsIQ6AEIKjAB#v=onepage&q=epistolas%20quotidianis%20verbis%20texere%20solemus&f=false]</ref> ou plus nettement chez [[Quintilien]] (1er siècle après J.-C.) : « verba in textu jungantur =  l'agencement des mots dans la phrase »<ref>« quantumque interest, sensus idem quibus verbis efferatur, tantum , verba eadem qua in compositione vel in textu jungantur = (autant la valeur de la pensée varie suivant les mots qui l'expriment, autant celle des mots varie selon leur harmonie et selon leur agencement) - Quintilien De l'Institution oratoire Livre IX, ch. 4 ''De compositione'' (''De l'arrangement des mots'') [https://books.google.fr/books?id=2UAMAAAAIAAJ&pg=PA156&lpg=PA156&dq=quintilien+textus&source=bl&ots=jDzK22q6c7&sig=n3bGNfTCT1UcfAGQOEwe3SNPZxU&hl=fr&sa=X&ved=0ahUKEwjqgNa99tnPAhVGDsAKHRjGDqgQ6AEIIzAA#v=onepage&q=quintilien%20textus&f=false]  page 326, ou page 392 ibidem « Historia non tam finitos numeros, quam orbem quemdam contextumque desiderat : namque omnia ejus membra connexa sunt, quoniam lubrica est, ac fluit »  page 392 = « L'histoire n'exige pas tant une prose parfaitement cadencée, qu'une suite de phrases dont le tissu soit bien lié; car tout s'y enchaîne, tout y coule, tout y glisse. »</ref>.
+
+Les formes anciennes du [[Moyen Âge]] désignent au XIIe siècle le volume qui contient le texte sacré des Évangiles, puis au XIIIe s. le texte original d'un livre saint ou des propos de quelqu'un. Au XVIIe siècle le mot s’applique au passage d'un ouvrage pris comme référence et au début du XIXe siècle le mot texte a son sens général d'« écrit »<ref>[http://www.cnrtl.fr/lexicographie/texte Dictionnaire CNRTL]</ref>.
+
+== Texte littéraire ==
+Un texte répond de façon plus ou moins pertinente à des critères qui en déterminent la qualité [[littérature|littéraire]]. On retient en particulier la structure d'ensemble, la [[syntaxe]] et la ponctuation, l'orthographe lexicale et grammaticale, la pertinence et la richesse du vocabulaire, la présence de [[figures de style]], le [[registre de langue]] et la [[Schéma de Jakobson|fonction]] recherchée (narrative, descriptive, expressive, argumentative, injonctive, poétique). C'est l'objet de l'analyse littéraire.
+
+== En informatique ==
+En [[informatique]], la notion de texte s'oppose à la notion de [[données binaires]], on parle alors :
+* de [[texte brut]] dans un protocole de télécommunication ;
+* de document texte si le logiciel utilisé permet de formater le texte ;
+* ou encore de texte formaté ou riche lorsque les indications de formats sont données en texte brut (exemple : [[Rich Text Format]]) ;
+* de [[fichier texte]] dans un fichier qui ne contient que des caractères sans mise en forme autre que les sauts de lignes et le choix des caractères.
+
+== Notes et références ==
+{{Références}}
+
+== Voir aussi ==
+{{Autres projets|wiktionary=texte}}
+
+=== Bibliographie ===
+* [[Roland Barthes]] :
+# ''S/Z'', Paris, 1970 ;
+# ''Le Plaisir du texte'', Paris, 1973 ;
+# ''L'Avenir sémiologique'', Paris, Seuil, 1985.
+* J. Baudrillard, ''Pour une critique de l'économie politique du signe'', Paris, 1972.
+* [[Jacques Derrida]], ''De la grammatologie'', Paris, 1967.
+* [[Tzvetan Todorov]], « Texte », in O.Ducrot et Tzvetan Todorov, ''Dictionnaire encyclopédique des sciences du langage'', Paris, 1972.
+
+=== Articles connexes ===
+* [[Texte de loi]]
+* [[Fichier texte]]
+
+{{Portail|Littérature|Écriture}}
+
+[[Catégorie:Lexique littéraire]]
+Un '''texte''' est une série orale ou écrite de mots perçus comme constituant un ensemble cohérent, porteur de sens et utilisant les structures propres à une [[langue]] (conjugaisons, construction et association des phrases…)<ref>François Rastier définit le texte comme {{Citation|une suite linguistique autonome (orale ou écrite) constituant une unité empirique, et produite par un ou plusieurs énonciateurs dans une pratique sociale attestée}} (François Rastier, 2001, ''Arts et sciences du texte'', Paris, PUF, page 302).</ref>. Un texte n'a pas de longueur déterminée sauf dans le cas de [[poème]]s à forme fixe comme le [[sonnet]] ou le [[haïku]].
+
+L'étude formelle des textes s'appuie sur la [[linguistique]] qui est l'approche scientifique du langage.
+
+== Étymologie ==
+« Texte » est issu du mot latin « textum », dérivé du verbe « texere » qui signifie « tisser ». Le mot s'applique à l'entrelacement des fibres utilisées dans le tissage, voir par exemple [[Ovide]] : « Quo super iniecit textum rude sedula Baucis = (un siège) sur lequel Baucis empressée avait jeté un tissu grossier »<ref>[http://bcs.fltr.ucl.ac.be/METAM/Met08/M-08-547-724.htm ''Métamorphoses'' 8, 640]</ref> ou au tressage  (exemple chez [[Martial]] « Vimineum textum = panier d'osier tressé »). Le verbe a aussi le sens large de construire comme dans « basilicam texere = construire une basilique » chez [[Cicéron]]<ref>[[Lucius Aemilius Paullus (consul en -50)|Paullus]] in medio foro jam paene basilicam texuit iisdem antiquis columnis [https://books.google.fr/books?id=eshGAQAAMAAJ&pg=PA306&lpg=PA306&dq=Paullus+in+medio+foro+jam+paene+basilicam+texuit&source=bl&ots=_uIh9eCKyW&sig=28Yo5gvBvD7wYO2RmezR3PDsVjI&hl=fr&sa=X&ved=0ahUKEwjx86f-mNrPAhWnAcAKHfBgDacQ6AEIKTAB#v=onepage&q=Paullus%20in%20medio%20foro%20jam%20paene%20basilicam%20texuit&f=false] Ciceron, ''Ad Atticum'', 4,16, 14, Lettre CXLIX - page 306</ref>.
+
+Le [[sens figuré]] d'éléments de langage organisés et enchaînés apparaît avant l'[[Empire romain]] : il désigne un agencement particulier du discours. Exemple : « epistolas texere = composer des épîtres » - Cicéron (1er siècle avant J.-C)<ref>« epistolas quotidianis verbis texere solemus » Ciceron, Lettres  : Ad Familiares, IX, 21, lettre DCLVIII [https://books.google.fr/books?id=1ldDAAAAYAAJ&pg=PA200&lpg=PA200&dq=epistolas+quotidianis+verbis+texere+solemus&source=bl&ots=-v9nCm6nnM&sig=SAAOH0nwqng3JhE23i9iysTmWzs&hl=fr&sa=X&ved=0ahUKEwjozrXH8NnPAhUsCsAKHXdJBsIQ6AEIKjAB#v=onepage&q=epistolas%20quotidianis%20verbis%20texere%20solemus&f=false]</ref> ou plus nettement chez [[Quintilien]] (1er siècle après J.-C.) : « verba in textu jungantur =  l'agencement des mots dans la phrase »<ref>« quantumque interest, sensus idem quibus verbis efferatur, tantum , verba eadem qua in compositione vel in textu jungantur = (autant la valeur de la pensée varie suivant les mots qui l'expriment, autant celle des mots varie selon leur harmonie et selon leur agencement) - Quintilien De l'Institution oratoire Livre IX, ch. 4 ''De compositione'' (''De l'arrangement des mots'') [https://books.google.fr/books?id=2UAMAAAAIAAJ&pg=PA156&lpg=PA156&dq=quintilien+textus&source=bl&ots=jDzK22q6c7&sig=n3bGNfTCT1UcfAGQOEwe3SNPZxU&hl=fr&sa=X&ved=0ahUKEwjqgNa99tnPAhVGDsAKHRjGDqgQ6AEIIzAA#v=onepage&q=quintilien%20textus&f=false]  page 326, ou page 392 ibidem « Historia non tam finitos numeros, quam orbem quemdam contextumque desiderat : namque omnia ejus membra connexa sunt, quoniam lubrica est, ac fluit »  page 392 = « L'histoire n'exige pas tant une prose parfaitement cadencée, qu'une suite de phrases dont le tissu soit bien lié; car tout s'y enchaîne, tout y coule, tout y glisse. »</ref>.
+
+Les formes anciennes du [[Moyen Âge]] désignent au XIIe siècle le volume qui contient le texte sacré des Évangiles, puis au XIIIe s. le texte original d'un livre saint ou des propos de quelqu'un. Au XVIIe siècle le mot s’applique au passage d'un ouvrage pris comme référence et au début du XIXe siècle le mot texte a son sens général d'« écrit »<ref>[http://www.cnrtl.fr/lexicographie/texte Dictionnaire CNRTL]</ref>.
+
+== Texte littéraire ==
+Un texte répond de façon plus ou moins pertinente à des critères qui en déterminent la qualité [[littérature|littéraire]]. On retient en particulier la structure d'ensemble, la [[syntaxe]] et la ponctuation, l'orthographe lexicale et grammaticale, la pertinence et la richesse du vocabulaire, la présence de [[figures de style]], le [[registre de langue]] et la [[Schéma de Jakobson|fonction]] recherchée (narrative, descriptive, expressive, argumentative, injonctive, poétique). C'est l'objet de l'analyse littéraire.
+
+== En informatique ==
+En [[informatique]], la notion de texte s'oppose à la notion de [[données binaires]], on parle alors :
+* de [[texte brut]] dans un protocole de télécommunication ;
+* de document texte si le logiciel utilisé permet de formater le texte ;
+* ou encore de texte formaté ou riche lorsque les indications de formats sont données en texte brut (exemple : [[Rich Text Format]]) ;
+* de [[fichier texte]] dans un fichier qui ne contient que des caractères sans mise en forme autre que les sauts de lignes et le choix des caractères.
+
+== Notes et références ==
+{{Références}}
+
+== Voir aussi ==
+{{Autres projets|wiktionary=texte}}
+
+=== Bibliographie ===
+* [[Roland Barthes]] :
+# ''S/Z'', Paris, 1970 ;
+# ''Le Plaisir du texte'', Paris, 1973 ;
+# ''L'Avenir sémiologique'', Paris, Seuil, 1985.
+* J. Baudrillard, ''Pour une critique de l'économie politique du signe'', Paris, 1972.
+* [[Jacques Derrida]], ''De la grammatologie'', Paris, 1967.
+* [[Tzvetan Todorov]], « Texte », in O.Ducrot et Tzvetan Todorov, ''Dictionnaire encyclopédique des sciences du langage'', Paris, 1972.
+
+=== Articles connexes ===
+* [[Texte de loi]]
+* [[Fichier texte]]
+
+{{Portail|Littérature|Écriture}}
+
+[[Catégorie:Lexique littéraire]]
+Un '''texte''' est une série orale ou écrite de mots perçus comme constituant un ensemble cohérent, porteur de sens et utilisant les structures propres à une [[langue]] (conjugaisons, construction et association des phrases…)<ref>François Rastier définit le texte comme {{Citation|une suite linguistique autonome (orale ou écrite) constituant une unité empirique, et produite par un ou plusieurs énonciateurs dans une pratique sociale attestée}} (François Rastier, 2001, ''Arts et sciences du texte'', Paris, PUF, page 302).</ref>. Un texte n'a pas de longueur déterminée sauf dans le cas de [[poème]]s à forme fixe comme le [[sonnet]] ou le [[haïku]].
+
+L'étude formelle des textes s'appuie sur la [[linguistique]] qui est l'approche scientifique du langage.
+
+== Étymologie ==
+« Texte » est issu du mot latin « textum », dérivé du verbe « texere » qui signifie « tisser ». Le mot s'applique à l'entrelacement des fibres utilisées dans le tissage, voir par exemple [[Ovide]] : « Quo super iniecit textum rude sedula Baucis = (un siège) sur lequel Baucis empressée avait jeté un tissu grossier »<ref>[http://bcs.fltr.ucl.ac.be/METAM/Met08/M-08-547-724.htm ''Métamorphoses'' 8, 640]</ref> ou au tressage  (exemple chez [[Martial]] « Vimineum textum = panier d'osier tressé »). Le verbe a aussi le sens large de construire comme dans « basilicam texere = construire une basilique » chez [[Cicéron]]<ref>[[Lucius Aemilius Paullus (consul en -50)|Paullus]] in medio foro jam paene basilicam texuit iisdem antiquis columnis [https://books.google.fr/books?id=eshGAQAAMAAJ&pg=PA306&lpg=PA306&dq=Paullus+in+medio+foro+jam+paene+basilicam+texuit&source=bl&ots=_uIh9eCKyW&sig=28Yo5gvBvD7wYO2RmezR3PDsVjI&hl=fr&sa=X&ved=0ahUKEwjx86f-mNrPAhWnAcAKHfBgDacQ6AEIKTAB#v=onepage&q=Paullus%20in%20medio%20foro%20jam%20paene%20basilicam%20texuit&f=false] Ciceron, ''Ad Atticum'', 4,16, 14, Lettre CXLIX - page 306</ref>.
+
+Le [[sens figuré]] d'éléments de langage organisés et enchaînés apparaît avant l'[[Empire romain]] : il désigne un agencement particulier du discours. Exemple : « epistolas texere = composer des épîtres » - Cicéron (1er siècle avant J.-C)<ref>« epistolas quotidianis verbis texere solemus » Ciceron, Lettres  : Ad Familiares, IX, 21, lettre DCLVIII [https://books.google.fr/books?id=1ldDAAAAYAAJ&pg=PA200&lpg=PA200&dq=epistolas+quotidianis+verbis+texere+solemus&source=bl&ots=-v9nCm6nnM&sig=SAAOH0nwqng3JhE23i9iysTmWzs&hl=fr&sa=X&ved=0ahUKEwjozrXH8NnPAhUsCsAKHXdJBsIQ6AEIKjAB#v=onepage&q=epistolas%20quotidianis%20verbis%20texere%20solemus&f=false]</ref> ou plus nettement chez [[Quintilien]] (1er siècle après J.-C.) : « verba in textu jungantur =  l'agencement des mots dans la phrase »<ref>« quantumque interest, sensus idem quibus verbis efferatur, tantum , verba eadem qua in compositione vel in textu jungantur = (autant la valeur de la pensée varie suivant les mots qui l'expriment, autant celle des mots varie selon leur harmonie et selon leur agencement) - Quintilien De l'Institution oratoire Livre IX, ch. 4 ''De compositione'' (''De l'arrangement des mots'') [https://books.google.fr/books?id=2UAMAAAAIAAJ&pg=PA156&lpg=PA156&dq=quintilien+textus&source=bl&ots=jDzK22q6c7&sig=n3bGNfTCT1UcfAGQOEwe3SNPZxU&hl=fr&sa=X&ved=0ahUKEwjqgNa99tnPAhVGDsAKHRjGDqgQ6AEIIzAA#v=onepage&q=quintilien%20textus&f=false]  page 326, ou page 392 ibidem « Historia non tam finitos numeros, quam orbem quemdam contextumque desiderat : namque omnia ejus membra connexa sunt, quoniam lubrica est, ac fluit »  page 392 = « L'histoire n'exige pas tant une prose parfaitement cadencée, qu'une suite de phrases dont le tissu soit bien lié; car tout s'y enchaîne, tout y coule, tout y glisse. »</ref>.
+
+Les formes anciennes du [[Moyen Âge]] désignent au XIIe siècle le volume qui contient le texte sacré des Évangiles, puis au XIIIe s. le texte original d'un livre saint ou des propos de quelqu'un. Au XVIIe siècle le mot s’applique au passage d'un ouvrage pris comme référence et au début du XIXe siècle le mot texte a son sens général d'« écrit »<ref>[http://www.cnrtl.fr/lexicographie/texte Dictionnaire CNRTL]</ref>.
+
+== Texte littéraire ==
+Un texte répond de façon plus ou moins pertinente à des critères qui en déterminent la qualité [[littérature|littéraire]]. On retient en particulier la structure d'ensemble, la [[syntaxe]] et la ponctuation, l'orthographe lexicale et grammaticale, la pertinence et la richesse du vocabulaire, la présence de [[figures de style]], le [[registre de langue]] et la [[Schéma de Jakobson|fonction]] recherchée (narrative, descriptive, expressive, argumentative, injonctive, poétique). C'est l'objet de l'analyse littéraire.
+
+== En informatique ==
+En [[informatique]], la notion de texte s'oppose à la notion de [[données binaires]], on parle alors :
+* de [[texte brut]] dans un protocole de télécommunication ;
+* de document texte si le logiciel utilisé permet de formater le texte ;
+* ou encore de texte formaté ou riche lorsque les indications de formats sont données en texte brut (exemple : [[Rich Text Format]]) ;
+* de [[fichier texte]] dans un fichier qui ne contient que des caractères sans mise en forme autre que les sauts de lignes et le choix des caractères.
+
+== Notes et références ==
+{{Références}}
+
+== Voir aussi ==
+{{Autres projets|wiktionary=texte}}
+
+=== Bibliographie ===
+* [[Roland Barthes]] :
+# ''S/Z'', Paris, 1970 ;
+# ''Le Plaisir du texte'', Paris, 1973 ;
+# ''L'Avenir sémiologique'', Paris, Seuil, 1985.
+* J. Baudrillard, ''Pour une critique de l'économie politique du signe'', Paris, 1972.
+* [[Jacques Derrida]], ''De la grammatologie'', Paris, 1967.
+* [[Tzvetan Todorov]], « Texte », in O.Ducrot et Tzvetan Todorov, ''Dictionnaire encyclopédique des sciences du langage'', Paris, 1972.
+
+=== Articles connexes ===
+* [[Texte de loi]]
+* [[Fichier texte]]
+
+{{Portail|Littérature|Écriture}}
+
+[[Catégorie:Lexique littéraire]]
+Un '''texte''' est une série orale ou écrite de mots perçus comme constituant un ensemble cohérent, porteur de sens et utilisant les structures propres à une [[langue]] (conjugaisons, construction et association des phrases…)<ref>François Rastier définit le texte comme {{Citation|une suite linguistique autonome (orale ou écrite) constituant une unité empirique, et produite par un ou plusieurs énonciateurs dans une pratique sociale attestée}} (François Rastier, 2001, ''Arts et sciences du texte'', Paris, PUF, page 302).</ref>. Un texte n'a pas de longueur déterminée sauf dans le cas de [[poème]]s à forme fixe comme le [[sonnet]] ou le [[haïku]].
+
+L'étude formelle des textes s'appuie sur la [[linguistique]] qui est l'approche scientifique du langage.
+
+== Étymologie ==
+« Texte » est issu du mot latin « textum », dérivé du verbe « texere » qui signifie « tisser ». Le mot s'applique à l'entrelacement des fibres utilisées dans le tissage, voir par exemple [[Ovide]] : « Quo super iniecit textum rude sedula Baucis = (un siège) sur lequel Baucis empressée avait jeté un tissu grossier »<ref>[http://bcs.fltr.ucl.ac.be/METAM/Met08/M-08-547-724.htm ''Métamorphoses'' 8, 640]</ref> ou au tressage  (exemple chez [[Martial]] « Vimineum textum = panier d'osier tressé »). Le verbe a aussi le sens large de construire comme dans « basilicam texere = construire une basilique » chez [[Cicéron]]<ref>[[Lucius Aemilius Paullus (consul en -50)|Paullus]] in medio foro jam paene basilicam texuit iisdem antiquis columnis [https://books.google.fr/books?id=eshGAQAAMAAJ&pg=PA306&lpg=PA306&dq=Paullus+in+medio+foro+jam+paene+basilicam+texuit&source=bl&ots=_uIh9eCKyW&sig=28Yo5gvBvD7wYO2RmezR3PDsVjI&hl=fr&sa=X&ved=0ahUKEwjx86f-mNrPAhWnAcAKHfBgDacQ6AEIKTAB#v=onepage&q=Paullus%20in%20medio%20foro%20jam%20paene%20basilicam%20texuit&f=false] Ciceron, ''Ad Atticum'', 4,16, 14, Lettre CXLIX - page 306</ref>.
+
+Le [[sens figuré]] d'éléments de langage organisés et enchaînés apparaît avant l'[[Empire romain]] : il désigne un agencement particulier du discours. Exemple : « epistolas texere = composer des épîtres » - Cicéron (1er siècle avant J.-C)<ref>« epistolas quotidianis verbis texere solemus » Ciceron, Lettres  : Ad Familiares, IX, 21, lettre DCLVIII [https://books.google.fr/books?id=1ldDAAAAYAAJ&pg=PA200&lpg=PA200&dq=epistolas+quotidianis+verbis+texere+solemus&source=bl&ots=-v9nCm6nnM&sig=SAAOH0nwqng3JhE23i9iysTmWzs&hl=fr&sa=X&ved=0ahUKEwjozrXH8NnPAhUsCsAKHXdJBsIQ6AEIKjAB#v=onepage&q=epistolas%20quotidianis%20verbis%20texere%20solemus&f=false]</ref> ou plus nettement chez [[Quintilien]] (1er siècle après J.-C.) : « verba in textu jungantur =  l'agencement des mots dans la phrase »<ref>« quantumque interest, sensus idem quibus verbis efferatur, tantum , verba eadem qua in compositione vel in textu jungantur = (autant la valeur de la pensée varie suivant les mots qui l'expriment, autant celle des mots varie selon leur harmonie et selon leur agencement) - Quintilien De l'Institution oratoire Livre IX, ch. 4 ''De compositione'' (''De l'arrangement des mots'') [https://books.google.fr/books?id=2UAMAAAAIAAJ&pg=PA156&lpg=PA156&dq=quintilien+textus&source=bl&ots=jDzK22q6c7&sig=n3bGNfTCT1UcfAGQOEwe3SNPZxU&hl=fr&sa=X&ved=0ahUKEwjqgNa99tnPAhVGDsAKHRjGDqgQ6AEIIzAA#v=onepage&q=quintilien%20textus&f=false]  page 326, ou page 392 ibidem « Historia non tam finitos numeros, quam orbem quemdam contextumque desiderat : namque omnia ejus membra connexa sunt, quoniam lubrica est, ac fluit »  page 392 = « L'histoire n'exige pas tant une prose parfaitement cadencée, qu'une suite de phrases dont le tissu soit bien lié; car tout s'y enchaîne, tout y coule, tout y glisse. »</ref>.
+
+Les formes anciennes du [[Moyen Âge]] désignent au XIIe siècle le volume qui contient le texte sacré des Évangiles, puis au XIIIe s. le texte original d'un livre saint ou des propos de quelqu'un. Au XVIIe siècle le mot s’applique au passage d'un ouvrage pris comme référence et au début du XIXe siècle le mot texte a son sens général d'« écrit »<ref>[http://www.cnrtl.fr/lexicographie/texte Dictionnaire CNRTL]</ref>.
+
+== Texte littéraire ==
+Un texte répond de façon plus ou moins pertinente à des critères qui en déterminent la qualité [[littérature|littéraire]]. On retient en particulier la structure d'ensemble, la [[syntaxe]] et la ponctuation, l'orthographe lexicale et grammaticale, la pertinence et la richesse du vocabulaire, la présence de [[figures de style]], le [[registre de langue]] et la [[Schéma de Jakobson|fonction]] recherchée (narrative, descriptive, expressive, argumentative, injonctive, poétique). C'est l'objet de l'analyse littéraire.
+
+== En informatique ==
+En [[informatique]], la notion de texte s'oppose à la notion de [[données binaires]], on parle alors :
+* de [[texte brut]] dans un protocole de télécommunication ;
+* de document texte si le logiciel utilisé permet de formater le texte ;
+* ou encore de texte formaté ou riche lorsque les indications de formats sont données en texte brut (exemple : [[Rich Text Format]]) ;
+* de [[fichier texte]] dans un fichier qui ne contient que des caractères sans mise en forme autre que les sauts de lignes et le choix des caractères.
+
+== Notes et références ==
+{{Références}}
+
+== Voir aussi ==
+{{Autres projets|wiktionary=texte}}
+
+=== Bibliographie ===
+* [[Roland Barthes]] :
+# ''S/Z'', Paris, 1970 ;
+# ''Le Plaisir du texte'', Paris, 1973 ;
+# ''L'Avenir sémiologique'', Paris, Seuil, 1985.
+* J. Baudrillard, ''Pour une critique de l'économie politique du signe'', Paris, 1972.
+* [[Jacques Derrida]], ''De la grammatologie'', Paris, 1967.
+* [[Tzvetan Todorov]], « Texte », in O.Ducrot et Tzvetan Todorov, ''Dictionnaire encyclopédique des sciences du langage'', Paris, 1972.
+
+=== Articles connexes ===
+* [[Texte de loi]]
+* [[Fichier texte]]
+
+{{Portail|Littérature|Écriture}}
+
+[[Catégorie:Lexique littéraire]]
+Un '''texte''' est une série orale ou écrite de mots perçus comme constituant un ensemble cohérent, porteur de sens et utilisant les structures propres à une [[langue]] (conjugaisons, construction et association des phrases…)<ref>François Rastier définit le texte comme {{Citation|une suite linguistique autonome (orale ou écrite) constituant une unité empirique, et produite par un ou plusieurs énonciateurs dans une pratique sociale attestée}} (François Rastier, 2001, ''Arts et sciences du texte'', Paris, PUF, page 302).</ref>. Un texte n'a pas de longueur déterminée sauf dans le cas de [[poème]]s à forme fixe comme le [[sonnet]] ou le [[haïku]].
+
+L'étude formelle des textes s'appuie sur la [[linguistique]] qui est l'approche scientifique du langage.
+
+== Étymologie ==
+« Texte » est issu du mot latin « textum », dérivé du verbe « texere » qui signifie « tisser ». Le mot s'applique à l'entrelacement des fibres utilisées dans le tissage, voir par exemple [[Ovide]] : « Quo super iniecit textum rude sedula Baucis = (un siège) sur lequel Baucis empressée avait jeté un tissu grossier »<ref>[http://bcs.fltr.ucl.ac.be/METAM/Met08/M-08-547-724.htm ''Métamorphoses'' 8, 640]</ref> ou au tressage  (exemple chez [[Martial]] « Vimineum textum = panier d'osier tressé »). Le verbe a aussi le sens large de construire comme dans « basilicam texere = construire une basilique » chez [[Cicéron]]<ref>[[Lucius Aemilius Paullus (consul en -50)|Paullus]] in medio foro jam paene basilicam texuit iisdem antiquis columnis [https://books.google.fr/books?id=eshGAQAAMAAJ&pg=PA306&lpg=PA306&dq=Paullus+in+medio+foro+jam+paene+basilicam+texuit&source=bl&ots=_uIh9eCKyW&sig=28Yo5gvBvD7wYO2RmezR3PDsVjI&hl=fr&sa=X&ved=0ahUKEwjx86f-mNrPAhWnAcAKHfBgDacQ6AEIKTAB#v=onepage&q=Paullus%20in%20medio%20foro%20jam%20paene%20basilicam%20texuit&f=false] Ciceron, ''Ad Atticum'', 4,16, 14, Lettre CXLIX - page 306</ref>.
+
+Le [[sens figuré]] d'éléments de langage organisés et enchaînés apparaît avant l'[[Empire romain]] : il désigne un agencement particulier du discours. Exemple : « epistolas texere = composer des épîtres » - Cicéron (1er siècle avant J.-C)<ref>« epistolas quotidianis verbis texere solemus » Ciceron, Lettres  : Ad Familiares, IX, 21, lettre DCLVIII [https://books.google.fr/books?id=1ldDAAAAYAAJ&pg=PA200&lpg=PA200&dq=epistolas+quotidianis+verbis+texere+solemus&source=bl&ots=-v9nCm6nnM&sig=SAAOH0nwqng3JhE23i9iysTmWzs&hl=fr&sa=X&ved=0ahUKEwjozrXH8NnPAhUsCsAKHXdJBsIQ6AEIKjAB#v=onepage&q=epistolas%20quotidianis%20verbis%20texere%20solemus&f=false]</ref> ou plus nettement chez [[Quintilien]] (1er siècle après J.-C.) : « verba in textu jungantur =  l'agencement des mots dans la phrase »<ref>« quantumque interest, sensus idem quibus verbis efferatur, tantum , verba eadem qua in compositione vel in textu jungantur = (autant la valeur de la pensée varie suivant les mots qui l'expriment, autant celle des mots varie selon leur harmonie et selon leur agencement) - Quintilien De l'Institution oratoire Livre IX, ch. 4 ''De compositione'' (''De l'arrangement des mots'') [https://books.google.fr/books?id=2UAMAAAAIAAJ&pg=PA156&lpg=PA156&dq=quintilien+textus&source=bl&ots=jDzK22q6c7&sig=n3bGNfTCT1UcfAGQOEwe3SNPZxU&hl=fr&sa=X&ved=0ahUKEwjqgNa99tnPAhVGDsAKHRjGDqgQ6AEIIzAA#v=onepage&q=quintilien%20textus&f=false]  page 326, ou page 392 ibidem « Historia non tam finitos numeros, quam orbem quemdam contextumque desiderat : namque omnia ejus membra connexa sunt, quoniam lubrica est, ac fluit »  page 392 = « L'histoire n'exige pas tant une prose parfaitement cadencée, qu'une suite de phrases dont le tissu soit bien lié; car tout s'y enchaîne, tout y coule, tout y glisse. »</ref>.
+
+Les formes anciennes du [[Moyen Âge]] désignent au XIIe siècle le volume qui contient le texte sacré des Évangiles, puis au XIIIe s. le texte original d'un livre saint ou des propos de quelqu'un. Au XVIIe siècle le mot s’applique au passage d'un ouvrage pris comme référence et au début du XIXe siècle le mot texte a son sens général d'« écrit »<ref>[http://www.cnrtl.fr/lexicographie/texte Dictionnaire CNRTL]</ref>.
+
+== Texte littéraire ==
+Un texte répond de façon plus ou moins pertinente à des critères qui en déterminent la qualité [[littérature|littéraire]]. On retient en particulier la structure d'ensemble, la [[syntaxe]] et la ponctuation, l'orthographe lexicale et grammaticale, la pertinence et la richesse du vocabulaire, la présence de [[figures de style]], le [[registre de langue]] et la [[Schéma de Jakobson|fonction]] recherchée (narrative, descriptive, expressive, argumentative, injonctive, poétique). C'est l'objet de l'analyse littéraire.
+
+== En informatique ==
+En [[informatique]], la notion de texte s'oppose à la notion de [[données binaires]], on parle alors :
+* de [[texte brut]] dans un protocole de télécommunication ;
+* de document texte si le logiciel utilisé permet de formater le texte ;
+* ou encore de texte formaté ou riche lorsque les indications de formats sont données en texte brut (exemple : [[Rich Text Format]]) ;
+* de [[fichier texte]] dans un fichier qui ne contient que des caractères sans mise en forme autre que les sauts de lignes et le choix des caractères.
+
+== Notes et références ==
+{{Références}}
+
+== Voir aussi ==
+{{Autres projets|wiktionary=texte}}
+
+=== Bibliographie ===
+* [[Roland Barthes]] :
+# ''S/Z'', Paris, 1970 ;
+# ''Le Plaisir du texte'', Paris, 1973 ;
+# ''L'Avenir sémiologique'', Paris, Seuil, 1985.
+* J. Baudrillard, ''Pour une critique de l'économie politique du signe'', Paris, 1972.
+* [[Jacques Derrida]], ''De la grammatologie'', Paris, 1967.
+* [[Tzvetan Todorov]], « Texte », in O.Ducrot et Tzvetan Todorov, ''Dictionnaire encyclopédique des sciences du langage'', Paris, 1972.
+
+=== Articles connexes ===
+* [[Texte de loi]]
+* [[Fichier texte]]
+
+{{Portail|Littérature|Écriture}}
+
+[[Catégorie:Lexique littéraire]]
+Un '''texte''' est une série orale ou écrite de mots perçus comme constituant un ensemble cohérent, porteur de sens et utilisant les structures propres à une [[langue]] (conjugaisons, construction et association des phrases…)<ref>François Rastier définit le texte comme {{Citation|une suite linguistique autonome (orale ou écrite) constituant une unité empirique, et produite par un ou plusieurs énonciateurs dans une pratique sociale attestée}} (François Rastier, 2001, ''Arts et sciences du texte'', Paris, PUF, page 302).</ref>. Un texte n'a pas de longueur déterminée sauf dans le cas de [[poème]]s à forme fixe comme le [[sonnet]] ou le [[haïku]].
+
+L'étude formelle des textes s'appuie sur la [[linguistique]] qui est l'approche scientifique du langage.
+
+== Étymologie ==
+« Texte » est issu du mot latin « textum », dérivé du verbe « texere » qui signifie « tisser ». Le mot s'applique à l'entrelacement des fibres utilisées dans le tissage, voir par exemple [[Ovide]] : « Quo super iniecit textum rude sedula Baucis = (un siège) sur lequel Baucis empressée avait jeté un tissu grossier »<ref>[http://bcs.fltr.ucl.ac.be/METAM/Met08/M-08-547-724.htm ''Métamorphoses'' 8, 640]</ref> ou au tressage  (exemple chez [[Martial]] « Vimineum textum = panier d'osier tressé »). Le verbe a aussi le sens large de construire comme dans « basilicam texere = construire une basilique » chez [[Cicéron]]<ref>[[Lucius Aemilius Paullus (consul en -50)|Paullus]] in medio foro jam paene basilicam texuit iisdem antiquis columnis [https://books.google.fr/books?id=eshGAQAAMAAJ&pg=PA306&lpg=PA306&dq=Paullus+in+medio+foro+jam+paene+basilicam+texuit&source=bl&ots=_uIh9eCKyW&sig=28Yo5gvBvD7wYO2RmezR3PDsVjI&hl=fr&sa=X&ved=0ahUKEwjx86f-mNrPAhWnAcAKHfBgDacQ6AEIKTAB#v=onepage&q=Paullus%20in%20medio%20foro%20jam%20paene%20basilicam%20texuit&f=false] Ciceron, ''Ad Atticum'', 4,16, 14, Lettre CXLIX - page 306</ref>.
+
+Le [[sens figuré]] d'éléments de langage organisés et enchaînés apparaît avant l'[[Empire romain]] : il désigne un agencement particulier du discours. Exemple : « epistolas texere = composer des épîtres » - Cicéron (1er siècle avant J.-C)<ref>« epistolas quotidianis verbis texere solemus » Ciceron, Lettres  : Ad Familiares, IX, 21, lettre DCLVIII [https://books.google.fr/books?id=1ldDAAAAYAAJ&pg=PA200&lpg=PA200&dq=epistolas+quotidianis+verbis+texere+solemus&source=bl&ots=-v9nCm6nnM&sig=SAAOH0nwqng3JhE23i9iysTmWzs&hl=fr&sa=X&ved=0ahUKEwjozrXH8NnPAhUsCsAKHXdJBsIQ6AEIKjAB#v=onepage&q=epistolas%20quotidianis%20verbis%20texere%20solemus&f=false]</ref> ou plus nettement chez [[Quintilien]] (1er siècle après J.-C.) : « verba in textu jungantur =  l'agencement des mots dans la phrase »<ref>« quantumque interest, sensus idem quibus verbis efferatur, tantum , verba eadem qua in compositione vel in textu jungantur = (autant la valeur de la pensée varie suivant les mots qui l'expriment, autant celle des mots varie selon leur harmonie et selon leur agencement) - Quintilien De l'Institution oratoire Livre IX, ch. 4 ''De compositione'' (''De l'arrangement des mots'') [https://books.google.fr/books?id=2UAMAAAAIAAJ&pg=PA156&lpg=PA156&dq=quintilien+textus&source=bl&ots=jDzK22q6c7&sig=n3bGNfTCT1UcfAGQOEwe3SNPZxU&hl=fr&sa=X&ved=0ahUKEwjqgNa99tnPAhVGDsAKHRjGDqgQ6AEIIzAA#v=onepage&q=quintilien%20textus&f=false]  page 326, ou page 392 ibidem « Historia non tam finitos numeros, quam orbem quemdam contextumque desiderat : namque omnia ejus membra connexa sunt, quoniam lubrica est, ac fluit »  page 392 = « L'histoire n'exige pas tant une prose parfaitement cadencée, qu'une suite de phrases dont le tissu soit bien lié; car tout s'y enchaîne, tout y coule, tout y glisse. »</ref>.
+
+Les formes anciennes du [[Moyen Âge]] désignent au XIIe siècle le volume qui contient le texte sacré des Évangiles, puis au XIIIe s. le texte original d'un livre saint ou des propos de quelqu'un. Au XVIIe siècle le mot s’applique au passage d'un ouvrage pris comme référence et au début du XIXe siècle le mot texte a son sens général d'« écrit »<ref>[http://www.cnrtl.fr/lexicographie/texte Dictionnaire CNRTL]</ref>.
+
+== Texte littéraire ==
+Un texte répond de façon plus ou moins pertinente à des critères qui en déterminent la qualité [[littérature|littéraire]]. On retient en particulier la structure d'ensemble, la [[syntaxe]] et la ponctuation, l'orthographe lexicale et grammaticale, la pertinence et la richesse du vocabulaire, la présence de [[figures de style]], le [[registre de langue]] et la [[Schéma de Jakobson|fonction]] recherchée (narrative, descriptive, expressive, argumentative, injonctive, poétique). C'est l'objet de l'analyse littéraire.
+
+== En informatique ==
+En [[informatique]], la notion de texte s'oppose à la notion de [[données binaires]], on parle alors :
+* de [[texte brut]] dans un protocole de télécommunication ;
+* de document texte si le logiciel utilisé permet de formater le texte ;
+* ou encore de texte formaté ou riche lorsque les indications de formats sont données en texte brut (exemple : [[Rich Text Format]]) ;
+* de [[fichier texte]] dans un fichier qui ne contient que des caractères sans mise en forme autre que les sauts de lignes et le choix des caractères.
+
+== Notes et références ==
+{{Références}}
+
+== Voir aussi ==
+{{Autres projets|wiktionary=texte}}
+
+=== Bibliographie ===
+* [[Roland Barthes]] :
+# ''S/Z'', Paris, 1970 ;
+# ''Le Plaisir du texte'', Paris, 1973 ;
+# ''L'Avenir sémiologique'', Paris, Seuil, 1985.
+* J. Baudrillard, ''Pour une critique de l'économie politique du signe'', Paris, 1972.
+* [[Jacques Derrida]], ''De la grammatologie'', Paris, 1967.
+* [[Tzvetan Todorov]], « Texte », in O.Ducrot et Tzvetan Todorov, ''Dictionnaire encyclopédique des sciences du langage'', Paris, 1972.
+
+=== Articles connexes ===
+* [[Texte de loi]]
+* [[Fichier texte]]
+
+{{Portail|Littérature|Écriture}}
+
+[[Catégorie:Lexique littéraire]]
+Un '''texte''' est une série orale ou écrite de mots perçus comme constituant un ensemble cohérent, porteur de sens et utilisant les structures propres à une [[langue]] (conjugaisons, construction et association des phrases…)<ref>François Rastier définit le texte comme {{Citation|une suite linguistique autonome (orale ou écrite) constituant une unité empirique, et produite par un ou plusieurs énonciateurs dans une pratique sociale attestée}} (François Rastier, 2001, ''Arts et sciences du texte'', Paris, PUF, page 302).</ref>. Un texte n'a pas de longueur déterminée sauf dans le cas de [[poème]]s à forme fixe comme le [[sonnet]] ou le [[haïku]].
+
+L'étude formelle des textes s'appuie sur la [[linguistique]] qui est l'approche scientifique du langage.
+
+== Étymologie ==
+« Texte » est issu du mot latin « textum », dérivé du verbe « texere » qui signifie « tisser ». Le mot s'applique à l'entrelacement des fibres utilisées dans le tissage, voir par exemple [[Ovide]] : « Quo super iniecit textum rude sedula Baucis = (un siège) sur lequel Baucis empressée avait jeté un tissu grossier »<ref>[http://bcs.fltr.ucl.ac.be/METAM/Met08/M-08-547-724.htm ''Métamorphoses'' 8, 640]</ref> ou au tressage  (exemple chez [[Martial]] « Vimineum textum = panier d'osier tressé »). Le verbe a aussi le sens large de construire comme dans « basilicam texere = construire une basilique » chez [[Cicéron]]<ref>[[Lucius Aemilius Paullus (consul en -50)|Paullus]] in medio foro jam paene basilicam texuit iisdem antiquis columnis [https://books.google.fr/books?id=eshGAQAAMAAJ&pg=PA306&lpg=PA306&dq=Paullus+in+medio+foro+jam+paene+basilicam+texuit&source=bl&ots=_uIh9eCKyW&sig=28Yo5gvBvD7wYO2RmezR3PDsVjI&hl=fr&sa=X&ved=0ahUKEwjx86f-mNrPAhWnAcAKHfBgDacQ6AEIKTAB#v=onepage&q=Paullus%20in%20medio%20foro%20jam%20paene%20basilicam%20texuit&f=false] Ciceron, ''Ad Atticum'', 4,16, 14, Lettre CXLIX - page 306</ref>.
+
+Le [[sens figuré]] d'éléments de langage organisés et enchaînés apparaît avant l'[[Empire romain]] : il désigne un agencement particulier du discours. Exemple : « epistolas texere = composer des épîtres » - Cicéron (1er siècle avant J.-C)<ref>« epistolas quotidianis verbis texere solemus » Ciceron, Lettres  : Ad Familiares, IX, 21, lettre DCLVIII [https://books.google.fr/books?id=1ldDAAAAYAAJ&pg=PA200&lpg=PA200&dq=epistolas+quotidianis+verbis+texere+solemus&source=bl&ots=-v9nCm6nnM&sig=SAAOH0nwqng3JhE23i9iysTmWzs&hl=fr&sa=X&ved=0ahUKEwjozrXH8NnPAhUsCsAKHXdJBsIQ6AEIKjAB#v=onepage&q=epistolas%20quotidianis%20verbis%20texere%20solemus&f=false]</ref> ou plus nettement chez [[Quintilien]] (1er siècle après J.-C.) : « verba in textu jungantur =  l'agencement des mots dans la phrase »<ref>« quantumque interest, sensus idem quibus verbis efferatur, tantum , verba eadem qua in compositione vel in textu jungantur = (autant la valeur de la pensée varie suivant les mots qui l'expriment, autant celle des mots varie selon leur harmonie et selon leur agencement) - Quintilien De l'Institution oratoire Livre IX, ch. 4 ''De compositione'' (''De l'arrangement des mots'') [https://books.google.fr/books?id=2UAMAAAAIAAJ&pg=PA156&lpg=PA156&dq=quintilien+textus&source=bl&ots=jDzK22q6c7&sig=n3bGNfTCT1UcfAGQOEwe3SNPZxU&hl=fr&sa=X&ved=0ahUKEwjqgNa99tnPAhVGDsAKHRjGDqgQ6AEIIzAA#v=onepage&q=quintilien%20textus&f=false]  page 326, ou page 392 ibidem « Historia non tam finitos numeros, quam orbem quemdam contextumque desiderat : namque omnia ejus membra connexa sunt, quoniam lubrica est, ac fluit »  page 392 = « L'histoire n'exige pas tant une prose parfaitement cadencée, qu'une suite de phrases dont le tissu soit bien lié; car tout s'y enchaîne, tout y coule, tout y glisse. »</ref>.
+
+Les formes anciennes du [[Moyen Âge]] désignent au XIIe siècle le volume qui contient le texte sacré des Évangiles, puis au XIIIe s. le texte original d'un livre saint ou des propos de quelqu'un. Au XVIIe siècle le mot s’applique au passage d'un ouvrage pris comme référence et au début du XIXe siècle le mot texte a son sens général d'« écrit »<ref>[http://www.cnrtl.fr/lexicographie/texte Dictionnaire CNRTL]</ref>.
+
+== Texte littéraire ==
+Un texte répond de façon plus ou moins pertinente à des critères qui en déterminent la qualité [[littérature|littéraire]]. On retient en particulier la structure d'ensemble, la [[syntaxe]] et la ponctuation, l'orthographe lexicale et grammaticale, la pertinence et la richesse du vocabulaire, la présence de [[figures de style]], le [[registre de langue]] et la [[Schéma de Jakobson|fonction]] recherchée (narrative, descriptive, expressive, argumentative, injonctive, poétique). C'est l'objet de l'analyse littéraire.
+
+== En informatique ==
+En [[informatique]], la notion de texte s'oppose à la notion de [[données binaires]], on parle alors :
+* de [[texte brut]] dans un protocole de télécommunication ;
+* de document texte si le logiciel utilisé permet de formater le texte ;
+* ou encore de texte formaté ou riche lorsque les indications de formats sont données en texte brut (exemple : [[Rich Text Format]]) ;
+* de [[fichier texte]] dans un fichier qui ne contient que des caractères sans mise en forme autre que les sauts de lignes et le choix des caractères.
+
+== Notes et références ==
+{{Références}}
+
+== Voir aussi ==
+{{Autres projets|wiktionary=texte}}
+
+=== Bibliographie ===
+* [[Roland Barthes]] :
+# ''S/Z'', Paris, 1970 ;
+# ''Le Plaisir du texte'', Paris, 1973 ;
+# ''L'Avenir sémiologique'', Paris, Seuil, 1985.
+* J. Baudrillard, ''Pour une critique de l'économie politique du signe'', Paris, 1972.
+* [[Jacques Derrida]], ''De la grammatologie'', Paris, 1967.
+* [[Tzvetan Todorov]], « Texte », in O.Ducrot et Tzvetan Todorov, ''Dictionnaire encyclopédique des sciences du langage'', Paris, 1972.
+
+=== Articles connexes ===
+* [[Texte de loi]]
+* [[Fichier texte]]
+
+{{Portail|Littérature|Écriture}}
+
+[[Catégorie:Lexique littéraire]]
+Un '''texte''' est une série orale ou écrite de mots perçus comme constituant un ensemble cohérent, porteur de sens et utilisant les structures propres à une [[langue]] (conjugaisons, construction et association des phrases…)<ref>François Rastier définit le texte comme {{Citation|une suite linguistique autonome (orale ou écrite) constituant une unité empirique, et produite par un ou plusieurs énonciateurs dans une pratique sociale attestée}} (François Rastier, 2001, ''Arts et sciences du texte'', Paris, PUF, page 302).</ref>. Un texte n'a pas de longueur déterminée sauf dans le cas de [[poème]]s à forme fixe comme le [[sonnet]] ou le [[haïku]].
+
+L'étude formelle des textes s'appuie sur la [[linguistique]] qui est l'approche scientifique du langage.
+
+== Étymologie ==
+« Texte » est issu du mot latin « textum », dérivé du verbe « texere » qui signifie « tisser ». Le mot s'applique à l'entrelacement des fibres utilisées dans le tissage, voir par exemple [[Ovide]] : « Quo super iniecit textum rude sedula Baucis = (un siège) sur lequel Baucis empressée avait jeté un tissu grossier »<ref>[http://bcs.fltr.ucl.ac.be/METAM/Met08/M-08-547-724.htm ''Métamorphoses'' 8, 640]</ref> ou au tressage  (exemple chez [[Martial]] « Vimineum textum = panier d'osier tressé »). Le verbe a aussi le sens large de construire comme dans « basilicam texere = construire une basilique » chez [[Cicéron]]<ref>[[Lucius Aemilius Paullus (consul en -50)|Paullus]] in medio foro jam paene basilicam texuit iisdem antiquis columnis [https://books.google.fr/books?id=eshGAQAAMAAJ&pg=PA306&lpg=PA306&dq=Paullus+in+medio+foro+jam+paene+basilicam+texuit&source=bl&ots=_uIh9eCKyW&sig=28Yo5gvBvD7wYO2RmezR3PDsVjI&hl=fr&sa=X&ved=0ahUKEwjx86f-mNrPAhWnAcAKHfBgDacQ6AEIKTAB#v=onepage&q=Paullus%20in%20medio%20foro%20jam%20paene%20basilicam%20texuit&f=false] Ciceron, ''Ad Atticum'', 4,16, 14, Lettre CXLIX - page 306</ref>.
+
+Le [[sens figuré]] d'éléments de langage organisés et enchaînés apparaît avant l'[[Empire romain]] : il désigne un agencement particulier du discours. Exemple : « epistolas texere = composer des épîtres » - Cicéron (1er siècle avant J.-C)<ref>« epistolas quotidianis verbis texere solemus » Ciceron, Lettres  : Ad Familiares, IX, 21, lettre DCLVIII [https://books.google.fr/books?id=1ldDAAAAYAAJ&pg=PA200&lpg=PA200&dq=epistolas+quotidianis+verbis+texere+solemus&source=bl&ots=-v9nCm6nnM&sig=SAAOH0nwqng3JhE23i9iysTmWzs&hl=fr&sa=X&ved=0ahUKEwjozrXH8NnPAhUsCsAKHXdJBsIQ6AEIKjAB#v=onepage&q=epistolas%20quotidianis%20verbis%20texere%20solemus&f=false]</ref> ou plus nettement chez [[Quintilien]] (1er siècle après J.-C.) : « verba in textu jungantur =  l'agencement des mots dans la phrase »<ref>« quantumque interest, sensus idem quibus verbis efferatur, tantum , verba eadem qua in compositione vel in textu jungantur = (autant la valeur de la pensée varie suivant les mots qui l'expriment, autant celle des mots varie selon leur harmonie et selon leur agencement) - Quintilien De l'Institution oratoire Livre IX, ch. 4 ''De compositione'' (''De l'arrangement des mots'') [https://books.google.fr/books?id=2UAMAAAAIAAJ&pg=PA156&lpg=PA156&dq=quintilien+textus&source=bl&ots=jDzK22q6c7&sig=n3bGNfTCT1UcfAGQOEwe3SNPZxU&hl=fr&sa=X&ved=0ahUKEwjqgNa99tnPAhVGDsAKHRjGDqgQ6AEIIzAA#v=onepage&q=quintilien%20textus&f=false]  page 326, ou page 392 ibidem « Historia non tam finitos numeros, quam orbem quemdam contextumque desiderat : namque omnia ejus membra connexa sunt, quoniam lubrica est, ac fluit »  page 392 = « L'histoire n'exige pas tant une prose parfaitement cadencée, qu'une suite de phrases dont le tissu soit bien lié; car tout s'y enchaîne, tout y coule, tout y glisse. »</ref>.
+
+Les formes anciennes du [[Moyen Âge]] désignent au XIIe siècle le volume qui contient le texte sacré des Évangiles, puis au XIIIe s. le texte original d'un livre saint ou des propos de quelqu'un. Au XVIIe siècle le mot s’applique au passage d'un ouvrage pris comme référence et au début du XIXe siècle le mot texte a son sens général d'« écrit »<ref>[http://www.cnrtl.fr/lexicographie/texte Dictionnaire CNRTL]</ref>.
+
+== Texte littéraire ==
+Un texte répond de façon plus ou moins pertinente à des critères qui en déterminent la qualité [[littérature|littéraire]]. On retient en particulier la structure d'ensemble, la [[syntaxe]] et la ponctuation, l'orthographe lexicale et grammaticale, la pertinence et la richesse du vocabulaire, la présence de [[figures de style]], le [[registre de langue]] et la [[Schéma de Jakobson|fonction]] recherchée (narrative, descriptive, expressive, argumentative, injonctive, poétique). C'est l'objet de l'analyse littéraire.
+
+== En informatique ==
+En [[informatique]], la notion de texte s'oppose à la notion de [[données binaires]], on parle alors :
+* de [[texte brut]] dans un protocole de télécommunication ;
+* de document texte si le logiciel utilisé permet de formater le texte ;
+* ou encore de texte formaté ou riche lorsque les indications de formats sont données en texte brut (exemple : [[Rich Text Format]]) ;
+* de [[fichier texte]] dans un fichier qui ne contient que des caractères sans mise en forme autre que les sauts de lignes et le choix des caractères.
+
+== Notes et références ==
+{{Références}}
+
+== Voir aussi ==
+{{Autres projets|wiktionary=texte}}
+
+=== Bibliographie ===
+* [[Roland Barthes]] :
+# ''S/Z'', Paris, 1970 ;
+# ''Le Plaisir du texte'', Paris, 1973 ;
+# ''L'Avenir sémiologique'', Paris, Seuil, 1985.
+* J. Baudrillard, ''Pour une critique de l'économie politique du signe'', Paris, 1972.
+* [[Jacques Derrida]], ''De la grammatologie'', Paris, 1967.
+* [[Tzvetan Todorov]], « Texte », in O.Ducrot et Tzvetan Todorov, ''Dictionnaire encyclopédique des sciences du langage'', Paris, 1972.
+
+=== Articles connexes ===
+* [[Texte de loi]]
+* [[Fichier texte]]
+
+{{Portail|Littérature|Écriture}}
+
+[[Catégorie:Lexique littéraire]]

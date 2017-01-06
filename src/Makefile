@@ -7,7 +7,7 @@ CLIENT_EXEC =	tchatche_client
 
 all: tchatche_server tchatche_client
 
-tchatche_server: server/tchatche_server.o common.o protocol.o server/server.o server/server_file.o
+tchatche_server: server/tchatche_server.o common.o protocol.o server/server.o server/server_file.o$
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ -o $@
 
 tchatche_client: client/tchatche_client.o common.o protocol.o client/client.o client/client_file.o

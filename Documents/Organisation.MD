@@ -1,5 +1,6 @@
 # Bugs constatés
 - Après l'envoi d'un fichier volumineux (plusieurs Mo), l'entrée standard du serveur n'est pas vide, même si l'utilisateur n'a rien saisi
+- Si un client est déconnecté, le serveur crashe. Correction possible : vérifier que `errno` vaut `EPIPE`, déconnecter l'utilisateur et ignorer le signal `SIGPIPE`
 
 # Base
 - [x] Démarrage / fin propre du serveur

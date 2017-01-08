@@ -271,6 +271,7 @@ int process_join(server *srvr, char *username, char *pipepath) {
 
     link->clnt.id = srvr->id_counter;
     srvr->id_counter++;
+    srvr->client_count++;
 
     char *ptr = make_header(buff, 12, CODE_SUCCESS);
     add_number(ptr, link->clnt.id);
@@ -296,6 +297,8 @@ int process_disconnect(server *srvr, int id) {
             prev->next = clnt->next;
 
         printf("%s déconnecté avec succès\n", clnt->clnt.name);
+
+        srvr->client_count--;
 
         free(clnt->clnt.name);
         free(clnt->clnt.pipe_path);
@@ -350,7 +353,7 @@ int broadcast_message(server *srvr, request *req) {
     list = srvr->clients;
     while (list) {
         //  On s'assure de ne pas retransmettre le mesage à l'émetteur
-        if (list->clnt.id != id && (strcmp(req->type, CODE_PRIVATE) || !strcmp(username, list->clnt.name))) {
+        if (strcmp(req->type, CODE_PRIVATE) || !strcmp(username, list->clnt.name)) {
             if (write(list->clnt.pipe, buff, BUFFER_LENGTH) < BUFFER_LENGTH) {
                 printf("\033[31mErreur lors de la transmission du message à %s\033[0m", list->clnt.name);
                 perror("");

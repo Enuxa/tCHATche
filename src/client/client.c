@@ -103,10 +103,18 @@ int connect(server *srvr, char *path) {
 }
 
 int join(client *clnt, char *username, server *srvr) {
+    //  Créer (si nécessaire) le répertoire racine
+    if (access(ROOT_PATH, F_OK) && mkdir(ROOT_PATH, S_IRWXU | S_IRWXG)) {
+        perror("\033[31mErreur lors de l'ouverture du dossier racine\033[0m");
+
+        return 1;
+    }
+
     //  Ouverture du tube
     clnt->pipepath = calloc(BUFFER_LENGTH, 1);
     clnt->username = calloc(USERNAME_LENGTH, 1);
     strcpy(clnt->username, username);
+
     int i = 1;
     do {
         sprintf(clnt->pipepath, "%s/pipe%d", ROOT_PATH, i);

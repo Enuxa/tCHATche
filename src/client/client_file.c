@@ -120,10 +120,10 @@ void free_file_transfert(file_transfert *ft) {
 }
 
 void terminate_file_transferts(client *clnt) {
-  while (clnt->ft_list) {
-      file_transfert *ft = clnt->ft_list->next;
-      free_file_transfert(clnt->ft_list);
-      clnt->ft_list = ft;
+  file_transfert *ft = clnt->ft_list;
+  while (ft) {
+      free_file_transfert(ft);
+      ft = ft->next;
   }
 }
 
@@ -146,7 +146,7 @@ int send_file(server *srvr, file_transfert *ft) {
         ft->remaining_length += block_size;
         lseek(ft->file, position, SEEK_SET);
       } else {
-        printf("Erreur lors de la transmission du paquet no %d à %s (%d/%d octets ecrits) : ", ft->serie, ft->username, k, block_size);
+        printf("Erreur lors de la transmission du paquet no %d à %s (%d/%d octets écrits) : ", ft->serie, ft->username, k, block_size);
         perror("");
       }
       fflush(stdout);

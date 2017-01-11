@@ -230,6 +230,7 @@ int process_join(server *srvr, char *username, char *pipepath) {
 
     //  On vérifie que le nom est correct
     int username_valid = (strlen(username) > 0 && strlen(username) <= USERNAME_LENGTH);
+
     for (int i = 0; username[i] != '\0' && username_valid; i++) {
         if (username[i] == ' ' || username[i] == '\t' || username[i] == '\n')
             username_valid = 0;
@@ -352,7 +353,6 @@ int broadcast_message(server *srvr, request *req) {
     int ret_val = 0;
     list = srvr->clients;
     while (list) {
-        //  On s'assure de ne pas retransmettre le mesage à l'émetteur
         if (strcmp(req->type, CODE_PRIVATE) || !strcmp(username, list->clnt.name)) {
             if (write(list->clnt.pipe, buff, BUFFER_LENGTH) < BUFFER_LENGTH) {
                 printf("\033[31mErreur lors de la transmission du message à %s\033[0m", list->clnt.name);
